@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adoni AI | Intelligent Digital Solutions</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Project is waking up...</div>
+        <p class="text-muted mt-2">This may take 30-40 seconds (Free tier hosting)</p>
+    </div>
+
+    <!-- Floating Background Elements -->
+    <div class="floating-element" style="top: 10%; left: 5%; width: 30px; height: 30px; background: var(--primary);">
+    </div>
+    <div class="floating-element"
+        style="top: 20%; right: 10%; width: 40px; height: 40px; background: var(--secondary);"></div>
+    <div class="floating-element" style="bottom: 30%; left: 15%; width: 25px; height: 25px; background: var(--accent);">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
+        <div class="container">
+
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <!-- Large Animated AI Circuit Logo -->
+                <svg width="48" height="48" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="logo-svg">
+                    <defs>
+                        <!-- Main Gradient -->
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#00D4FF" />
+                            <stop offset="50%" stop-color="#8A2BE2" />
+                            <stop offset="100%" stop-color="#00FFAA" />
+                        </linearGradient>
+
+                        <!-- Bright Gradient for contrast -->
+                        <linearGradient id="logoGradBright" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#00F7FF" />
+                            <stop offset="50%" stop-color="#9A4BFF" />
+                            <stop offset="100%" stop-color="#00FFD5" />
+                        </linearGradient>
+
+                        <!-- Glow Filter -->
+                        <filter id="logoGlow" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
+                            <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
+                            <feFlood flood-color="#00D4FF" flood-opacity="0.6" result="glowColor" />
+                            <feComposite in="glowColor" in2="offsetBlur" operator="in" result="softGlow" />
+                            <feMerge>
+                                <feMergeNode in="softGlow" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <!-- Background Orbital Rings -->
+                    <circle cx="60" cy="60" r="45" stroke="url(#logoGrad)" stroke-width="1.5" fill="none" opacity="0.3"
+                        class="orbital-ring-1" />
+                    <circle cx="60" cy="60" r="38" stroke="url(#logoGrad)" stroke-width="1.2" fill="none" opacity="0.4"
+                        class="orbital-ring-2" />
+                    <circle cx="60" cy="60" r="31" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.5"
+                        class="orbital-ring-3" />
+
+                    <!-- Main Diamond/Hexagon Shape -->
+                    <path d="M60,30 L85,45 L85,75 L60,90 L35,75 L35,45 Z" fill="rgba(10,11,15,0.9)"
+                        stroke="url(#logoGradBright)" stroke-width="3" stroke-linejoin="round" filter="url(#logoGlow)"
+                        class="main-shape" />
+
+                    <!-- Circuit Board Pattern -->
+                    <g class="circuit-pattern">
+                        <!-- Horizontal Circuit Lines -->
+                        <path d="M40,50 L80,50" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
+                            class="circuit-line-1" />
+                        <path d="M40,70 L80,70" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
+                            class="circuit-line-2" />
+
+                        <!-- Vertical Circuit Lines -->
+                        <path d="M50,40 L50,80" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
+                            class="circuit-line-3" />
+                        <path d="M70,40 L70,80" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
+                            class="circuit-line-4" />
+
+                        <!-- Diagonal Circuit Connections -->
+                        <path d="M45,55 L55,45" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
+                            class="circuit-diag-1" />
+                        <path d="M65,55 L75,45" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
+                            class="circuit-diag-2" />
+                        <path d="M45,65 L55,75" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
+                            class="circuit-diag-3" />
+                        <path d="M65,65 L75,75" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
+                            class="circuit-diag-4" />
+                    </g>
+
+                    <!-- Central AI Hub -->
+                    <circle cx="60" cy="60" r="8" fill="url(#logoGrad)" class="central-hub">
+                        <animate attributeName="r" values="8;9;8" dur="2s" repeatCount="indefinite" />
+                    </circle>
+
+                    <!-- Data Nodes -->
+                    <g class="data-nodes">
+                        <circle cx="45" cy="45" r="4" fill="#00D4FF" class="node-1">
+                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
+                                repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="75" cy="45" r="4" fill="#00D4FF" class="node-2">
+                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
+                                repeatCount="indefinite" begin="0.5s" />
+                        </circle>
+                        <circle cx="45" cy="75" r="4" fill="#00D4FF" class="node-3">
+                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
+                                repeatCount="indefinite" begin="1s" />
+                        </circle>
+                        <circle cx="75" cy="75" r="4" fill="#00D4FF" class="node-4">
+                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
+                                repeatCount="indefinite" begin="1.5s" />
+                        </circle>
+                    </g>
+
+                    <!-- Connecting Lines -->
+                    <path d="M45,45 L60,60 L75,45 M45,75 L60,60 L75,75" stroke="url(#logoGrad)" stroke-width="1.2"
+                        fill="none" opacity="0.8" class="connection-lines" />
+
+                    <!-- AI Text inside Hub -->
+                    <text x="60" y="65" text-anchor="middle" font-family="'Space Grotesk', Arial" font-size="9"
+                        font-weight="800" fill="#0A0B0F" class="ai-text">AI</text>
+
+                    <!-- Energy Pulses -->
+                    <circle cx="60" cy="60" r="12" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.4"
+                        class="pulse-1">
+                        <animate attributeName="r" values="12;25;12" dur="3s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite" />
+                    </circle>
+
+                    <circle cx="60" cy="60" r="12" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.3"
+                        class="pulse-2">
+                        <animate attributeName="r" values="12;30;12" dur="4s" repeatCount="indefinite" begin="1s" />
+                        <animate attributeName="opacity" values="0.3;0;0.3" dur="4s" repeatCount="indefinite"
+                            begin="1s" />
+                    </circle>
+                </svg>
+
+                <!-- BRAND TEXT - Larger and more prominent -->
+                <span class="logo-text ms-3">
+                    <span class="brand-adoni">ADONI</span>
+                    <span class="brand-ai">AI</span>
+                    <span class="brand-pulse">.</span>
+                </span>
+            </a>
+
+            <!-- TOGGLER -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- NAV LINKS -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+
+                <!-- CTA BUTTON -->
+                <a href="#contact" class="btn btn-primary ms-lg-3 mt-3 mt-lg-0">
+                    <i class="bi bi-rocket-takeoff me-2"></i>Start Project
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title animate__animated animate__fadeInUp">
+                        <span class="gradient-text">Intelligent</span> Digital Solutions
+                    </h1>
+                    <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">
+                        We build AI-powered applications, scalable software solutions, and intelligent digital
+                        experiences for startups and enterprises.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 animate__animated animate__fadeInUp animate__delay-2s">
+                        <a href="#portfolio" class="btn btn-primary">
+                            <i class="bi bi-code-slash me-2"></i>View Projects
+                        </a>
+                        <a href="#contact" class="btn btn-outline-primary">
+                            <i class="bi bi-chat-dots me-2"></i>Get Consultation
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mt-5 mt-lg-0">
+                        <div class="terminal-container animate__animated animate__fadeIn animate__delay-1s">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <div class="terminal-dot dot-red"></div>
+                                    <div class="terminal-dot dot-yellow"></div>
+                                    <div class="terminal-dot dot-green"></div>
+                                </div>
+                                <div class="terminal-title">bash — Adoni-ai — 80×24</div>
+                            </div>
+                            <div class="terminal-content">
+                                <div class="terminal-line"><span class="text-primary">$</span> Adoni init --project
+                                    "ai-solution"</div>
+                                <div class="terminal-line">Initializing AI project structure...</div>
+                                <div class="terminal-line">Installing dependencies: tensorflow, pytorch, fastapi</div>
+                                <div class="terminal-line">Configuring neural network models...</div>
+                                <div class="terminal-line">Setting up cloud deployment: AWS/Azure/GCP</div>
+                                <div class="terminal-line">Project ready! Build intelligent apps with <span
+                                        class="text-accent">Adoni AI</span><span class="terminal-cursor"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number" data-count="20">0</div>
+                        <div class="stat-label">Projects Delivered</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number" data-count="5">0</div>
+                        <div class="stat-label">AI Solutions</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number" data-count="7">0</div>
+                        <div class="stat-label">Client Satisfaction</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item animate-on-scroll">
+                        <div class="stat-number" data-count="5">0</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title center animate-on-scroll">Our <span class="gradient-text">Expertise</span></h2>
+                <p class="lead text-muted animate-on-scroll">Specialized services for the modern digital landscape</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Service 1: AI/ML Development -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon">
+                            <i class="bi bi-cpu"></i>
+                        </div>
+                        <h3>AI/ML Development</h3>
+                        <p>Building custom machine learning models, neural networks, and AI-powered applications for
+                            various industries.</p>
+                        <ul class="service-features">
+                            <li><i class="bi bi-check-circle-fill"></i> Custom ML Models</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Predictive Analytics</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Computer Vision</li>
+                            <li><i class="bi bi-check-circle-fill"></i> NLP Solutions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Service 2: Full-Stack Development -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon">
+                            <i class="bi bi-stack"></i>
+                        </div>
+                        <h3>Full-Stack Development</h3>
+                        <p>End-to-end development of scalable web applications using modern frameworks and cloud
+                            technologies.</p>
+                        <ul class="service-features">
+                            <li><i class="bi bi-check-circle-fill"></i> React/Next.js</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Node.js/Python</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Microservices</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Cloud Deployment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Service 3: Cloud & DevOps -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                        </div>
+                        <h3>Cloud & DevOps</h3>
+                        <p>Implementing CI/CD pipelines, containerization, and cloud infrastructure for scalable
+                            applications.</p>
+                        <ul class="service-features">
+                            <li><i class="bi bi-check-circle-fill"></i> AWS/Azure/GCP</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Docker & Kubernetes</li>
+                            <li><i class="bi bi-check-circle-fill"></i> CI/CD Automation</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Infrastructure as Code</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Service 4: Data Engineering -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon">
+                            <i class="bi bi-file-bar-graph"></i>
+                        </div>
+                        <h3>Data Engineering</h3>
+                        <p>Designing and building data pipelines, warehouses, and analytics platforms for data-driven
+                            decisions.</p>
+                        <ul class="service-features">
+                            <li><i class="bi bi-check-circle-fill"></i> ETL/ELT Pipelines</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Data Warehousing</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Real-time Analytics</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Big Data Solutions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Service 5: Blockchain Development -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h3>Blockchain Development</h3>
+                        <p>Developing decentralized applications, smart contracts, and blockchain integration solutions.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="bi bi-check-circle-fill"></i> Smart Contracts</li>
+                            <li><i class="bi bi-check-circle-fill"></i> DApps Development</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Web3 Integration</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Tokenomics Design</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Service 6: Mobile Development -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon">
+                            <i class="bi bi-phone"></i>
+                        </div>
+                        <h3>Mobile Development</h3>
+                        <p>Creating cross-platform and native mobile applications with modern UI/UX and backend
+                            integration.</p>
+                        <ul class="service-features">
+                            <li><i class="bi bi-check-circle-fill"></i> React Native/Flutter</li>
+                            <li><i class="bi bi-check-circle-fill"></i> iOS & Android Native</li>
+                            <li><i class="bi bi-check-circle-fill"></i> PWA Development</li>
+                            <li><i class="bi bi-check-circle-fill"></i> App Store Deployment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title center animate-on-scroll">Featured <span class="gradient-text">Projects</span>
+                </h2>
+                <p class="lead text-muted animate-on-scroll">Showcasing our innovative solutions and technical expertise
+                </p>
+                <a href="projects.html" target="_blank" class="btn btn-outline-primary mt-3">
+                    <i class="bi bi-grid-3x3-gap me-2"></i>View All Projects
+                </a>
+            </div>
+
+            <div class="row">
+                <!-- Project 1: Deadline Reminder System -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="portfolio-card animate-on-scroll">
+                        <div class="portfolio-img"
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="bi bi-alarm"></i>
+                        </div>
+                        <div class="portfolio-content">
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">Full-Stack</span>
+                                <span class="portfolio-tag">Node.js</span>
+                                <span class="portfolio-tag">MongoDB</span>
+                            </div>
+                            <h4>Deadline Reminder System</h4>
+                            <p>A comprehensive task management system with automated reminders, email notifications, and
+                                deadline tracking.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="text-primary">Tech: Node.js, Express, MongoDB</span>
+                                <a href="#" class="text-decoration-none project-link"
+                                    data-url="https://deadline-reminder-system.onrender.com/">Live Demo →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: AI Resume Creator -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="portfolio-card animate-on-scroll">
+                        <div class="portfolio-img"
+                            style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="bi bi-file-earmark-person"></i>
+                        </div>
+                        <div class="portfolio-content">
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">AI/ML</span>
+                                <span class="portfolio-tag">React</span>
+                                <span class="portfolio-tag">Python</span>
+                            </div>
+                            <h4>AI Resume Creator</h4>
+                            <p>Intelligent resume builder that uses AI to optimize content, suggest improvements, and
+                                match job descriptions.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="text-primary">Tech: React, Python, OpenAI API</span>
+                                <a href="#" class="text-decoration-none project-link"
+                                    data-url="https://ai-resume-creator-7byw.onrender.com/">Live Demo →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Typing Game -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="portfolio-card animate-on-scroll">
+                        <div class="portfolio-img"
+                            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="bi bi-keyboard"></i>
+                        </div>
+                        <div class="portfolio-content">
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">JavaScript</span>
+                                <span class="portfolio-tag">Game</span>
+                                <span class="portfolio-tag">Frontend</span>
+                            </div>
+                            <h4>Typing Speed Game</h4>
+                            <p>Interactive typing game that tests and improves typing speed with real-time statistics
+                                and progress tracking.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="text-primary">Tech: JavaScript, HTML5, CSS3</span>
+                                <a href="#" class="text-decoration-none project-link"
+                                    data-url="https://typing-game-7osu.onrender.com/">Live Demo →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title center">Client <span class="gradient-text">Testimonials</span></h2>
+                <p class="lead text-muted">Trusted by innovative individuals and teams</p>
+            </div>
+
+            <div class="testimonial-slider">
+                <div class="testimonial-track">
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            "Taher's work on our hardware website was exceptional. He understood the technical nuances
+                            of our products and translated them into a seamless digital experience."
+                        </div>
+                        <div class="client-info">
+                            <div>
+                                <div class="client-name">Yusuf Kanorewala</div>
+                                <div class="client-company">Hardware Solutions</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            "Working with Taher on our college project made everything easier. His problem-solving
+                            skills and coding logic were key to our project's success."
+                        </div>
+                        <div class="client-info">
+                            <div>
+                                <div class="client-name">Vaishnavi Godage</div>
+                                <div class="client-company">College Project</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            "Excellent technical support and collaboration. Taher ensured that the project was not only
+                            functional but also well-documented and scalable."
+                        </div>
+                        <div class="client-info">
+                            <div>
+                                <div class="client-name">Bhagyashri Jadhav</div>
+                                <div class="client-company">College Project</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            "Taher is a dedicated developer. His expertise in full-stack development helped us integrate
+                            complex features into our college submission effortlessly."
+                        </div>
+                        <div class="client-info">
+                            <div>
+                                <div class="client-name">Ayush Jain</div>
+                                <div class="client-company">College Project</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            "His ability to bridge the gap between AI concepts and practical implementation was crucial
+                            for our final year project. Highly recommended!"
+                        </div>
+                        <div class="client-info">
+                            <div>
+                                <div class="client-name">Akansha Shinde</div>
+                                <div class="client-company">College Project</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            "Taher's work on our hardware website was exceptional..."
+                        </div>
+                        <div class="client-info">
+                            <div>
+                                <div class="client-name">Yusuf Kanorewala</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-9 text-center">
+                    <h2 class="cta-title animate-on-scroll">Ready to Build the <span class="gradient-text">Future</span>
+                        Together?</h2>
+                    <p class="cta-text animate-on-scroll">
+                        Let's transform your ideas into intelligent digital solutions. Our team of AI experts and
+                        software engineers is ready to bring your vision to life.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 justify-content-center animate-on-scroll">
+                        <a href="#contact" class="btn btn-primary btn-lg">
+                            <i class="bi bi-rocket-takeoff me-2"></i>Start Your Project
+                        </a>
+
+                        <a href="projects.html" target="_blank" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-grid-3x3-gap me-2"></i>All Projects
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="contact-form animate-on-scroll">
+                        <div class="text-center mb-5">
+                            <h2 class="section-title center">Get in <span class="gradient-text">Touch</span></h2>
+                            <p class="text-muted">Share your project details and we'll get back to you within 24 hours.
+                            </p>
+                        </div>
+
+                        <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+
+                            <input type="hidden" name="access_key" value="e7271cae-5e38-4c1a-a6f4-a24302e555af">
+
+                            <input type="hidden" name="subject" value="New Project Inquiry from Adoni AI">
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label">Full Name *</label>
+                                    <input type="text" name="name" class="form-control" required
+                                        placeholder="Eg. Taher Bohra">
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label">Email Address *</label>
+                                    <input type="email" name="email" class="form-control" required
+                                        placeholder="Eg. taher@company.com">
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Company / Project Name</label>
+                                <input type="text" name="company" class="form-control" placeholder="Your Company Inc.">
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Service Interested In *</label>
+                                <select name="service" class="form-select" required>
+                                    <option value="">Select a service</option>
+                                    <option value="ai-ml">AI/ML Development</option>
+                                    <option value="full-stack">Website Development</option>
+                                    <option value="cloud">Cloud & DevOps</option>
+                                    <option value="data">Data Engineering</option>
+                                    <option value="blockchain">Blockchain Development</option>
+                                    <option value="mobile">Mobile Development</option>
+                                    <option value="consulting">Technical Consulting</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Project Details *</label>
+                                <textarea name="message" class="form-control" rows="6"
+                                    placeholder="Describe your project requirements, timeline, and budget..."
+                                    required></textarea>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg py-3">
+                                    <i class="bi bi-send me-2"></i>Submit Project Request
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h3 class="footer-title">
+                        <i class="bi bi-cpu-fill me-2"></i>Adoni<span class="text-primary">AI</span>
+                    </h3>
+                    <p class="mb-4" style="opacity: 0.8;">
+                        Building intelligent digital solutions with cutting-edge AI, modern software development, and
+                        cloud technologies.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://github.com/taher-bohra786"><i class="bi bi-github"></i></a>
+                        <a href="https://www.linkedin.com/in/taher-bohra9/"><i class="bi bi-linkedin"></i></a>
+                        <a href="https://www.instagram.com/taaheeerrr/"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 mb-5 mb-lg-0">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#home">Home</a></li>
+                        <li class="mb-2"><a href="#services">Services</a></li>
+                        <li class="mb-2"><a href="#portfolio">Projects</a></li>
+                        <li class="mb-2"><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="projects.html" target="_blank">All Projects</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-4 mb-5 mb-lg-0">
+                    <h5 class="footer-title">Our Services</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#services">AI/ML Development</a></li>
+                        <li class="mb-2"><a href="#services">Full-Stack Development</a></li>
+                        <li class="mb-2"><a href="#services">Cloud & DevOps</a></li>
+                        <li class="mb-2"><a href="#services">Blockchain Development</a></li>
+                        <li><a href="#services">Mobile Development</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-4">
+                    <h5 class="footer-title">Contact Info</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-geo-alt me-2"></i> Pune, Maharashtra, India
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-envelope me-2"></i> taherbohra06@gmail.com
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-phone me-2"></i> +91 9929235556
+                        </li>
+                        <li>
+                            <i class="bi bi-clock me-2"></i> 24/7 Support Available
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="my-5" style="opacity: 0.2;">
+
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p style="opacity: 0.8;">&copy; 2026 Adoni AI. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p style="opacity: 0.8;">Built with <i class="bi bi-lightning-charge-fill text-warning"></i> for the
+                        future</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function () {
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+
+                        // Update active nav link
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Animated counter
+            function animateCounter() {
+                const counters = document.querySelectorAll('.stat-number');
+                const speed = 200;
+
+                counters.forEach(counter => {
+                    const target = parseInt(counter.getAttribute('data-count'));
+                    const count = parseInt(counter.innerText);
+                    const increment = Math.ceil(target / speed);
+
+                    if (count < target) {
+                        counter.innerText = count + increment;
+                        setTimeout(() => animateCounter(), 10);
+                    } else {
+                        counter.innerText = target + (counter.getAttribute('data-count') === '7' ? '+' : '');
+                    }
+                });
+            }
+
+            // Trigger counter when stats section is visible
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(animateCounter, 300);
+                    }
+                });
+            });
+
+            const statsSection = document.querySelector('.stats-section');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+
+            // Project link click handler with loading overlay
+            document.querySelectorAll('.project-link').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('data-url');
+
+                    // Show loading overlay
+                    const loadingOverlay = document.getElementById('loadingOverlay');
+                    loadingOverlay.classList.add('active');
+
+                    // Redirect after 3 seconds
+                    setTimeout(() => {
+                        window.open(url, '_blank');
+                        loadingOverlay.classList.remove('active');
+                    }, 3000);
+                });
+            });
+
+            // Navbar background on scroll
+            window.addEventListener('scroll', function () {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(10, 11, 15, 0.95)';
+                    navbar.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.4)';
+                } else {
+                    navbar.style.background = 'rgba(10, 11, 15, 0.9)';
+                    navbar.style.boxShadow = '0 5px 30px rgba(0, 0, 0, 0.3)';
+                }
+            });
+
+            // Animated terminal effect
+            function animateTerminal() {
+                const terminalCursor = document.querySelector('.terminal-cursor');
+                if (terminalCursor) {
+                    setInterval(() => {
+                        terminalCursor.style.opacity = terminalCursor.style.opacity === '0' ? '1' : '0';
+                    }, 500);
+                }
+            }
+
+            animateTerminal();
+        });
+    </script>
+</body>
+
+</html>
