@@ -846,7 +846,7 @@
 
                     // Redirect after 3 seconds
                     setTimeout(() => {
-                        window.open(url, '_blank');
+                        window.location.href = url;
                         loadingOverlay.classList.remove('active');
                     }, 3000);
                 });
