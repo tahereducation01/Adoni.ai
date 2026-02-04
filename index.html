@@ -1,943 +1,665 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adoni AI | Intelligent Digital Solutions</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <!-- Google Fonts -->
+    <title>Chapters London | Premium Brunch & Dining in Ilford</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'luxury-gold': '#D4AF37',
+                        'deep-charcoal': '#0F0F0F',
+                        'soft-gold': '#E5C76B',
+                        'off-white': '#FAF9F6',
+                        'overlay-black': 'rgba(10, 10, 10, 0.85)',
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'outfit': ['Outfit', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'gradient-gold': 'linear-gradient(135deg, #D4AF37 0%, #F5E6AD 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Fix for desktop horizontal scrolling */
+        body {
+            background-color: #0F0F0F;
+            color: #FAF9F6;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-nav {
+            background: rgba(15, 15, 15, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .hero-zoom {
+            animation: slowZoom 20s infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.1);
+            }
+        }
+
+        .btn-gold-glow:hover {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+    </style>
 </head>
 
-<body>
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Project is waking up...</div>
-        <p class="text-muted mt-2">This may take 30-40 seconds.</p>
+<body class="antialiased selection:bg-luxury-gold selection:text-black">
+
+    <div
+        class="fixed top-0 w-full z-[60] bg-luxury-gold text-deep-charcoal py-2 text-center text-xs font-bold uppercase tracking-widest shadow-lg">
+        <span class="animate-pulse mr-2">●</span> Now Delivering via UberEats & Deliveroo | 100% Halal Menu
     </div>
 
-    <!-- Floating Background Elements -->
-    <div class="floating-element" style="top: 10%; left: 5%; width: 30px; height: 30px; background: var(--primary);">
-    </div>
-    <div class="floating-element"
-        style="top: 20%; right: 10%; width: 40px; height: 40px; background: var(--secondary);"></div>
-    <div class="floating-element" style="bottom: 30%; left: 15%; width: 25px; height: 25px; background: var(--accent);">
-    </div>
+    <nav class="fixed top-8 w-full z-50 glass-nav border-b border-white/5 transition-all duration-300">
+        <div class="container mx-auto px-6 py-2 flex justify-between items-center relative">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
-        <div class="container">
-
-            <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <!-- Large Animated AI Circuit Logo -->
-                <svg width="48" height="48" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    class="logo-svg">
-                    <defs>
-                        <!-- Main Gradient -->
-                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#00D4FF" />
-                            <stop offset="50%" stop-color="#8A2BE2" />
-                            <stop offset="100%" stop-color="#00FFAA" />
-                        </linearGradient>
-
-                        <!-- Bright Gradient for contrast -->
-                        <linearGradient id="logoGradBright" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#00F7FF" />
-                            <stop offset="50%" stop-color="#9A4BFF" />
-                            <stop offset="100%" stop-color="#00FFD5" />
-                        </linearGradient>
-
-                        <!-- Glow Filter -->
-                        <filter id="logoGlow" x="-30%" y="-30%" width="160%" height="160%">
-                            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
-                            <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
-                            <feFlood flood-color="#00D4FF" flood-opacity="0.6" result="glowColor" />
-                            <feComposite in="glowColor" in2="offsetBlur" operator="in" result="softGlow" />
-                            <feMerge>
-                                <feMergeNode in="softGlow" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                    </defs>
-
-                    <!-- Background Orbital Rings -->
-                    <circle cx="60" cy="60" r="45" stroke="url(#logoGrad)" stroke-width="1.5" fill="none" opacity="0.3"
-                        class="orbital-ring-1" />
-                    <circle cx="60" cy="60" r="38" stroke="url(#logoGrad)" stroke-width="1.2" fill="none" opacity="0.4"
-                        class="orbital-ring-2" />
-                    <circle cx="60" cy="60" r="31" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.5"
-                        class="orbital-ring-3" />
-
-                    <!-- Main Diamond/Hexagon Shape -->
-                    <path d="M60,30 L85,45 L85,75 L60,90 L35,75 L35,45 Z" fill="rgba(10,11,15,0.9)"
-                        stroke="url(#logoGradBright)" stroke-width="3" stroke-linejoin="round" filter="url(#logoGlow)"
-                        class="main-shape" />
-
-                    <!-- Circuit Board Pattern -->
-                    <g class="circuit-pattern">
-                        <!-- Horizontal Circuit Lines -->
-                        <path d="M40,50 L80,50" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
-                            class="circuit-line-1" />
-                        <path d="M40,70 L80,70" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
-                            class="circuit-line-2" />
-
-                        <!-- Vertical Circuit Lines -->
-                        <path d="M50,40 L50,80" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
-                            class="circuit-line-3" />
-                        <path d="M70,40 L70,80" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
-                            class="circuit-line-4" />
-
-                        <!-- Diagonal Circuit Connections -->
-                        <path d="M45,55 L55,45" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
-                            class="circuit-diag-1" />
-                        <path d="M65,55 L75,45" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
-                            class="circuit-diag-2" />
-                        <path d="M45,65 L55,75" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
-                            class="circuit-diag-3" />
-                        <path d="M65,65 L75,75" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
-                            class="circuit-diag-4" />
+            <a href="#home" class="flex flex-col items-center group -ml-4 z-50">
+                <svg width="160" height="60" viewBox="0 0 300 130" xmlns="http://www.w3.org/2000/svg"
+                    class="text-luxury-gold group-hover:text-white transition-colors duration-300 fill-current">
+                    <g transform="translate(128, 0) scale(0.5)">
+                        <path d="M15,10 L15,45 M25,10 L25,45 M35,10 L35,45 M15,45 C15,65 35,65 35,45 M25,65 L25,100"
+                            stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none" />
+                        <path d="M65,10 C85,10 85,50 65,50 C45,50 45,10 65,10 M65,50 L65,100" stroke="currentColor"
+                            stroke-width="5" stroke-linecap="round" fill="none" />
+                        <path d="M15,35 Q-15,35 -5,10" stroke="currentColor" stroke-width="4" fill="none"
+                            opacity="0.8" />
+                        <path d="M75,80 Q110,80 110,40 Q110,70 85,90" fill="currentColor" />
                     </g>
-
-                    <!-- Central AI Hub -->
-                    <circle cx="60" cy="60" r="8" fill="url(#logoGrad)" class="central-hub">
-                        <animate attributeName="r" values="8;9;8" dur="2s" repeatCount="indefinite" />
-                    </circle>
-
-                    <!-- Data Nodes -->
-                    <g class="data-nodes">
-                        <circle cx="45" cy="45" r="4" fill="#00D4FF" class="node-1">
-                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
-                                repeatCount="indefinite" />
-                        </circle>
-                        <circle cx="75" cy="45" r="4" fill="#00D4FF" class="node-2">
-                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
-                                repeatCount="indefinite" begin="0.5s" />
-                        </circle>
-                        <circle cx="45" cy="75" r="4" fill="#00D4FF" class="node-3">
-                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
-                                repeatCount="indefinite" begin="1s" />
-                        </circle>
-                        <circle cx="75" cy="75" r="4" fill="#00D4FF" class="node-4">
-                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
-                                repeatCount="indefinite" begin="1.5s" />
-                        </circle>
-                    </g>
-
-                    <!-- Connecting Lines -->
-                    <path d="M45,45 L60,60 L75,45 M45,75 L60,60 L75,75" stroke="url(#logoGrad)" stroke-width="1.2"
-                        fill="none" opacity="0.8" class="connection-lines" />
-
-                    <!-- AI Text inside Hub -->
-                    <text x="60" y="65" text-anchor="middle" font-family="'Space Grotesk', Arial" font-size="9"
-                        font-weight="800" fill="#0A0B0F" class="ai-text">AI</text>
-
-                    <!-- Energy Pulses -->
-                    <circle cx="60" cy="60" r="12" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.4"
-                        class="pulse-1">
-                        <animate attributeName="r" values="12;25;12" dur="3s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite" />
-                    </circle>
-
-                    <circle cx="60" cy="60" r="12" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.3"
-                        class="pulse-2">
-                        <animate attributeName="r" values="12;30;12" dur="4s" repeatCount="indefinite" begin="1s" />
-                        <animate attributeName="opacity" values="0.3;0;0.3" dur="4s" repeatCount="indefinite"
-                            begin="1s" />
-                    </circle>
+                    <text x="150" y="95" font-family="'Playfair Display', serif" font-size="44" font-weight="bold"
+                        text-anchor="middle" letter-spacing="4">CHAPTERS</text>
+                    <text x="150" y="118" font-family="'Outfit', sans-serif" font-size="11" font-weight="400"
+                        text-anchor="middle" letter-spacing="3" opacity="0.7">BREAKFAST • BRUNCH • BURGERS</text>
                 </svg>
-
-                <!-- BRAND TEXT - Larger and more prominent -->
-                <span class="logo-text ms-3">
-                    <span class="brand-adoni">ADONI</span>
-                    <span class="brand-ai">AI</span>
-                    <span class="brand-pulse">.</span>
-                </span>
             </a>
 
-            <!-- TOGGLER -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- NAV LINKS -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#services">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#portfolio">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                </ul>
-
-                <!-- CTA BUTTON -->
-                <a href="#contact" class="btn btn-primary ms-lg-3 mt-3 mt-lg-0">
-                    <i class="bi bi-rocket-takeoff me-2"></i>Start Project
+            <div class="hidden md:flex space-x-8 items-center font-light tracking-wide text-sm uppercase">
+                <a href="#home" class="hover:text-luxury-gold transition-colors">Experience</a>
+                <a href="#about" class="hover:text-luxury-gold transition-colors">Our Story</a>
+                <a href="#menu" class="hover:text-luxury-gold transition-colors">Menu</a>
+                <a href="#offers" class="text-luxury-gold font-semibold transition-colors">Offers</a>
+                <a href="#private-hire" class="hover:text-luxury-gold transition-colors">Hire</a>
+                <a href="tel:+442030926216"
+                    class="bg-luxury-gold/10 text-luxury-gold px-6 py-2 rounded-sm border border-luxury-gold/30 hover:bg-luxury-gold hover:text-deep-charcoal transition-all font-semibold">
+                    Book Table
                 </a>
             </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-luxury-gold text-2xl z-50 focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu"
+            class="absolute top-full left-0 w-full bg-[#0F0F0F] border-b border-white/10 hidden flex-col items-center py-6 space-y-4 md:hidden shadow-2xl origin-top transition-transform duration-300">
+            <a href="#home" class="text-white hover:text-luxury-gold text-sm uppercase tracking-widest"
+                onclick="toggleMobileMenu()">Experience</a>
+            <a href="#about" class="text-white hover:text-luxury-gold text-sm uppercase tracking-widest"
+                onclick="toggleMobileMenu()">Our Story</a>
+            <a href="#menu" class="text-white hover:text-luxury-gold text-sm uppercase tracking-widest"
+                onclick="toggleMobileMenu()">Menu</a>
+            <a href="#offers" class="text-luxury-gold font-bold text-sm uppercase tracking-widest"
+                onclick="toggleMobileMenu()">Offers</a>
+            <a href="#private-hire" class="text-white hover:text-luxury-gold text-sm uppercase tracking-widest"
+                onclick="toggleMobileMenu()">Hire</a>
         </div>
     </nav>
 
-
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h1 class="hero-title animate__animated animate__fadeInUp">
-                        <span class="gradient-text">Intelligent</span> Digital Solutions
-                    </h1>
-                    <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">
-                        We build AI-powered applications, scalable software solutions, and intelligent digital
-                        experiences for startups and enterprises.
-                    </p>
-                    <div class="d-flex flex-wrap gap-3 animate__animated animate__fadeInUp animate__delay-2s">
-                        <a href="#portfolio" class="btn btn-primary">
-                            <i class="bi bi-code-slash me-2"></i>View Projects
-                        </a>
-                        <a href="#contact" class="btn btn-outline-primary">
-                            <i class="bi bi-chat-dots me-2"></i>Get Consultation
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="mt-5 mt-lg-0">
-                        <div class="terminal-container animate__animated animate__fadeIn animate__delay-1s">
-                            <div class="terminal-header">
-                                <div class="terminal-dots">
-                                    <div class="terminal-dot dot-red"></div>
-                                    <div class="terminal-dot dot-yellow"></div>
-                                    <div class="terminal-dot dot-green"></div>
-                                </div>
-                                <div class="terminal-title">bash — Adoni-ai — 80×24</div>
-                            </div>
-                            <div class="terminal-content">
-                                <div class="terminal-line"><span class="text-primary">$</span> Adoni init --project
-                                    "ai-solution"</div>
-                                <div class="terminal-line">Initializing AI project structure...</div>
-                                <div class="terminal-line">Installing dependencies: tensorflow, pytorch, fastapi</div>
-                                <div class="terminal-line">Configuring neural network models...</div>
-                                <div class="terminal-line">Setting up cloud deployment: AWS/Azure/GCP</div>
-                                <div class="terminal-line">Project ready! Build intelligent apps with <span
-                                        class="text-accent">Adoni AI</span><span class="terminal-cursor"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="home" class="relative h-screen overflow-hidden flex items-center pt-16">
+        <div class="absolute inset-0 z-0">
+            <img src="shop.jpg" class="w-full h-full object-cover brightness-[0.35] hero-zoom"
+                alt="Chapters London Interior">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-transparent to-transparent"></div>
         </div>
-    </section>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-6">
-                    <div class="stat-item animate-on-scroll">
-                        <div class="stat-number" data-count="20">0</div>
-                        <div class="stat-label">Projects Delivered</div>
-                    </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl" data-aos="fade-up" data-aos-duration="1200">
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="h-[1px] w-12 bg-luxury-gold"></div>
+                    <span class="text-luxury-gold tracking-[0.3em] uppercase text-sm font-semibold">Est. Ilford,
+                        London</span>
                 </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item animate-on-scroll">
-                        <div class="stat-number" data-count="5">0</div>
-                        <div class="stat-label">AI Solutions</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item animate-on-scroll">
-                        <div class="stat-number" data-count="7">0</div>
-                        <div class="stat-label">Client Satisfaction</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item animate-on-scroll">
-                        <div class="stat-number" data-count="5">0</div>
-                        <div class="stat-label">Years Experience</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <!-- Services Section -->
-    <section id="services" class="services-section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title center animate-on-scroll">Our <span class="gradient-text">Expertise</span></h2>
-                <p class="lead text-muted animate-on-scroll">Specialized services for the modern digital landscape</p>
-            </div>
-
-            <div class="row g-4">
-                <!-- Service 1: AI/ML Development -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-cpu"></i>
-                        </div>
-                        <h3>AI/ML Development</h3>
-                        <p>Building custom machine learning models, neural networks, and AI-powered applications for
-                            various industries.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> Custom ML Models</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Predictive Analytics</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Computer Vision</li>
-                            <li><i class="bi bi-check-circle-fill"></i> NLP Solutions</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 2: Full-Stack Development -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-stack"></i>
-                        </div>
-                        <h3>Full-Stack Development</h3>
-                        <p>End-to-end development of scalable web applications using modern frameworks and cloud
-                            technologies.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> React/Next.js</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Node.js/Python</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Microservices</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Cloud Deployment</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 3: Cloud & DevOps -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-cloud-arrow-up"></i>
-                        </div>
-                        <h3>Cloud & DevOps</h3>
-                        <p>Implementing CI/CD pipelines, containerization, and cloud infrastructure for scalable
-                            applications.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> AWS/Azure/GCP</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Docker & Kubernetes</li>
-                            <li><i class="bi bi-check-circle-fill"></i> CI/CD Automation</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Infrastructure as Code</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 4: Data Engineering -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-file-bar-graph"></i>
-                        </div>
-                        <h3>Data Engineering</h3>
-                        <p>Designing and building data pipelines, warehouses, and analytics platforms for data-driven
-                            decisions.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> ETL/ELT Pipelines</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Data Warehousing</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Real-time Analytics</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Big Data Solutions</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 5: Blockchain Development -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <h3>Blockchain Development</h3>
-                        <p>Developing decentralized applications, smart contracts, and blockchain integration solutions.
-                        </p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> Smart Contracts</li>
-                            <li><i class="bi bi-check-circle-fill"></i> DApps Development</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Web3 Integration</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Tokenomics Design</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 6: Mobile Development -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-phone"></i>
-                        </div>
-                        <h3>Mobile Development</h3>
-                        <p>Creating cross-platform and native mobile applications with modern UI/UX and backend
-                            integration.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> React Native/Flutter</li>
-                            <li><i class="bi bi-check-circle-fill"></i> iOS & Android Native</li>
-                            <li><i class="bi bi-check-circle-fill"></i> PWA Development</li>
-                            <li><i class="bi bi-check-circle-fill"></i> App Store Deployment</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 7: Social Media Marketing -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-megaphone"></i>
-                        </div>
-                        <h3>Social Media Marketing</h3>
-                        <p>Strategic social media campaigns, content creation, and community management to boost brand
-                            presence and engagement.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> Content Strategy</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Campaign Management</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Community Building</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Performance Analytics</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 8: SEO Optimization -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-search"></i>
-                        </div>
-                        <h3>SEO & Digital Marketing</h3>
-                        <p>Comprehensive search engine optimization, keyword research, and digital marketing strategies
-                            to improve online visibility.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> Technical SEO</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Keyword Research</li>
-                            <li><i class="bi bi-check-circle-fill"></i> On-Page Optimization</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Link Building</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 9: Public Relations -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-broadcast"></i>
-                        </div>
-                        <h3>Public Relations</h3>
-                        <p>Building brand reputation, media relations, and strategic communication to enhance public
-                            perception and credibility.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> Media Outreach</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Press Release Distribution</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Crisis Management</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Brand Storytelling</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio-section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title center animate-on-scroll">Featured <span class="gradient-text">Projects</span>
-                </h2>
-                <p class="lead text-muted animate-on-scroll">Showcasing our innovative solutions and technical expertise
+                <h1 class="text-5xl md:text-8xl font-playfair mb-6 leading-[1.1] text-white">
+                    Crafting Your <br><span class="italic text-luxury-gold">Next Chapter</span>
+                </h1>
+                <p class="text-lg md:text-xl text-white/80 max-w-xl mb-10 leading-relaxed font-light">
+                    Elevated halal brunch, artisanal coffee, and signature wagyu burgers. Experience the taste of modern
+                    luxury in the heart of East London.
                 </p>
-                <a href="projects.html" target="_blank" class="btn btn-outline-primary mt-3">
-                    <i class="bi bi-grid-3x3-gap me-2"></i>View All Projects
+                <div class="flex flex-wrap gap-4">
+                    <a href="#menu"
+                        class="bg-gradient-gold text-deep-charcoal px-8 py-4 font-bold rounded-sm btn-gold-glow transition-all">
+                        View Menu
+                    </a>
+                    <a href="https://ubereats.com" target="_blank"
+                        class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 font-bold rounded-sm hover:bg-white hover:text-deep-charcoal transition-all flex items-center">
+                        <i class="fas fa-bicycle mr-2"></i> Order Delivery
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 bg-[#141414] relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-luxury-gold/5 skew-x-12 transform translate-x-20"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+
+                <div class="lg:w-1/2 relative" data-aos="fade-right">
+                    <div class="relative z-10">
+                        <img src="shope1.png" alt="Restaurant Interior"
+                            class="w-full rounded-sm shadow-2xl border-b-4 border-luxury-gold">
+                    </div>
+                    <div class="absolute -top-6 -left-6 w-full h-full border border-white/10 z-0 hidden md:block"></div>
+                </div>
+
+                <div class="lg:w-1/2" data-aos="fade-left">
+                    <span class="text-luxury-gold uppercase tracking-widest text-xs font-bold mb-2 block">Our
+                        Story</span>
+                    <h2 class="text-4xl md:text-5xl font-playfair mb-6 text-white">More Than Just <br><span
+                            class="text-luxury-gold italic">A Restaurant</span></h2>
+
+                    <p class="text-gray-400 mb-6 leading-relaxed font-light">
+                        Located in the vibrant heart of Ilford, Chapters London was born from a passion for exceptional
+                        food and community. We believe every meal tells a story, which is why we've curated a menu that
+                        blends modern culinary trends with comforting classics.
+                    </p>
+                    <p class="text-gray-400 mb-8 leading-relaxed font-light">
+                        Whether you're joining us for a lazy Sunday brunch, a quick artisan coffee, or a celebratory
+                        dinner, our space is designed to be your sanctuary. We are proud to serve a fully <strong>Halal
+                            menu</strong>, ensuring everyone can enjoy our signature Wagyu burgers and hand-crafted
+                        mocktails.
+                    </p>
+
+                    <div class="flex items-center gap-8">
+                        <div>
+                            <span class="block text-3xl font-playfair text-white">4.8</span>
+                            <span class="text-xs text-luxury-gold uppercase tracking-widest">Google Rating</span>
+                        </div>
+                        <div class="w-[1px] h-10 bg-white/20"></div>
+                        <div>
+                            <span class="block text-3xl font-playfair text-white">100%</span>
+                            <span class="text-xs text-luxury-gold uppercase tracking-widest">Halal Certified</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="py-24 bg-[#0a0a0a]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-down">
+                <span class="text-luxury-gold uppercase tracking-widest text-xs font-bold">Gastronomy</span>
+                <h2 class="text-4xl md:text-5xl font-playfair mt-2 mb-4">The Culinary Collection</h2>
+                <div class="w-24 h-1 bg-luxury-gold mx-auto mb-10"></div>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="filterMenu('all')"
+                        class="tab-btn px-6 md:px-8 py-3 border border-luxury-gold bg-luxury-gold text-deep-charcoal rounded-sm font-semibold transition-all hover:bg-white hover:text-black hover:border-white">All</button>
+                    <button onclick="filterMenu('brunch')"
+                        class="tab-btn px-6 md:px-8 py-3 border border-luxury-gold text-luxury-gold rounded-sm font-semibold transition-all hover:bg-luxury-gold hover:text-deep-charcoal">Brunch</button>
+                    <button onclick="filterMenu('mains')"
+                        class="tab-btn px-6 md:px-8 py-3 border border-luxury-gold text-luxury-gold rounded-sm font-semibold transition-all hover:bg-luxury-gold hover:text-deep-charcoal">Mains</button>
+                    <button onclick="filterMenu('drinks')"
+                        class="tab-btn px-6 md:px-8 py-3 border border-luxury-gold text-luxury-gold rounded-sm font-semibold transition-all hover:bg-luxury-gold hover:text-deep-charcoal">Drinks</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+                <div class="menu-item group cursor-pointer" data-category="brunch" data-aos="fade-up">
+                    <div class="relative overflow-hidden mb-5 rounded-sm">
+                        <img src="chiken.png"
+                            class="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="honycom chicken">
+                        <div
+                            class="absolute top-4 left-4 bg-luxury-gold text-deep-charcoal font-bold py-1 px-3 text-xs uppercase tracking-wider">
+                            Bestseller</div>
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2 border-b border-white/10 pb-2">
+                        <h3 class="text-2xl font-playfair">honycom chicken</h3>
+                        <span class="text-luxury-gold font-bold text-lg">£14.50</span>
+                    </div>
+                    <p class="text-white/50 text-sm font-light leading-relaxed">Artisanal chicken sausages, free-range
+                        organic eggs, roasted vine tomatoes, portobello mushrooms, turkey bacon and sourdough.</p>
+                </div>
+
+                <div class="menu-item group cursor-pointer" data-category="brunch" data-aos="fade-up">
+                    <div class="relative overflow-hidden mb-5 rounded-sm">
+                        <img src="egg.png"
+                            class="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Shakshuka">
+                        <div
+                            class="absolute top-4 left-4 bg-gray-800 text-white font-bold py-1 px-3 text-xs uppercase tracking-wider border border-white/20">
+                            Spicy</div>
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2 border-b border-white/10 pb-2">
+                        <h3 class="text-2xl font-playfair">Signature Shakshuka</h3>
+                        <span class="text-luxury-gold font-bold text-lg">£13.50</span>
+                    </div>
+                    <p class="text-white/50 text-sm font-light leading-relaxed">Baked eggs in a spicy tomato and pepper
+                        ragout, topped with feta cheese and coriander. Served with toasted flatbread.</p>
+                </div>
+
+                <div class="menu-item group cursor-pointer" data-category="mains" data-aos="fade-up"
+                    data-aos-delay="100">
+                    <div class="relative overflow-hidden mb-5 rounded-sm">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
+                            class="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Chapters Burger">
+                        <div
+                            class="absolute top-4 left-4 bg-green-900 text-white font-bold py-1 px-3 text-xs uppercase tracking-wider border border-green-700">
+                            Halal</div>
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2 border-b border-white/10 pb-2">
+                        <h3 class="text-2xl font-playfair">Wagyu Signature</h3>
+                        <span class="text-luxury-gold font-bold text-lg">£18.90</span>
+                    </div>
+                    <p class="text-white/50 text-sm font-light leading-relaxed">Premium wagyu beef, truffle aioli, aged
+                        cheddar, turkey bacon jam, and brioche. Served with rosemary fries.</p>
+                </div>
+
+                <div class="menu-item group cursor-pointer" data-category="mains" data-aos="fade-up"
+                    data-aos-delay="100">
+                    <div class="relative overflow-hidden mb-5 rounded-sm">
+                        <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e"
+                            class="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Steak">
+                        <div
+                            class="absolute top-4 left-4 bg-green-900 text-white font-bold py-1 px-3 text-xs uppercase tracking-wider border border-green-700">
+                            Halal</div>
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2 border-b border-white/10 pb-2">
+                        <h3 class="text-2xl font-playfair">Ribeye Steak</h3>
+                        <span class="text-luxury-gold font-bold text-lg">£24.00</span>
+                    </div>
+                    <p class="text-white/50 text-sm font-light leading-relaxed">28-day dry-aged ribeye, garlic butter,
+                        blistered cherry tomatoes, and triple-cooked chips.</p>
+                </div>
+
+                <div class="menu-item group cursor-pointer" data-category="mains" data-aos="fade-up"
+                    data-aos-delay="100">
+                    <div class="relative overflow-hidden mb-5 rounded-sm">
+                        <img src="green.png"
+                            class="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Lamb Chops">
+                        <div
+                            class="absolute top-4 left-4 bg-green-900 text-white font-bold py-1 px-3 text-xs uppercase tracking-wider border border-green-700">
+                            Halal</div>
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2 border-b border-white/10 pb-2">
+                        <h3 class="text-2xl font-playfair">Grilled Lamb Chops</h3>
+                        <span class="text-luxury-gold font-bold text-lg">£22.50</span>
+                    </div>
+                    <p class="text-white/50 text-sm font-light leading-relaxed">Marinated in special house spices,
+                        served with creamy mash, grilled asparagus and mint jus.</p>
+                </div>
+
+                <div class="menu-item group cursor-pointer" data-category="mains" data-aos="fade-up"
+                    data-aos-delay="100">
+                    <div class="relative overflow-hidden mb-5 rounded-sm">
+                        <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb"
+                            class="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Pasta">
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2 border-b border-white/10 pb-2">
+                        <h3 class="text-2xl font-playfair">Truffle Chicken Pasta</h3>
+                        <span class="text-luxury-gold font-bold text-lg">£16.50</span>
+                    </div>
+                    <p class="text-white/50 text-sm font-light leading-relaxed">Fettuccine tossed in a rich truffle
+                        cream sauce with grilled chicken breast and parmesan shavings.</p>
+                </div>
+
+                <div class="menu-item group cursor-pointer" data-category="drinks" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <div class="relative overflow-hidden mb-5 rounded-sm">
+                        <img src="beverage.jpg"
+                            class="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Specialty Lattes">
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2 border-b border-white/10 pb-2">
+                        <h3 class="text-2xl font-playfair">Gold Leaf Latte</h3>
+                        <span class="text-luxury-gold font-bold text-lg">£5.50</span>
+                    </div>
+                    <p class="text-white/50 text-sm font-light leading-relaxed">24k edible gold flakes, turmeric blend,
+                        choice of oat, almond or soy milk. A visual masterpiece.</p>
+                </div>
+
+                <div class="menu-item group cursor-pointer" data-category="drinks" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <div class="relative overflow-hidden mb-5 rounded-sm">
+                        <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd"
+                            class="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Mojito">
+                        <div
+                            class="absolute top-4 left-4 bg-blue-900 text-white font-bold py-1 px-3 text-xs uppercase tracking-wider border border-blue-700">
+                            Mocktail</div>
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2 border-b border-white/10 pb-2">
+                        <h3 class="text-2xl font-playfair">Passionfruit Mojito</h3>
+                        <span class="text-luxury-gold font-bold text-lg">£7.90</span>
+                    </div>
+                    <p class="text-white/50 text-sm font-light leading-relaxed">Refreshing blend of fresh passionfruit,
+                        mint, lime and sparkling soda. Alcohol-free.</p>
+                </div>
+
+                <div class="menu-item group cursor-pointer" data-category="drinks" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <div class="relative overflow-hidden mb-5 rounded-sm">
+                        <img src="https://images.unsplash.com/photo-1579954115545-a95591f28bfc"
+                            class="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Milkshake">
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2 border-b border-white/10 pb-2">
+                        <h3 class="text-2xl font-playfair">strawberry Madness</h3>
+                        <span class="text-luxury-gold font-bold text-lg">£6.50</span>
+                    </div>
+                    <p class="text-white/50 text-sm font-light leading-relaxed">Thick vanilla milkshake blended with
+                        strawberrys, topped with whipped cream and chocolate drizzle.</p>
+                </div>
+
+                <div class="menu-item group cursor-pointer" data-category="drinks" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <div class="relative overflow-hidden mb-5 rounded-sm">
+                        <img src="https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8"
+                            class="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Karak coffee">
+                        <div
+                            class="absolute top-4 left-4 bg-luxury-gold text-deep-charcoal font-bold py-1 px-3 text-xs uppercase tracking-wider">
+                            Local Fave</div>
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2 border-b border-white/10 pb-2">
+                        <h3 class="text-2xl font-playfair">Chapters strong coffee</h3>
+                        <span class="text-luxury-gold font-bold text-lg">£3.50</span>
+                    </div>
+                    <p class="text-white/50 text-sm font-light leading-relaxed">Authentic strong tea brewed with
+                        cardamom, saffron and evaporated milk.</p>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-16">
+                <a href="#"
+                    class="inline-block border-b border-luxury-gold text-luxury-gold pb-1 hover:text-white hover:border-white transition-colors uppercase tracking-widest text-sm">Download
+                    Full Menu PDF</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="offers" class="py-24 relative bg-deep-charcoal border-y border-luxury-gold/20">
+        <div
+            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=2000')] bg-cover bg-center opacity-10">
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-luxury-gold uppercase tracking-widest text-xs font-bold">Promotions</span>
+                <h2 class="text-4xl md:text-5xl font-playfair mt-2 text-white">The Golden Hour</h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Exclusive treats for our Chapters community.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white/5 border border-white/10 p-8 rounded-sm hover:border-luxury-gold transition-all group"
+                    data-aos="fade-right">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fas fa-graduation-cap text-4xl text-luxury-gold"></i>
+                        <span
+                            class="bg-luxury-gold text-deep-charcoal px-3 py-1 text-xs font-bold uppercase">Daily</span>
+                    </div>
+                    <h3 class="text-2xl font-playfair text-white mb-2">Student & NHS 15% Off</h3>
+                    <p class="text-gray-400 mb-6">Valid on all food items Monday to Friday with valid ID. Treat yourself
+                        between lectures or shifts.</p>
+                    <a href="#"
+                        class="text-luxury-gold uppercase text-xs tracking-widest font-bold group-hover:text-white transition-colors">Learn
+                        More →</a>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 p-8 rounded-sm hover:border-luxury-gold transition-all group"
+                    data-aos="fade-left">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fas fa-birthday-cake text-4xl text-luxury-gold"></i>
+                        <span
+                            class="bg-luxury-gold text-deep-charcoal px-3 py-1 text-xs font-bold uppercase">Birthdays</span>
+                    </div>
+                    <h3 class="text-2xl font-playfair text-white mb-2">Birthday Special</h3>
+                    <p class="text-gray-400 mb-6">Book a table for 5+ people on your birthday week and the celebrant
+                        eats for free. (ID required).</p>
+                    <a href="#"
+                        class="text-luxury-gold uppercase text-xs tracking-widest font-bold group-hover:text-white transition-colors">Book
+                        Now →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section id="private-hire" class="py-24 bg-white text-deep-charcoal relative">
+        <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center gap-16">
+            <div class="lg:w-1/2 relative" data-aos="fade-right">
+                <div class="absolute -top-4 -left-4 w-20 h-20 border-t-4 border-l-4 border-luxury-gold"></div>
+                <img src="https://images.unsplash.com/photo-1519671482538-518b5c2fb984?auto=format&fit=crop&w=1000&q=80"
+                    class="w-full shadow-2xl" alt="Private Events">
+                <div class="absolute -bottom-4 -right-4 w-20 h-20 border-b-4 border-r-4 border-luxury-gold"></div>
+            </div>
+            <div class="lg:w-1/2" data-aos="fade-left">
+                <span class="text-luxury-gold font-bold uppercase tracking-widest text-sm block mb-4">Exclusive Access</span>
+                <h2 class="text-5xl font-playfair mb-6 text-black">Host Your Moments</h2>
+                <p class="text-gray-600 mb-8 text-lg font-light leading-relaxed">
+                    From corporate breakfasts to intimate evening soirées, Chapters London provides the perfect Ilford
+                    backdrop for your special events. We offer bespoke halal catering packages tailored to your requirements.
+                </p>
+                <div class="grid grid-cols-2 gap-4 mb-10">
+                    <div class="flex items-center"><i class="fas fa-check text-luxury-gold mr-3"></i> Full Venue Hire</div>
+                    <div class="flex items-center"><i class="fas fa-check text-luxury-gold mr-3"></i> Custom Menus</div>
+                    <div class="flex items-center"><i class="fas fa-check text-luxury-gold mr-3"></i> Capacity: 60 Guests</div>
+                    <div class="flex items-center"><i class="fas fa-check text-luxury-gold mr-3"></i> Prayer Space Available</div>
+                </div>
+                <button
+                    class="bg-deep-charcoal text-white px-8 py-4 font-bold uppercase tracking-wider hover:bg-luxury-gold hover:text-black transition-all">Enquire
+                    for Events</button>
+            </div>
+        </div>
+    </section> -->
+
+    <section id="contact" class="py-24 bg-deep-charcoal border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div data-aos="fade-up">
+                    <span class="text-luxury-gold uppercase tracking-widest text-xs font-bold">Location</span>
+                    <h2 class="text-4xl font-playfair mb-8 text-white">Visit Our Chapter</h2>
+
+                    <div class="flex flex-col space-y-8">
+                        <div class="flex items-start group">
+                            <div
+                                class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mr-6 group-hover:bg-luxury-gold group-hover:text-black transition-all">
+                                <i class="fas fa-map-marker-alt text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-playfair text-white mb-1">Address</h4>
+                                <p class="text-gray-400 font-light">833-835 High Rd, Ilford IG3 8TD<br>United Kingdom
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start group">
+                            <div
+                                class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mr-6 group-hover:bg-luxury-gold group-hover:text-black transition-all">
+                                <i class="fas fa-envelope text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-playfair text-white mb-1">Contact</h4>
+                                <p class="text-gray-400 font-light">
+                                    <a href="tel:+442030926216" class="hover:text-luxury-gold transition-colors">+44 20
+                                        3092 6216</a><br>
+                                    <a href="mailto:chapterslondon2022@gmail.com"
+                                        class="hover:text-luxury-gold transition-colors">chapterslondon2022@gmail.com</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white/5 p-8 border-l-2 border-luxury-gold mt-6">
+                            <h4 class="font-playfair text-xl mb-4 italic text-white">Opening Hours</h4>
+                            <div class="grid grid-cols-2 gap-y-2 text-sm text-gray-400">
+                                <span>Mon - Thu</span> <span class="text-right text-white">09:00 - 17:00</span>
+                                <span>Fri - Sat</span> <span class="text-right text-white">09:00 - 17:30</span>
+                                <span>Sunday</span> <span class="text-right text-white">09:00 - 16:30</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="h-[500px] rounded-sm overflow-hidden relative group" data-aos="fade-left">
+                    <div
+                        class="w-full h-full relative border border-white/10 group-hover:border-luxury-gold transition-colors">
+                        <iframe
+                            src="https://maps.google.com/maps?q=833-835+High+Rd,+Ilford+IG3+8TD&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            class="w-full h-full" style="border:0;" allowfullscreen loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+
+                        <div
+                            class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6">
+                            <a href="https://maps.google.com/maps?q=833-835+High+Rd,+Ilford+IG3+8TD" target="_blank"
+                                class="px-6 py-2 border border-white/40 text-white bg-black/40 hover:bg-white hover:text-black transition-all text-sm uppercase tracking-wider backdrop-blur">
+                                Get Directions
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-white/10 bg-[#050505] text-center">
+        <div class="container mx-auto px-6">
+            <div class="mb-6 flex justify-center">
+                <a href="#home" class="flex flex-col items-center group">
+                    <svg width="180" height="80" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg"
+                        class="fill-luxury-gold group-hover:text-white transition-colors duration-300">
+                        <g transform="translate(115, 0) scale(0.6)">
+                            <path
+                                d="M15,10 L15,50 M25,10 L25,50 M35,10 L35,50 M15,50 Q15,70 25,70 Q35,70 35,50 M25,70 L25,110"
+                                stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none" />
+                            <path d="M65,10 Q80,10 80,35 Q80,60 65,60 Q50,60 50,35 Q50,10 65,10 M65,60 L65,110"
+                                stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="currentColor" />
+                            <path d="M10,60 Q-10,30 10,10 M50,100 Q100,100 110,70 Q110,90 90,100 Z"
+                                stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none" />
+                            <path d="M85,80 Q105,70 110,50 Q110,80 85,80 Z" fill="currentColor" />
+                        </g>
+
+                        <text x="150" y="100" font-family="'Playfair Display', serif" font-size="42" font-weight="bold"
+                            text-anchor="middle" letter-spacing="4" fill="currentColor">CHAPTERS</text>
+
+                        <text x="150" y="125" font-family="'Outfit', sans-serif" font-size="12" font-weight="300"
+                            text-anchor="middle" letter-spacing="2" fill="currentColor" opacity="0.8">
+                            BREAKFAST • BRUNCH • BURGERS
+                        </text>
+                    </svg>
                 </a>
             </div>
+            <div class="flex justify-center space-x-8 mb-8 text-white/40">
+                <a href="https://www.instagram.com/chapters_london/" target="_blank"
+                    class="hover:text-luxury-gold hover:scale-125 transition-all">
+                    <i class="fab fa-instagram fa-lg"></i>
+                </a>
 
-            <div class="row">
-                <!-- Project 1: Deadline Reminder System -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="portfolio-card animate-on-scroll">
-                        <div class="portfolio-img"
-                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <i class="bi bi-alarm"></i>
-                        </div>
-                        <div class="portfolio-content">
-                            <div class="portfolio-tags">
-                                <span class="portfolio-tag">Full-Stack</span>
-                                <span class="portfolio-tag">Node.js</span>
-                                <span class="portfolio-tag">MongoDB</span>
-                            </div>
-                            <h4>Deadline Reminder System</h4>
-                            <p>A comprehensive task management system with automated reminders, email notifications, and
-                                deadline tracking.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="text-primary">Tech: Node.js, Express, MongoDB</span>
-                                <a href="#" class="text-decoration-none project-link"
-                                    data-url="https://deadline-reminder-system.onrender.com/">Live Demo →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <a href="https://www.tiktok.com/@chapters_london?_t=8oupBsKsOVl&_r=1" target="_blank"
+                    class="hover:text-luxury-gold hover:scale-125 transition-all">
+                    <i class="fab fa-tiktok fa-lg"></i>
+                </a>
 
-                <!-- Project 2: AI Resume Creator -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="portfolio-card animate-on-scroll">
-                        <div class="portfolio-img"
-                            style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                            <i class="bi bi-file-earmark-person"></i>
-                        </div>
-                        <div class="portfolio-content">
-                            <div class="portfolio-tags">
-                                <span class="portfolio-tag">AI/ML</span>
-                                <span class="portfolio-tag">React</span>
-                                <span class="portfolio-tag">Python</span>
-                            </div>
-                            <h4>AI Resume Creator</h4>
-                            <p>Intelligent resume builder that uses AI to optimize content, suggest improvements, and
-                                match job descriptions.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="text-primary">Tech: React, Python, OpenAI API</span>
-                                <a href="#" class="text-decoration-none project-link"
-                                    data-url="https://ai-resume-creator-7byw.onrender.com/">Live Demo →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <a href="tel:+442030926216" class="hover:text-luxury-gold hover:scale-125 transition-all">
+                    <i class="fas fa-phone fa-lg"></i>
+                </a>
 
-                <!-- Project 3: Typing Game -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="portfolio-card animate-on-scroll">
-                        <div class="portfolio-img"
-                            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                            <i class="bi bi-keyboard"></i>
-                        </div>
-                        <div class="portfolio-content">
-                            <div class="portfolio-tags">
-                                <span class="portfolio-tag">JavaScript</span>
-                                <span class="portfolio-tag">Game</span>
-                                <span class="portfolio-tag">Frontend</span>
-                            </div>
-                            <h4>Typing Speed Game</h4>
-                            <p>Interactive typing game that tests and improves typing speed with real-time statistics
-                                and progress tracking.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="text-primary">Tech: JavaScript, HTML5, CSS3</span>
-                                <a href="#" class="text-decoration-none project-link"
-                                    data-url="https://typing-game-7osu.onrender.com/">Live Demo →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials-section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title center">Client <span class="gradient-text">Testimonials</span></h2>
-                <p class="lead text-muted">Trusted by innovative individuals and teams</p>
-            </div>
-
-            <div class="testimonial-slider">
-                <div class="testimonial-track">
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "Taher's work on our hardware website was exceptional. He understood the technical nuances
-                            of our products and translated them into a seamless digital experience."
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Yusuf Kanorewala</div>
-                                <div class="client-company">Hardware Solutions</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "Working with Taher on our college project made everything easier. His problem-solving
-                            skills and coding logic were key to our project's success."
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Vaishnavi Godage</div>
-                                <div class="client-company">College Project</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "Excellent technical support and collaboration. Taher ensured that the project was not only
-                            functional but also well-documented and scalable."
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Bhagyashri Jadhav</div>
-                                <div class="client-company">College Project</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "Taher is a dedicated developer. His expertise in full-stack development helped us integrate
-                            complex features into our college submission effortlessly."
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Ayush Jain</div>
-                                <div class="client-company">College Project</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "His ability to bridge the gap between AI concepts and practical implementation was crucial
-                            for our final year project. Highly recommended!"
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Akansha Shinde</div>
-                                <div class="client-company">College Project</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "Taher's work on our hardware website was exceptional..."
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Yusuf Kanorewala</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-9 text-center">
-                    <h2 class="cta-title animate-on-scroll">Ready to Build the <span class="gradient-text">Future</span>
-                        Together?</h2>
-                    <p class="cta-text animate-on-scroll">
-                        Let's transform your ideas into intelligent digital solutions. Our team of AI experts and
-                        software engineers is ready to bring your vision to life.
-                    </p>
-                    <div class="d-flex flex-wrap gap-3 justify-content-center animate-on-scroll">
-                        <a href="#contact" class="btn btn-primary btn-lg">
-                            <i class="bi bi-rocket-takeoff me-2"></i>Start Your Project
-                        </a>
-
-                        <a href="projects.html" target="_blank" class="btn btn-outline-primary btn-lg">
-                            <i class="bi bi-grid-3x3-gap me-2"></i>All Projects
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="contact-form animate-on-scroll">
-                        <div class="text-center mb-5">
-                            <h2 class="section-title center">Get in <span class="gradient-text">Touch</span></h2>
-                            <p class="text-muted">Share your project details and we'll get back to you within 24 hours.
-                            </p>
-                        </div>
-
-                        <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
-
-                            <input type="hidden" name="access_key" value="e7271cae-5e38-4c1a-a6f4-a24302e555af">
-
-                            <input type="hidden" name="subject" value="New Project Inquiry from Adoni AI">
-
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label">Full Name *</label>
-                                    <input type="text" name="name" class="form-control" required
-                                        placeholder="Eg. Taher Bohra">
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label">Email Address *</label>
-                                    <input type="email" name="email" class="form-control" required
-                                        placeholder="Eg. taher@company.com">
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label">Company / Project Name</label>
-                                <input type="text" name="company" class="form-control" placeholder="Your Company Inc.">
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label">Service Interested In *</label>
-                                <select name="service" class="form-select" required>
-                                    <option value="">Select a service</option>
-                                    <option value="ai-ml">AI/ML Development</option>
-                                    <option value="full-stack">Website Development</option>
-                                    <option value="cloud">Cloud & DevOps</option>
-                                    <option value="data">Data Engineering</option>
-                                    <option value="blockchain">Blockchain Development</option>
-                                    <option value="mobile">Mobile Development</option>
-                                    <option value="social-media">Social Media Marketing</option>
-                                    <option value="seo">SEO & Digital Marketing</option>
-                                    <option value="pr">Public Relations</option>
-                                    <option value="consulting">Technical Consulting</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label">Project Details *</label>
-                                <textarea name="message" class="form-control" rows="6"
-                                    placeholder="Describe your project requirements, timeline, and budget..."
-                                    required></textarea>
-                            </div>
-
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-lg py-3">
-                                    <i class="bi bi-send me-2"></i>Submit Project Request
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h3 class="footer-title">
-                        <i class="bi bi-cpu-fill me-2"></i>Adoni<span class="text-primary">AI</span>
-                    </h3>
-                    <p class="mb-4" style="opacity: 0.8;">
-                        Building intelligent digital solutions with cutting-edge AI, modern software development, and
-                        cloud technologies.
-                    </p>
-                    <div class="social-links">
-                        <a href="https://github.com/taher-bohra786"><i class="bi bi-github"></i></a>
-                        <a href="https://www.linkedin.com/in/taher-bohra9/"><i class="bi bi-linkedin"></i></a>
-                        <a href="https://www.instagram.com/taaheeerrr/"><i class="bi bi-instagram"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-4 mb-5 mb-lg-0">
-                    <h5 class="footer-title">Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#home">Home</a></li>
-                        <li class="mb-2"><a href="#services">Services</a></li>
-                        <li class="mb-2"><a href="#portfolio">Projects</a></li>
-                        <li class="mb-2"><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="projects.html" target="_blank">All Projects</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-4 mb-5 mb-lg-0">
-                    <h5 class="footer-title">Our Services</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#services">AI/ML Development</a></li>
-                        <li class="mb-2"><a href="#services">Full-Stack Development</a></li>
-                        <li class="mb-2"><a href="#services">Cloud & DevOps</a></li>
-                        <li class="mb-2"><a href="#services">Data Engineering</a></li>
-                        <li class="mb-2"><a href="#services">Blockchain Development</a></li>
-                        <li class="mb-2"><a href="#services">Mobile Development</a></li>
-                        <li class="mb-2"><a href="#services">Social Media Marketing</a></li>
-                        <li class="mb-2"><a href="#services">SEO & Digital Marketing</a></li>
-                        <li><a href="#services">Public Relations</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-4">
-                    <h5 class="footer-title">Contact Info</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-3">
-                            <i class="bi bi-geo-alt me-2"></i> Pune, Maharashtra, India
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-envelope me-2"></i> taherbohra06@gmail.com
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-phone me-2"></i> +91 9929235556
-                        </li>
-                        <li>
-                            <i class="bi bi-clock me-2"></i> 24/7 Support Available
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <hr class="my-5" style="opacity: 0.2;">
-
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start">
-                    <p style="opacity: 0.8;">&copy; 2026 Adoni AI. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <p style="opacity: 0.8;">Built with <i class="bi bi-lightning-charge-fill text-warning"></i> for the
-                        future</p>
-                </div>
-            </div>
+            <p class="text-xs text-white/30 uppercase tracking-[0.2em]">© 2026 Chapters London • Designed with <i
+                    class="fas fa-heart text-luxury-gold mx-1"></i> in Ilford</p>
         </div>
     </footer>
 
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
-        // Animation on scroll
-        document.addEventListener('DOMContentLoaded', function () {
-            const animateElements = document.querySelectorAll('.animate-on-scroll');
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-
-            animateElements.forEach(element => {
-                observer.observe(element);
-            });
-
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-
-                        // Update active nav link
-                        document.querySelectorAll('.nav-link').forEach(link => {
-                            link.classList.remove('active');
-                        });
-                        this.classList.add('active');
-                    }
-                });
-            });
-
-            // Animated counter
-            function animateCounter() {
-                const counters = document.querySelectorAll('.stat-number');
-                const speed = 200;
-
-                counters.forEach(counter => {
-                    const target = parseInt(counter.getAttribute('data-count'));
-                    const count = parseInt(counter.innerText);
-                    const increment = Math.ceil(target / speed);
-
-                    if (count < target) {
-                        counter.innerText = count + increment;
-                        setTimeout(() => animateCounter(), 10);
-                    } else {
-                        counter.innerText = target + (counter.getAttribute('data-count') === '7' ? '+' : '');
-                    }
-                });
-            }
-
-            // Trigger counter when stats section is visible
-            const statsObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        setTimeout(animateCounter, 300);
-                    }
-                });
-            });
-
-            const statsSection = document.querySelector('.stats-section');
-            if (statsSection) {
-                statsObserver.observe(statsSection);
-            }
-
-            // Project link click handler with loading overlay
-            document.querySelectorAll('.project-link').forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const url = this.getAttribute('data-url');
-
-                    // Show loading overlay
-                    const loadingOverlay = document.getElementById('loadingOverlay');
-                    loadingOverlay.classList.add('active');
-
-                    // Redirect after 3 seconds
-                    setTimeout(() => {
-                        window.location.href = url;
-                        loadingOverlay.classList.remove('active');
-                    }, 3000);
-                });
-            });
-
-            // Navbar background on scroll
-            window.addEventListener('scroll', function () {
-                const navbar = document.querySelector('.navbar');
-                if (window.scrollY > 50) {
-                    navbar.style.background = 'rgba(10, 11, 15, 0.95)';
-                    navbar.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.4)';
-                } else {
-                    navbar.style.background = 'rgba(10, 11, 15, 0.9)';
-                    navbar.style.boxShadow = '0 5px 30px rgba(0, 0, 0, 0.3)';
-                }
-            });
-
-            // Animated terminal effect
-            function animateTerminal() {
-                const terminalCursor = document.querySelector('.terminal-cursor');
-                if (terminalCursor) {
-                    setInterval(() => {
-                        terminalCursor.style.opacity = terminalCursor.style.opacity === '0' ? '1' : '0';
-                    }, 500);
-                }
-            }
-
-            animateTerminal();
+        // Init Animation
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 50,
+            easing: 'ease-out-cubic'
         });
+
+        // Toggle Mobile Menu
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileBtn.addEventListener('click', () => {
+            toggleMobileMenu();
+        });
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+        }
+
+        // Menu Filtering Logic
+        function filterMenu(category) {
+            const items = document.querySelectorAll('.menu-item');
+            const buttons = document.querySelectorAll('.tab-btn');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-luxury-gold', 'text-deep-charcoal');
+                btn.classList.add('text-luxury-gold');
+            });
+            event.currentTarget.classList.remove('text-luxury-gold');
+            event.currentTarget.classList.add('bg-luxury-gold', 'text-deep-charcoal');
+
+            items.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.classList.remove('hidden');
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                }, 300);
+            });
+        }
     </script>
 </body>
 
