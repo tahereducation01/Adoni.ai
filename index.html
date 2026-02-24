@@ -1,944 +1,894 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adoni AI | Intelligent Digital Solutions</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    <title>Adoni AI | Taher Bohra Portfolio</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ==================== 1. EXACT THEME VARIABLES ==================== */
+        :root {
+            --primary: #00D4FF;
+            --secondary: #8A2BE2;
+            --accent: #00FFAA;
+            --dark: #0A0B0F;
+            --dark-card: #12141C;
+            --dark-light: #1A1D28;
+            --light: #FFFFFF; 
+            --gray: #C4CBE0; 
+            --gradient-primary: linear-gradient(135deg, #00D4FF 0%, #8A2BE2 50%, #00FFAA 100%);
+            --gradient-bright: linear-gradient(135deg, #00F7FF 0%, #9A4BFF 50%, #00FFD5 100%);
+            --neon-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--dark); 
+            color: var(--light); 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+        }
+        h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; }
+        a { text-decoration: none; }
+
+        .gradient-text {
+            background: var(--gradient-bright);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        /* ==================== 2. DEEP SPACE & FALLING STARS ==================== */
+        .space-background {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -6;
+            background-color: #050608; 
+        }
+        
+        .nebula {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -5;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(138, 43, 226, 0.18), transparent 45%),
+                radial-gradient(circle at 85% 30%, rgba(0, 212, 255, 0.15), transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(0, 255, 170, 0.08), transparent 45%);
+            filter: blur(40px);
+            animation: nebulaFloat 20s ease-in-out infinite alternate;
+        }
+        @keyframes nebulaFloat {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.8; }
+            100% { transform: scale(1.1) translate(2%, 2%); opacity: 1; }
+        }
+
+        .stars-distant, .stars-mid, .stars-near { position: fixed; top: -50%; left: -50%; width: 200vw; height: 200vh; pointer-events: none; }
+        .stars-distant { z-index: -4; opacity: 0.4; background-image: radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)), radial-gradient(1px 1px at 150px 70px, #fff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 140px, #fff, rgba(0,0,0,0)); background-size: 300px 300px; animation: cosmicDrift 200s linear infinite; }
+        .stars-mid { z-index: -4; opacity: 0.6; background-image: radial-gradient(1.5px 1.5px at 50px 150px, #00D4FF, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 180px 40px, #fff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 350px 210px, #8A2BE2, rgba(0,0,0,0)); background-size: 400px 400px; animation: cosmicDrift 150s linear infinite reverse; }
+        .stars-near { z-index: -4; opacity: 0.9; background-image: radial-gradient(2px 2px at 90px 80px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 280px 250px, #00FFAA, rgba(0,0,0,0)), radial-gradient(2.5px 2.5px at 400px 100px, #fff, rgba(0,0,0,0)); background-size: 500px 500px; animation: cosmicDrift 100s linear infinite; }
+        @keyframes cosmicDrift { 100% { transform: rotate(360deg); } }
+
+        .meteor-shower { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; pointer-events: none; overflow: hidden; }
+        .meteor { position: absolute; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(0, 212, 255, 0.8) 20%, transparent 100%); border-radius: 50%; filter: drop-shadow(0 0 10px #00F7FF); transform: rotate(-45deg); opacity: 0; }
+        @keyframes meteorFall { 
+    0% { transform: rotate(-45deg) translateX(0); opacity: 0; } 
+    10% { opacity: 1; } 
+    60% { opacity: 0; } 
+    100% { transform: rotate(-45deg) translateX(-1500px); opacity: 0; } 
+}
+        /* ==================== 3. GRAND 3D ORBITAL SYSTEM (Enhanced) ==================== */
+        .orbital-system { 
+            position: fixed; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%) rotateX(60deg); /* Reduced tilt for better visibility */
+            transform-style: preserve-3d; z-index: -2; pointer-events: none; 
+            width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; mix-blend-mode: screen; 
+        }
+        .core { 
+            width: 200px; height: 200px; /* Made the core significantly larger */
+            border-radius: 50%; 
+            background: radial-gradient(circle at 40% 40%, #ffffff 0%, #00F7FF 30%, #8A2BE2 70%, transparent 100%); 
+            box-shadow: 0 0 100px #00F7FF, 0 0 180px #8A2BE2, inset 0 0 40px #fff; 
+            transform: rotateX(-60deg); /* Counter-rotation to keep it spherical */
+            animation: corePulse 4s ease-in-out infinite alternate; 
+        }
+        @keyframes corePulse { 
+            0% { box-shadow: 0 0 80px #00F7FF, 0 0 140px #8A2BE2, inset 0 0 30px #fff; transform: rotateX(-60deg) scale(0.95); } 
+            100% { box-shadow: 0 0 120px #00F7FF, 0 0 220px #8A2BE2, 0 0 300px rgba(0,212,255,0.4), inset 0 0 60px #fff; transform: rotateX(-60deg) scale(1.05); } 
+        }
+        
+        .orbit { position: absolute; border-radius: 50%; transform-style: preserve-3d; animation: spinOrbit linear infinite; }
+        
+        /* Massively expanded orbital rings */
+        .orbit-1 { width: 700px; height: 700px; border: 2px solid rgba(0, 247, 255, 0.4); animation-duration: 30s; box-shadow: 0 0 30px rgba(0,247,255,0.2) inset, 0 0 20px rgba(0,247,255,0.2); }
+        .orbit-2 { width: 1100px; height: 1100px; border: 2px dashed rgba(138, 43, 226, 0.6); animation-duration: 50s; }
+        .orbit-3 { width: 1600px; height: 1600px; border: 1px solid rgba(0, 255, 170, 0.2); animation-duration: 90s; box-shadow: 0 0 40px rgba(0,255,170,0.1); }
+        
+        .node { position: absolute; border-radius: 50%; transform: translateX(-50%) rotateX(-60deg); background: #fff; box-shadow: 0 0 25px currentColor, 0 0 50px currentColor; }
+        .node-1 { width: 24px; height: 24px; top: -12px; left: 50%; color: #00F7FF; }
+        .node-2 { width: 40px; height: 40px; bottom: -20px; left: 50%; color: #8A2BE2; }
+        .node-3 { width: 18px; height: 18px; left: -9px; top: 50%; transform: translateY(-50%) rotateX(-60deg); color: #00FFAA; }
+        @keyframes spinOrbit { 100% { transform: rotate(360deg); } }
+
+        /* ==================== 4. GLASS NAVBAR & CUSTOM SVG LOGO ==================== */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 5vw; display: flex; justify-content: space-between; align-items: center; background: rgba(10, 11, 15, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
+        .nav-brand { display: flex; align-items: center; text-decoration: none; }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 1.8rem; margin-left: 12px; display: flex; align-items: center; }
+        .brand-adoni { color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .brand-ai { background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-left: 6px; }
+        .brand-pulse { color: #00FFAA; font-size: 2.5rem; margin-left: 2px; position: relative; top: -5px; animation: pulseDot 1.5s infinite; text-shadow: 0 0 15px #00FFAA; }
+        @keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.3); } }
+        .logo-svg { width: 45px; height: 45px; filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.6)); animation: floatLogo 6s ease-in-out infinite; }
+        @keyframes floatLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); filter: drop-shadow(0 0 20px #8A2BE2); } }
+        .circuit-line-1, .circuit-line-2, .circuit-line-3, .circuit-line-4 { animation: circuitFlow 4s linear infinite; }
+        .circuit-diag-1, .circuit-diag-3 { animation: circuitFlow 3s linear infinite reverse; }
+        .circuit-diag-2, .circuit-diag-4 { animation: circuitFlow 3.5s linear infinite; }
+        @keyframes circuitFlow { 0% { stroke-dashoffset: 20; } 100% { stroke-dashoffset: 0; } }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: var(--light); font-weight: 500; font-size: 1rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-btn { background: var(--gradient-primary); padding: 0.6rem 1.5rem; border-radius: 8px; color: #fff; font-weight: 600; font-family: 'Space Grotesk'; border: none; cursor: pointer; transition: 0.3s; box-shadow: var(--neon-shadow); }
+        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4); }
+
+        /* ==================== 5. HERO & PORTAL ==================== */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 5vw; }
+        .hero-title { font-size: 4.5rem; text-transform: uppercase; letter-spacing: 2px; line-height: 1.1; margin-bottom: 1rem; }
+        .hero-sub { font-size: 1.3rem; color: var(--gray); max-width: 600px; margin-bottom: 2rem; }
+        .zoom-section { height: 100vh; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .portal-gateway { width: 350px; height: 350px; border-radius: 50%; background: rgba(18, 20, 28, 0.7); backdrop-filter: blur(8px); border: 2px solid var(--glass-border); display: flex; justify-content: center; align-items: center; z-index: 2; box-shadow: 0 0 60px var(--neon-shadow), inset 0 0 40px var(--neon-shadow); }
+        .portal-gateway::before { content: ''; position: absolute; inset: -4px; z-index: -1; border-radius: 50%; background: var(--gradient-primary); animation: spin 4s linear infinite; }
+        .portal-text { font-size: 1.5rem; font-weight: 600; color: #fff; font-family: 'Space Grotesk'; letter-spacing: 2px; text-shadow: 0 0 10px var(--primary); }
+        .inside-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 1; opacity: 0; width: 90%; max-width: 800px; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* ==================== 6. ABOUT TAHER BOHRA ==================== */
+        .about-section { padding: 15vh 5vw; background: linear-gradient(180deg, transparent 0%, var(--dark-card) 100%); position: relative; z-index: 2; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1200px; margin: 0 auto; align-items: center; }
+        .about-text h2 { font-size: 3rem; margin-bottom: 1.5rem; }
+        .about-text p { font-size: 1.1rem; color: var(--gray); margin-bottom: 1.5rem; line-height: 1.7; }
+        .timeline { margin-top: 3rem; border-left: 2px solid var(--glass-border); padding-left: 20px; }
+        .timeline-item { position: relative; margin-bottom: 2rem; }
+        .timeline-item::before { content: ''; position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 10px var(--primary); }
+        .timeline-date { color: var(--primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .timeline-title { font-size: 1.3rem; color: var(--light); font-weight: 600; font-family: 'Space Grotesk'; }
+        .timeline-desc { color: var(--gray); font-size: 0.95rem; margin-top: 0.5rem; }
+        
+        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 2rem; }
+        .skill-badge { background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2); padding: 8px 16px; border-radius: 50px; color: var(--primary); font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
+        .skill-badge:hover { transform: translateY(-3px); box-shadow: var(--neon-shadow); background: rgba(0, 212, 255, 0.2); }
+
+        /* ==================== 7. HORIZONTAL CAPABILITIES ==================== */
+        .horizontal-section { height: 100vh; display: flex; align-items: center; overflow: hidden; background: var(--dark-card); }
+        .horizontal-track { display: flex; gap: 4vw; padding: 0 5vw; width: max-content; }
+        
+        .service-card { 
+            width: 450px; height: 60vh; min-height: 480px; 
+            background: linear-gradient(145deg, rgba(18, 20, 28, 0.9) 0%, rgba(10, 11, 15, 0.95) 100%); 
+            backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-top: 2px solid var(--primary); border-radius: 24px; 
+            padding: 3.5rem 3rem; display: flex; flex-direction: column; justify-content: flex-end; 
+            position: relative; overflow: hidden; transition: 0.4s; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.02);
+        }
+        .service-card::before {
+            content: ''; position: absolute; top: -50px; right: -50px; width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%); border-radius: 50%; z-index: 0; transition: 0.5s ease;
+        }
+        .service-card:hover { 
+            transform: translateY(-15px); box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,212,255,0.05); 
+            border-color: rgba(0, 212, 255, 0.3); border-top: 2px solid var(--accent);
+        }
+        .service-card:hover::before { background: radial-gradient(circle, rgba(0, 255, 170, 0.2) 0%, transparent 70%); }
+        .service-number { 
+            position: absolute; top: 1.5rem; right: 2rem; font-size: 8rem; font-weight: 800; 
+            color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.1); transition: 0.4s; z-index: 0; 
+        }
+        .service-card:hover .service-number { 
+            -webkit-text-stroke: 1px rgba(0,255,170,0.4); transform: scale(1.05) translate(-5px, 5px); text-shadow: 0 0 20px rgba(0,255,170,0.2);
+        }
+        .service-title { font-size: 2.2rem; margin-bottom: 1rem; z-index: 1; font-family: 'Space Grotesk'; color: var(--light); }
+        .service-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--gradient-primary); margin-top: 15px; transition: 0.4s; }
+        .service-card:hover .service-title::after { width: 100px; }
+        .service-desc { color: var(--gray); font-size: 1.15rem; z-index: 1; line-height: 1.6; }
+
+        /* ==================== 8. STACKING PROJECTS ==================== */
+        .portfolio-section { padding: 15vh 5vw; background: linear-gradient(180deg, var(--dark-card) 0%, var(--dark) 100%); }
+        .section-header { text-align: center; margin-bottom: 5rem; }
+        .cards-container { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 10vh; padding-bottom: 10vh; }
+        .project-card { position: sticky; top: 15vh; height: 70vh; background: var(--dark-light); border: 1px solid var(--glass-border); border-radius: 30px; padding: 4rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 -30px 50px rgba(0,0,0,0.8); transform-origin: top center; }
+        #card-1 { border-top: 2px solid var(--primary); } 
+        #card-2 { border-top: 2px solid var(--secondary); } 
+        #card-3 { border-top: 2px solid var(--accent); }
+        #card-4 { border-top: 2px solid #FF44EE; }
+        .project-tags { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .project-title { font-size: 3rem; margin-bottom: 1rem; max-width: 800px; }
+        .project-tech { font-size: 1rem; color: var(--gray); font-family: monospace; }
+        .project-link-btn { display: inline-flex; align-items: center; margin-top: 1rem; color: var(--primary); font-weight: 600; transition: 0.3s; }
+        .project-link-btn:hover { color: var(--accent); transform: translateX(5px); }
+
+        /* ==================== 9. MARQUEE TESTIMONIALS ==================== */
+        .testimonials-section { padding: 10vh 0; background: transparent; overflow: hidden; position: relative; z-index: 2; }
+        .testimonial-slider { width: 100%; display: flex; align-items: center; overflow: hidden; position: relative; }
+        .testimonial-slider::before, .testimonial-slider::after { content: ''; position: absolute; top: 0; width: 15vw; height: 100%; z-index: 2; }
+        .testimonial-slider::before { left: 0; background: linear-gradient(to right, var(--dark) 0%, transparent 100%); }
+        .testimonial-slider::after { right: 0; background: linear-gradient(to left, var(--dark) 0%, transparent 100%); }
+        .testimonial-track { display: flex; gap: 30px; padding: 20px; width: max-content; animation: scrollMarquee 40s linear infinite; }
+        .testimonial-card { width: 450px; background: rgba(18, 20, 28, 0.8); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2.5rem; transition: 0.3s; }
+        .testimonial-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--neon-shadow); }
+        .quote-icon { font-size: 2rem; color: rgba(0, 212, 255, 0.2); margin-bottom: 1rem; }
+        .testimonial-text { font-style: italic; color: var(--gray); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.6; }
+        .client-info { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; }
+        .client-name { font-weight: 600; color: var(--light); font-size: 1.1rem; }
+        .client-company { color: var(--primary); font-size: 0.9rem; }
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 15px)); } }
+
+       /* ==================== 10. FIXED CURTAIN FOOTER & FORM ==================== */
+.footer-wrapper { 
+    position: relative; 
+    height: auto; 
+    min-height: 100vh; 
+    background-color: var(--dark-card);
+    z-index: 1; 
+    /* Removed clip-path to allow natural flow */
+}
+
+.footer-section { 
+    position: relative; /* Changed from fixed */
+    width: 100%; 
+    min-height: 100vh; 
+    background-color: var(--dark-card); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    padding: 10vh 5vw 5vh 5vw; /* Adjusted top padding to breathe */
+    z-index: 1; /* Changed from -1 to sit above the background naturally */
+}
+        
+        .big-cta { font-size: 7vw; font-weight: 800; color: transparent; -webkit-text-stroke: 2px rgba(255,255,255,0.1); background: var(--gradient-bright); -webkit-background-clip: text; transition: 0.5s; font-family: 'Space Grotesk'; line-height: 1; margin-bottom: 2rem;}
+        .big-cta:hover { -webkit-text-fill-color: transparent; text-shadow: 0 0 40px rgba(0, 212, 255, 0.6); }
+        
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; margin-bottom: auto; align-items: start;}
+        
+        .contact-info h4 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .contact-info a, .contact-info p { color: var(--gray); font-size: 1.2rem; display: block; margin-bottom: 0.8rem; transition: 0.3s; }
+        .contact-info a:hover { color: var(--primary); }
+        
+        /* High Visibility Form UI */
+        .custom-form input, .custom-form textarea, .custom-form select { 
+            width: 100%; 
+            background: transparent; 
+            border: none; 
+            border-bottom: 2px solid rgba(255,255,255,0.15); 
+            color: #FFFFFF !important; 
+            padding: 1.2rem 0; 
+            margin-bottom: 1.8rem; 
+            font-size: 1.1rem; 
+            outline: none; transition: 0.3s; font-family: 'Inter', sans-serif; 
+        }
+        .custom-form input::placeholder, .custom-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6) !important; 
+        }
+        .custom-form input:focus, .custom-form textarea:focus, .custom-form select:focus { 
+            border-bottom-color: var(--primary); 
+            box-shadow: 0 10px 10px -10px var(--primary); 
+        }
+        
+        /* Dropdown Styling */
+        .custom-form select {
+            color: rgba(255, 255, 255, 0.6) !important; /* Placeholder color when unselected */
+            cursor: pointer;
+            appearance: none;
+        }
+        .custom-form select option {
+            background-color: var(--dark-card);
+            color: #FFFFFF;
+            padding: 1rem;
+        }
+        .custom-form select:valid {
+            color: #FFFFFF !important; /* White color when option is selected */
+        }
+
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; color: var(--gray); margin-top: 2rem;}
+        .social-links a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); color: #fff; margin-left: 1rem; transition: 0.3s; }
+        .social-links a:hover { background: var(--gradient-primary); transform: translateY(-3px); box-shadow: var(--neon-shadow); }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1100px) {
+            .footer-grid { gap: 3rem; }
+        }
+        @media (max-width: 900px) {
+            .hero-title { font-size: 3rem; }
+            .orbital-system { transform: translate(-50%, -50%) rotateX(60deg) scale(0.4); } 
+            .about-grid, .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .service-card { width: 85vw; height: auto; min-height: 400px; padding: 2.5rem; }
+            .project-card { padding: 2rem; height: auto; min-height: 60vh; }
+            .project-title { font-size: 2rem; }
+            .big-cta { font-size: 12vw; margin-bottom: 1rem; }
+            .nav-links { display: none; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+            .social-links a { margin: 0 0.5rem; }
+            .footer-section { padding-top: 12vh; overflow-y: auto; justify-content: flex-start;}
+        }
+        /* ==================== 11. CUSTOM SPACE CURSOR ==================== */
+/* Hide the default cursor across the page, except on inputs where we need it */
+body, a, button, .service-card { 
+    cursor: none !important; 
+}
+input, textarea, select { 
+    cursor: auto !important; 
+}
+
+.custom-cursor {
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 15px; 
+    height: 15px;
+    background: var(--primary);
+    border-radius: 50%;
+    pointer-events: none; /* Prevents cursor from blocking clicks */
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+    box-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
+    transition: width 0.3s, height 0.3s, background-color 0.3s, box-shadow 0.3s, border 0.3s;
+}
+
+/* State when hovering over clickable elements */
+.custom-cursor.hovered {
+    width: 60px; 
+    height: 60px;
+    background: rgba(0, 255, 170, 0.1);
+    box-shadow: 0 0 30px rgba(0, 255, 170, 0.4);
+    backdrop-filter: blur(2px);
+    border: 1px solid var(--accent);
+}
+    </style>
 </head>
-
 <body>
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Project is waking up...</div>
-        <p class="text-muted mt-2">This may take 30-40 seconds.</p>
+    <div class="custom-cursor"></div>
+    <div class="space-background"></div>
+    <div class="nebula"></div>
+    
+    <div class="stars-distant" id="stars-1"></div>
+    <div class="stars-mid" id="stars-2"></div>
+    <div class="stars-near" id="stars-3"></div>
+    
+  
+
+    <div class="orbital-system" id="orbital-system">
+        <div class="core"></div>
+        <div class="orbit orbit-1"><div class="node node-1"></div></div>
+        <div class="orbit orbit-2"><div class="node node-2"></div></div>
+        <div class="orbit orbit-3"><div class="node node-3"></div></div>
     </div>
 
-    <!-- Floating Background Elements -->
-    <div class="floating-element" style="top: 10%; left: 5%; width: 30px; height: 30px; background: var(--primary);">
-    </div>
-    <div class="floating-element"
-        style="top: 20%; right: 10%; width: 40px; height: 40px; background: var(--secondary);"></div>
-    <div class="floating-element" style="bottom: 30%; left: 15%; width: 25px; height: 25px; background: var(--accent);">
-    </div>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
-        <div class="container">
-
-            <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <!-- Large Animated AI Circuit Logo -->
-                <svg width="48" height="48" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    class="logo-svg">
-                    <defs>
-                        <!-- Main Gradient -->
-                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#00D4FF" />
-                            <stop offset="50%" stop-color="#8A2BE2" />
-                            <stop offset="100%" stop-color="#00FFAA" />
-                        </linearGradient>
-
-                        <!-- Bright Gradient for contrast -->
-                        <linearGradient id="logoGradBright" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#00F7FF" />
-                            <stop offset="50%" stop-color="#9A4BFF" />
-                            <stop offset="100%" stop-color="#00FFD5" />
-                        </linearGradient>
-
-                        <!-- Glow Filter -->
-                        <filter id="logoGlow" x="-30%" y="-30%" width="160%" height="160%">
-                            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
-                            <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
-                            <feFlood flood-color="#00D4FF" flood-opacity="0.6" result="glowColor" />
-                            <feComposite in="glowColor" in2="offsetBlur" operator="in" result="softGlow" />
-                            <feMerge>
-                                <feMergeNode in="softGlow" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                    </defs>
-
-                    <!-- Background Orbital Rings -->
-                    <circle cx="60" cy="60" r="45" stroke="url(#logoGrad)" stroke-width="1.5" fill="none" opacity="0.3"
-                        class="orbital-ring-1" />
-                    <circle cx="60" cy="60" r="38" stroke="url(#logoGrad)" stroke-width="1.2" fill="none" opacity="0.4"
-                        class="orbital-ring-2" />
-                    <circle cx="60" cy="60" r="31" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.5"
-                        class="orbital-ring-3" />
-
-                    <!-- Main Diamond/Hexagon Shape -->
-                    <path d="M60,30 L85,45 L85,75 L60,90 L35,75 L35,45 Z" fill="rgba(10,11,15,0.9)"
-                        stroke="url(#logoGradBright)" stroke-width="3" stroke-linejoin="round" filter="url(#logoGlow)"
-                        class="main-shape" />
-
-                    <!-- Circuit Board Pattern -->
-                    <g class="circuit-pattern">
-                        <!-- Horizontal Circuit Lines -->
-                        <path d="M40,50 L80,50" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
-                            class="circuit-line-1" />
-                        <path d="M40,70 L80,70" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
-                            class="circuit-line-2" />
-
-                        <!-- Vertical Circuit Lines -->
-                        <path d="M50,40 L50,80" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
-                            class="circuit-line-3" />
-                        <path d="M70,40 L70,80" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2"
-                            class="circuit-line-4" />
-
-                        <!-- Diagonal Circuit Connections -->
-                        <path d="M45,55 L55,45" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
-                            class="circuit-diag-1" />
-                        <path d="M65,55 L75,45" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
-                            class="circuit-diag-2" />
-                        <path d="M45,65 L55,75" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
-                            class="circuit-diag-3" />
-                        <path d="M65,65 L75,75" stroke="url(#logoGrad)" stroke-width="1.2" stroke-dasharray="3,2"
-                            class="circuit-diag-4" />
-                    </g>
-
-                    <!-- Central AI Hub -->
-                    <circle cx="60" cy="60" r="8" fill="url(#logoGrad)" class="central-hub">
-                        <animate attributeName="r" values="8;9;8" dur="2s" repeatCount="indefinite" />
-                    </circle>
-
-                    <!-- Data Nodes -->
-                    <g class="data-nodes">
-                        <circle cx="45" cy="45" r="4" fill="#00D4FF" class="node-1">
-                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
-                                repeatCount="indefinite" />
-                        </circle>
-                        <circle cx="75" cy="45" r="4" fill="#00D4FF" class="node-2">
-                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
-                                repeatCount="indefinite" begin="0.5s" />
-                        </circle>
-                        <circle cx="45" cy="75" r="4" fill="#00D4FF" class="node-3">
-                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
-                                repeatCount="indefinite" begin="1s" />
-                        </circle>
-                        <circle cx="75" cy="75" r="4" fill="#00D4FF" class="node-4">
-                            <animate attributeName="fill" values="#00D4FF;#00FFAA;#00D4FF" dur="3s"
-                                repeatCount="indefinite" begin="1.5s" />
-                        </circle>
-                    </g>
-
-                    <!-- Connecting Lines -->
-                    <path d="M45,45 L60,60 L75,45 M45,75 L60,60 L75,75" stroke="url(#logoGrad)" stroke-width="1.2"
-                        fill="none" opacity="0.8" class="connection-lines" />
-
-                    <!-- AI Text inside Hub -->
-                    <text x="60" y="65" text-anchor="middle" font-family="'Space Grotesk', Arial" font-size="9"
-                        font-weight="800" fill="#0A0B0F" class="ai-text">AI</text>
-
-                    <!-- Energy Pulses -->
-                    <circle cx="60" cy="60" r="12" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.4"
-                        class="pulse-1">
-                        <animate attributeName="r" values="12;25;12" dur="3s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite" />
-                    </circle>
-
-                    <circle cx="60" cy="60" r="12" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.3"
-                        class="pulse-2">
-                        <animate attributeName="r" values="12;30;12" dur="4s" repeatCount="indefinite" begin="1s" />
-                        <animate attributeName="opacity" values="0.3;0;0.3" dur="4s" repeatCount="indefinite"
-                            begin="1s" />
-                    </circle>
-                </svg>
-
-                <!-- BRAND TEXT - Larger and more prominent -->
-                <span class="logo-text ms-3">
-                    <span class="brand-adoni">ADONI</span>
-                    <span class="brand-ai">AI</span>
-                    <span class="brand-pulse">.</span>
-                </span>
-            </a>
-
-            <!-- TOGGLER -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- NAV LINKS -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#services">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#portfolio">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                </ul>
-
-                <!-- CTA BUTTON -->
-                <a href="#contact" class="btn btn-primary ms-lg-3 mt-3 mt-lg-0">
-                    <i class="bi bi-rocket-takeoff me-2"></i>Start Project
-                </a>
-            </div>
+    <nav class="navbar">
+        <a href="#" class="nav-brand">
+            <svg viewBox="0 0 120 120" class="logo-svg">
+                <defs>
+                    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00D4FF" />
+                        <stop offset="50%" stop-color="#8A2BE2" />
+                        <stop offset="100%" stop-color="#00FFAA" />
+                    </linearGradient>
+                    <linearGradient id="logoGradBright" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00F7FF" />
+                        <stop offset="50%" stop-color="#9A4BFF" />
+                        <stop offset="100%" stop-color="#00FFD5" />
+                    </linearGradient>
+                    <filter id="logoGlow" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
+                        <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
+                        <feFlood flood-color="#00D4FF" flood-opacity="0.6" result="glowColor" />
+                        <feComposite in="glowColor" in2="offsetBlur" operator="in" result="softGlow" />
+                        <feMerge><feMergeNode in="softGlow" /><feMergeNode in="SourceGraphic" /></feMerge>
+                    </filter>
+                </defs>
+                <circle cx="60" cy="60" r="45" stroke="url(#logoGrad)" stroke-width="1.5" fill="none" opacity="0.3" class="orbital-ring-1" />
+                <circle cx="60" cy="60" r="38" stroke="url(#logoGrad)" stroke-width="1.2" fill="none" opacity="0.4" class="orbital-ring-2" />
+                <circle cx="60" cy="60" r="31" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.5" class="orbital-ring-3" />
+                <path d="M60,30 L85,45 L85,75 L60,90 L35,75 L35,45 Z" fill="rgba(10,11,15,0.9)" stroke="url(#logoGradBright)" stroke-width="3" stroke-linejoin="round" filter="url(#logoGlow)" />
+                <g class="circuit-pattern">
+                    <path d="M40,50 L80,50" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2" class="circuit-line-1" />
+                    <path d="M40,70 L80,70" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2" class="circuit-line-2" />
+                    <path d="M50,40 L50,80" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2" class="circuit-line-3" />
+                    <path d="M70,40 L70,80" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2" class="circuit-line-4" />
+                </g>
+                <circle cx="60" cy="60" r="8" fill="url(#logoGrad)" class="central-hub">
+                    <animate attributeName="r" values="8;9;8" dur="2s" repeatCount="indefinite" />
+                </circle>
+                <text x="60" y="65" text-anchor="middle" font-family="'Space Grotesk'" font-size="9" font-weight="800" fill="#0A0B0F">AI</text>
+            </svg>
+            <span class="logo-text">
+                <span class="brand-adoni">ADONI</span><span class="brand-ai">AI</span><span class="brand-pulse">.</span>
+            </span>
+        </a>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#portfolio">Projects</a>
+            <a href="#testimonials">Clients</a>
         </div>
+        <a href="#footer"><button class="nav-btn">Start Project</button></a>
     </nav>
 
+    <section class="hero" id="hero-section">
+        <h1 class="hero-title gradient-text" id="hero-title">INTELLIGENT DIGITAL SOLUTIONS</h1>
+        <p class="hero-sub" id="hero-sub">We build intelligent software, AI automation, and futuristic digital experiences. Scroll to initiate sequence.</p>
+    </section>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h1 class="hero-title animate__animated animate__fadeInUp">
-                        <span class="gradient-text">Intelligent</span> Digital Solutions
-                    </h1>
-                    <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">
-                        We build AI-powered applications, scalable software solutions, and intelligent digital
-                        experiences for startups and enterprises.
-                    </p>
-                    <div class="d-flex flex-wrap gap-3 animate__animated animate__fadeInUp animate__delay-2s">
-                        <a href="#portfolio" class="btn btn-primary">
-                            <i class="bi bi-code-slash me-2"></i>View Projects
-                        </a>
-                        <a href="#contact" class="btn btn-outline-primary">
-                            <i class="bi bi-chat-dots me-2"></i>Get Consultation
-                        </a>
+    <section class="zoom-section" id="zoom-container">
+        <div class="portal-gateway" id="portal"><div class="portal-text" id="portal-text">Enter System</div></div>
+        <div class="inside-content" id="inside-content">
+            <h2 class="gradient-text" style="font-size: 3rem;">Welcome to Adoni AI</h2>
+            <p style="color: var(--gray); font-size: 1.2rem; margin: 1.5rem auto;">You have successfully navigated the warp gate into our central nervous system.</p>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="section-header scroll-fade">
+            <h2 class="gradient-text" style="font-size: 3.5rem;">The Architect</h2>
+        </div>
+        <div class="about-grid">
+            <div class="about-text scroll-fade">
+                <h2>Hi, I'm <span class="gradient-text" style="font-size: inherit;">Taher Bohra</span></h2>
+                <p>I am the <strong>Founder of Adoni AI</strong> and a passionate Software Developer based in Pune, India. I build intelligent, scalable solutions that bridge the gap between complex problems and elegant digital experiences.</p>
+                <p>My journey into technology began with a deep curiosity about how things work behind the screen. Today, I combine academic rigor with hands-on professional experience to architect award-winning web applications and AI tools.</p>
+                
+                <div class="skills-container mt-4">
+                    <span class="skill-badge">Node.js / Express</span>
+                    <span class="skill-badge">React / HTML5</span>
+                    <span class="skill-badge">Python / AI</span>
+                    <span class="skill-badge">MongoDB / SQL</span>
+                </div>
+            </div>
+
+            <div class="timeline scroll-fade">
+                <div class="timeline-item">
+                    <div class="timeline-date">2025 – Present</div>
+                    <div class="timeline-title">Software Developer Intern</div>
+                    <p class="timeline-desc">Elite Infosoft, Pune. Working on full-stack web development, collaborating with senior developers, and deploying real-world projects.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025 – Present</div>
+                    <div class="timeline-title">Founder & Lead Dev</div>
+                    <p class="timeline-desc">Adoni AI. Designing responsive websites, SaaS platforms, and AI automation systems for independent clients.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2022 – 2025</div>
+                    <div class="timeline-title">BCA Degree</div>
+                    <p class="timeline-desc">Studied core computer science, software engineering, and data structures while actively participating in coding challenges.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="horizontal-section" id="services">
+        <div class="horizontal-track" id="horizontal-track">
+            <div style="width: 80vw; max-width: 400px; display: flex; flex-direction: column; justify-content: center;">
+                <h2 class="gradient-text" style="font-size: 4rem;">Our<br>Expertise</h2>
+                <p style="color: var(--gray); margin-top: 1rem; font-size: 1.2rem;">Specialized orbital systems for the modern digital landscape.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-number">01</div>
+                <h3 class="service-title">AI / ML<br>Development</h3>
+                <p class="service-desc">Building custom machine learning models, neural networks, and AI-powered applications for various industries.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">02</div>
+                <h3 class="service-title">Full-Stack<br>Development</h3>
+                <p class="service-desc">End-to-end development of scalable web applications using React, Node.js, Python, and modern cloud technologies.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">03</div>
+                <h3 class="service-title">Mobile<br>Development</h3>
+                <p class="service-desc">Designing and building cross-platform mobile applications using React Native, Flutter, and native iOS/Android frameworks.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">04</div>
+                <h3 class="service-title">Cloud &<br>DevOps</h3>
+                <p class="service-desc">Implementing CI/CD pipelines, Docker containerization, and AWS infrastructure for highly available applications.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">05</div>
+                <h3 class="service-title">Digital<br>Marketing</h3>
+                <p class="service-desc">Comprehensive SEO, Social Media campaigns, and PR strategies to drastically improve your online visibility.</p>
+            </div>
+            <div style="width: 5vw;"></div>
+        </div>
+    </section>
+
+    <section class="portfolio-section" id="portfolio">
+        <div class="section-header scroll-fade">
+            <h2 class="gradient-text" style="font-size: 4rem;">Featured Projects</h2>
+            <p style="color: var(--gray); font-size: 1.2rem; margin-top: 1rem;">Architecting digital solutions across terrestrial industries.</p>
+        </div>
+        <div class="cards-container">
+            <div class="project-card" id="card-1">
+                <div>
+                    <div class="project-tags"><span class="tag">Full-Stack</span><span class="tag">Node.js</span></div>
+                    <h3 class="project-title">Deadline Reminder System</h3>
+                    <p style="color: var(--gray); font-size: 1.1rem; max-width: 600px;">A comprehensive task management system with automated email reminders, deadline tracking, and priority management.</p>
+                    <a href="#" class="project-link-btn">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+                <div class="project-tech"><span style="color: var(--primary);">Stack:</span> Node.js, Express, MongoDB</div>
+            </div>
+            <div class="project-card" id="card-2">
+                <div>
+                    <div class="project-tags"><span class="tag">AI/ML</span><span class="tag">React</span></div>
+                    <h3 class="project-title">AI Resume Creator</h3>
+                    <p style="color: var(--gray); font-size: 1.1rem; max-width: 600px;">Intelligent resume builder using AI to optimize content, suggest improvements, and match job descriptions automatically.</p>
+                    <a href="#" class="project-link-btn" style="color: var(--secondary);">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+                <div class="project-tech"><span style="color: var(--secondary);">Stack:</span> React, Python, OpenAI API</div>
+            </div>
+            <div class="project-card" id="card-3">
+                <div>
+                    <div class="project-tags"><span class="tag">E-Commerce</span><span class="tag">React</span></div>
+                    <h3 class="project-title">VirtuQ Cafe</h3>
+                    <p style="color: var(--gray); font-size: 1.1rem; max-width: 600px;">Modern cafe management system with online ordering, inventory management, and a customer analytics dashboard.</p>
+                    <a href="#" class="project-link-btn" style="color: var(--accent);">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+                <div class="project-tech"><span style="color: var(--accent);">Stack:</span> React, Node.js, MongoDB</div>
+            </div>
+            <div class="project-card" id="card-4">
+                <div>
+                    <div class="project-tags"><span class="tag">Healthcare</span><span class="tag">Database</span></div>
+                    <h3 class="project-title">Veterinary Management</h3>
+                    <p style="color: var(--gray); font-size: 1.1rem; max-width: 600px;">Complete veterinary clinic system with patient records, appointment scheduling, and automated billing generation.</p>
+                    <a href="#" class="project-link-btn" style="color: #FF44EE;">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+                <div class="project-tech"><span style="color: #FF44EE;">Stack:</span> Node.js, Express, MongoDB</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section" id="testimonials">
+        <div class="section-header scroll-fade" style="margin-bottom: 3rem;">
+            <h2 class="gradient-text" style="font-size: 3.5rem;">Client Feedback</h2>
+        </div>
+        <div class="testimonial-slider">
+            <div class="testimonial-track">
+                <div class="testimonial-card">
+                    <i class="bi bi-quote quote-icon"></i>
+                    <p class="testimonial-text">"Taher's work on our hardware website was exceptional. He understood the technical nuances of our products and translated them into a seamless digital experience."</p>
+                    <div class="client-info">
+                        <div class="client-name">Yusuf Kanorewala</div>
+                        <div class="client-company">Hardware Solutions</div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="mt-5 mt-lg-0">
-                        <div class="terminal-container animate__animated animate__fadeIn animate__delay-1s">
-                            <div class="terminal-header">
-                                <div class="terminal-dots">
-                                    <div class="terminal-dot dot-red"></div>
-                                    <div class="terminal-dot dot-yellow"></div>
-                                    <div class="terminal-dot dot-green"></div>
-                                </div>
-                                <div class="terminal-title">bash — Adoni-ai — 80×24</div>
-                            </div>
-                            <div class="terminal-content">
-                                <div class="terminal-line"><span class="text-primary">$</span> Adoni init --project
-                                    "ai-solution"</div>
-                                <div class="terminal-line">Initializing AI project structure...</div>
-                                <div class="terminal-line">Installing dependencies: tensorflow, pytorch, fastapi</div>
-                                <div class="terminal-line">Configuring neural network models...</div>
-                                <div class="terminal-line">Setting up cloud deployment: AWS/Azure/GCP</div>
-                                <div class="terminal-line">Project ready! Build intelligent apps with <span
-                                        class="text-accent">Adoni AI</span><span class="terminal-cursor"></span></div>
-                            </div>
-                        </div>
+                <div class="testimonial-card">
+                    <i class="bi bi-quote quote-icon"></i>
+                    <p class="testimonial-text">"Working with Taher on our project made everything easier. His problem-solving skills and coding logic were key to our project's success."</p>
+                    <div class="client-info">
+                        <div class="client-name">Vaishnavi Godage</div>
+                        <div class="client-company">Academic Collaboration</div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <i class="bi bi-quote quote-icon"></i>
+                    <p class="testimonial-text">"Excellent technical support and collaboration. Taher ensured that the project was not only functional but also well-documented and scalable."</p>
+                    <div class="client-info">
+                        <div class="client-name">Bhagyashri Jadhav</div>
+                        <div class="client-company">Software Engineering</div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <i class="bi bi-quote quote-icon"></i>
+                    <p class="testimonial-text">"Taher is a dedicated developer. His expertise in full-stack development helped us integrate complex features effortlessly."</p>
+                    <div class="client-info">
+                        <div class="client-name">Ayush Jain</div>
+                        <div class="client-company">Development Partner</div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <i class="bi bi-quote quote-icon"></i>
+                    <p class="testimonial-text">"His ability to bridge the gap between AI concepts and practical implementation was crucial. Highly recommended!"</p>
+                    <div class="client-info">
+                        <div class="client-name">Akansha Shinde</div>
+                        <div class="client-company">AI Research</div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <i class="bi bi-quote quote-icon"></i>
+                    <p class="testimonial-text">"Taher's work on our hardware website was exceptional. He understood the technical nuances of our products and translated them into a seamless digital experience."</p>
+                    <div class="client-info">
+                        <div class="client-name">Yusuf Kanorewala</div>
+                        <div class="client-company">Hardware Solutions</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-6">
-                    <div class="stat-item animate-on-scroll">
-                        <div class="stat-number" data-count="20">0</div>
-                        <div class="stat-label">Projects Delivered</div>
+    <div class="footer-wrapper" id="footer">
+        <footer class="footer-section">
+            <div class="footer-grid">
+                <div>
+                    <div class="big-cta footer-animate">Let's Build.</div>
+                    <div class="contact-info footer-animate" style="margin-top: 2rem;">
+                        <h4>Contact Command</h4>
+                        <a href="mailto:taherbohra06@gmail.com"><i class="bi bi-envelope me-2"></i> adoniai.contact@gmail.com</a>
+                        <p><i class="bi bi-phone me-2"></i> +91 9929235556</p>
+                        <p style="margin-top: 1rem;"><i class="bi bi-geo-alt me-2"></i> Pune, Maharashtra, India</p>
                     </div>
                 </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item animate-on-scroll">
-                        <div class="stat-number" data-count="5">0</div>
-                        <div class="stat-label">AI Solutions</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item animate-on-scroll">
-                        <div class="stat-number" data-count="7">0</div>
-                        <div class="stat-label">Client Satisfaction</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item animate-on-scroll">
-                        <div class="stat-number" data-count="5">0</div>
-                        <div class="stat-label">Years Experience</div>
-                    </div>
+                
+                <div class="footer-animate">
+                    <form action="https://api.web3forms.com/submit" method="POST" class="custom-form">
+                        <input type="hidden" name="access_key" value="e7271cae-5e38-4c1a-a6f4-a24302e555af">
+                        
+                        <div style="display: flex; gap: 1.5rem;">
+                            <div style="flex: 1;">
+                                <input type="text" name="name" placeholder="Full Name *" required>
+                            </div>
+                            <div style="flex: 1;">
+                                <input type="email" name="email" placeholder="Email Address *" required>
+                            </div>
+                        </div>
+                        
+                        <input type="text" name="company" placeholder="Company / Project Name">
+                        
+                        <select name="service" required>
+                            <option value="" disabled selected>Select a service *</option>
+                            <option value="AI/ML Development">AI/ML Development</option>
+                            <option value="Website Development">Website Development</option>
+                            <option value="Cloud & DevOps">Cloud & DevOps</option>
+                            <option value="Data Engineering">Data Engineering</option>
+                            <option value="Blockchain Development">Blockchain Development</option>
+                            <option value="Mobile Development">Mobile Development</option>
+                            <option value="Social Media Marketing">Social Media Marketing</option>
+                            <option value="SEO & Digital Marketing">SEO & Digital Marketing</option>
+                            <option value="Public Relations">Public Relations</option>
+                            <option value="Technical Consulting">Technical Consulting</option>
+                        </select>
+                        
+                        <textarea name="message" rows="4" placeholder="Project Details *" required></textarea>
+                        
+                        <button type="submit" class="nav-btn" style="padding: 1.2rem 3rem; font-size: 1.1rem; width: 100%;">Send Project Request</button>
+                    </form>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <!-- Services Section -->
-    <section id="services" class="services-section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title center animate-on-scroll">Our <span class="gradient-text">Expertise</span></h2>
-                <p class="lead text-muted animate-on-scroll">Specialized services for the modern digital landscape</p>
-            </div>
-
-            <div class="row g-4">
-                <!-- Service 1: AI/ML Development -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-cpu"></i>
-                        </div>
-                        <h3>AI/ML Development</h3>
-                        <p>Building custom machine learning models, neural networks, and AI-powered applications for
-                            various industries.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> Custom ML Models</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Predictive Analytics</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Computer Vision</li>
-                            <li><i class="bi bi-check-circle-fill"></i> NLP Solutions</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 2: Full-Stack Development -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-stack"></i>
-                        </div>
-                        <h3>Full-Stack Development</h3>
-                        <p>End-to-end development of scalable web applications using modern frameworks and cloud
-                            technologies.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> React/Next.js</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Node.js/Python</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Microservices</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Cloud Deployment</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 3: Cloud & DevOps -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-cloud-arrow-up"></i>
-                        </div>
-                        <h3>Cloud & DevOps</h3>
-                        <p>Implementing CI/CD pipelines, containerization, and cloud infrastructure for scalable
-                            applications.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> AWS/Azure/GCP</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Docker & Kubernetes</li>
-                            <li><i class="bi bi-check-circle-fill"></i> CI/CD Automation</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Infrastructure as Code</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 4: Data Engineering -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-file-bar-graph"></i>
-                        </div>
-                        <h3>Data Engineering</h3>
-                        <p>Designing and building data pipelines, warehouses, and analytics platforms for data-driven
-                            decisions.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> ETL/ELT Pipelines</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Data Warehousing</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Real-time Analytics</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Big Data Solutions</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 5: Blockchain Development -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <h3>Blockchain Development</h3>
-                        <p>Developing decentralized applications, smart contracts, and blockchain integration solutions.
-                        </p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> Smart Contracts</li>
-                            <li><i class="bi bi-check-circle-fill"></i> DApps Development</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Web3 Integration</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Tokenomics Design</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 6: Mobile Development -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-phone"></i>
-                        </div>
-                        <h3>Mobile Development</h3>
-                        <p>Creating cross-platform and native mobile applications with modern UI/UX and backend
-                            integration.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> React Native/Flutter</li>
-                            <li><i class="bi bi-check-circle-fill"></i> iOS & Android Native</li>
-                            <li><i class="bi bi-check-circle-fill"></i> PWA Development</li>
-                            <li><i class="bi bi-check-circle-fill"></i> App Store Deployment</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 7: Social Media Marketing -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-megaphone"></i>
-                        </div>
-                        <h3>Social Media Marketing</h3>
-                        <p>Strategic social media campaigns, content creation, and community management to boost brand
-                            presence and engagement.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> Content Strategy</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Campaign Management</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Community Building</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Performance Analytics</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 8: SEO Optimization -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-search"></i>
-                        </div>
-                        <h3>SEO & Digital Marketing</h3>
-                        <p>Comprehensive search engine optimization, keyword research, and digital marketing strategies
-                            to improve online visibility.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> Technical SEO</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Keyword Research</li>
-                            <li><i class="bi bi-check-circle-fill"></i> On-Page Optimization</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Link Building</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Service 9: Public Relations -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="service-card animate-on-scroll">
-                        <div class="service-icon">
-                            <i class="bi bi-broadcast"></i>
-                        </div>
-                        <h3>Public Relations</h3>
-                        <p>Building brand reputation, media relations, and strategic communication to enhance public
-                            perception and credibility.</p>
-                        <ul class="service-features">
-                            <li><i class="bi bi-check-circle-fill"></i> Media Outreach</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Press Release Distribution</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Crisis Management</li>
-                            <li><i class="bi bi-check-circle-fill"></i> Brand Storytelling</li>
-                        </ul>
-                    </div>
+            
+            <div class="footer-bottom footer-animate">
+                <div>&copy; 2026 Adoni AI. Engineered by Taher Bohra.</div>
+                <div class="social-links">
+                    <a href="https://github.com/taher-bohra786" target="_blank"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/taher-bohra9/" target="_blank"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://www.instagram.com/adoni.ai/" target="_blank"><i class="bi bi-instagram"></i></a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio-section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title center animate-on-scroll">Featured <span class="gradient-text">Projects</span>
-                </h2>
-                <p class="lead text-muted animate-on-scroll">Showcasing our innovative solutions and technical expertise
-                </p>
-                <a href="projects.html" target="_blank" class="btn btn-outline-primary mt-3">
-                    <i class="bi bi-grid-3x3-gap me-2"></i>View All Projects
-                </a>
-            </div>
-
-            <div class="row">
-                <!-- Project 1: Deadline Reminder System -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="portfolio-card animate-on-scroll">
-                        <div class="portfolio-img"
-                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <i class="bi bi-alarm"></i>
-                        </div>
-                        <div class="portfolio-content">
-                            <div class="portfolio-tags">
-                                <span class="portfolio-tag">Full-Stack</span>
-                                <span class="portfolio-tag">Node.js</span>
-                                <span class="portfolio-tag">MongoDB</span>
-                            </div>
-                            <h4>Deadline Reminder System</h4>
-                            <p>A comprehensive task management system with automated reminders, email notifications, and
-                                deadline tracking.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="text-primary">Tech: Node.js, Express, MongoDB</span>
-                                <a href="#" class="text-decoration-none project-link"
-                                    data-url="https://deadline-reminder-system.onrender.com/">Live Demo →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 2: AI Resume Creator -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="portfolio-card animate-on-scroll">
-                        <div class="portfolio-img"
-                            style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                            <i class="bi bi-file-earmark-person"></i>
-                        </div>
-                        <div class="portfolio-content">
-                            <div class="portfolio-tags">
-                                <span class="portfolio-tag">AI/ML</span>
-                                <span class="portfolio-tag">React</span>
-                                <span class="portfolio-tag">Python</span>
-                            </div>
-                            <h4>AI Resume Creator</h4>
-                            <p>Intelligent resume builder that uses AI to optimize content, suggest improvements, and
-                                match job descriptions.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="text-primary">Tech: React, Python, OpenAI API</span>
-                                <a href="#" class="text-decoration-none project-link"
-                                    data-url="https://ai-resume-creator-7byw.onrender.com/">Live Demo →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3: Typing Game -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="portfolio-card animate-on-scroll">
-                        <div class="portfolio-img"
-                            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                            <i class="bi bi-keyboard"></i>
-                        </div>
-                        <div class="portfolio-content">
-                            <div class="portfolio-tags">
-                                <span class="portfolio-tag">JavaScript</span>
-                                <span class="portfolio-tag">Game</span>
-                                <span class="portfolio-tag">Frontend</span>
-                            </div>
-                            <h4>Typing Speed Game</h4>
-                            <p>Interactive typing game that tests and improves typing speed with real-time statistics
-                                and progress tracking.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="text-primary">Tech: JavaScript, HTML5, CSS3</span>
-                                <a href="#" class="text-decoration-none project-link"
-                                    data-url="https://typing-game-7osu.onrender.com/">Live Demo →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials-section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title center">Client <span class="gradient-text">Testimonials</span></h2>
-                <p class="lead text-muted">Trusted by innovative individuals and teams</p>
-            </div>
-
-            <div class="testimonial-slider">
-                <div class="testimonial-track">
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "Taher's work on our hardware website was exceptional. He understood the technical nuances
-                            of our products and translated them into a seamless digital experience."
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Yusuf Kanorewala</div>
-                                <div class="client-company">Hardware Solutions</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "Working with Taher on our college project made everything easier. His problem-solving
-                            skills and coding logic were key to our project's success."
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Vaishnavi Godage</div>
-                                <div class="client-company">College Project</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "Excellent technical support and collaboration. Taher ensured that the project was not only
-                            functional but also well-documented and scalable."
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Bhagyashri Jadhav</div>
-                                <div class="client-company">College Project</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "Taher is a dedicated developer. His expertise in full-stack development helped us integrate
-                            complex features into our college submission effortlessly."
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Ayush Jain</div>
-                                <div class="client-company">College Project</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "His ability to bridge the gap between AI concepts and practical implementation was crucial
-                            for our final year project. Highly recommended!"
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Akansha Shinde</div>
-                                <div class="client-company">College Project</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-text">
-                            "Taher's work on our hardware website was exceptional..."
-                        </div>
-                        <div class="client-info">
-                            <div>
-                                <div class="client-name">Yusuf Kanorewala</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-9 text-center">
-                    <h2 class="cta-title animate-on-scroll">Ready to Build the <span class="gradient-text">Future</span>
-                        Together?</h2>
-                    <p class="cta-text animate-on-scroll">
-                        Let's transform your ideas into intelligent digital solutions. Our team of AI experts and
-                        software engineers is ready to bring your vision to life.
-                    </p>
-                    <div class="d-flex flex-wrap gap-3 justify-content-center animate-on-scroll">
-                        <a href="#contact" class="btn btn-primary btn-lg">
-                            <i class="bi bi-rocket-takeoff me-2"></i>Start Your Project
-                        </a>
-
-                        <a href="projects.html" target="_blank" class="btn btn-outline-primary btn-lg">
-                            <i class="bi bi-grid-3x3-gap me-2"></i>All Projects
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="contact-form animate-on-scroll">
-                        <div class="text-center mb-5">
-                            <h2 class="section-title center">Get in <span class="gradient-text">Touch</span></h2>
-                            <p class="text-muted">Share your project details and we'll get back to you within 24 hours.
-                            </p>
-                        </div>
-
-                        <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
-
-                            <input type="hidden" name="access_key" value="e7271cae-5e38-4c1a-a6f4-a24302e555af">
-
-                            <input type="hidden" name="subject" value="New Project Inquiry from Adoni AI">
-
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label">Full Name *</label>
-                                    <input type="text" name="name" class="form-control" required
-                                        placeholder="Eg. Taher Bohra">
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label">Email Address *</label>
-                                    <input type="email" name="email" class="form-control" required
-                                        placeholder="Eg. taher@company.com">
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label">Company / Project Name</label>
-                                <input type="text" name="company" class="form-control" placeholder="Your Company Inc.">
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label">Service Interested In *</label>
-                                <select name="service" class="form-select" required>
-                                    <option value="">Select a service</option>
-                                    <option value="ai-ml">AI/ML Development</option>
-                                    <option value="full-stack">Website Development</option>
-                                    <option value="cloud">Cloud & DevOps</option>
-                                    <option value="data">Data Engineering</option>
-                                    <option value="blockchain">Blockchain Development</option>
-                                    <option value="mobile">Mobile Development</option>
-                                    <option value="social-media">Social Media Marketing</option>
-                                    <option value="seo">SEO & Digital Marketing</option>
-                                    <option value="pr">Public Relations</option>
-                                    <option value="consulting">Technical Consulting</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label">Project Details *</label>
-                                <textarea name="message" class="form-control" rows="6"
-                                    placeholder="Describe your project requirements, timeline, and budget..."
-                                    required></textarea>
-                            </div>
-
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-lg py-3">
-                                    <i class="bi bi-send me-2"></i>Submit Project Request
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h3 class="footer-title">
-                        <i class="bi bi-cpu-fill me-2"></i>Adoni<span class="text-primary">AI</span>
-                    </h3>
-                    <p class="mb-4" style="opacity: 0.8;">
-                        Building intelligent digital solutions with cutting-edge AI, modern software development, and
-                        cloud technologies.
-                    </p>
-                    <div class="social-links">
-                        <a href="https://github.com/taher-bohra786"><i class="bi bi-github"></i></a>
-                        <a href="https://www.linkedin.com/in/taher-bohra9/"><i class="bi bi-linkedin"></i></a>
-                        <a href="https://www.instagram.com/taaheeerrr/"><i class="bi bi-instagram"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-4 mb-5 mb-lg-0">
-                    <h5 class="footer-title">Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#home">Home</a></li>
-                        <li class="mb-2"><a href="#services">Services</a></li>
-                        <li class="mb-2"><a href="#portfolio">Projects</a></li>
-                        <li class="mb-2"><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="projects.html" target="_blank">All Projects</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-4 mb-5 mb-lg-0">
-                    <h5 class="footer-title">Our Services</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#services">AI/ML Development</a></li>
-                        <li class="mb-2"><a href="#services">Full-Stack Development</a></li>
-                        <li class="mb-2"><a href="#services">Cloud & DevOps</a></li>
-                        <li class="mb-2"><a href="#services">Data Engineering</a></li>
-                        <li class="mb-2"><a href="#services">Blockchain Development</a></li>
-                        <li class="mb-2"><a href="#services">Mobile Development</a></li>
-                        <li class="mb-2"><a href="#services">Social Media Marketing</a></li>
-                        <li class="mb-2"><a href="#services">SEO & Digital Marketing</a></li>
-                        <li><a href="#services">Public Relations</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-4">
-                    <h5 class="footer-title">Contact Info</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-3">
-                            <i class="bi bi-geo-alt me-2"></i> Pune, Maharashtra, India
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-envelope me-2"></i> taherbohra06@gmail.com
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-phone me-2"></i> +91 9929235556
-                        </li>
-                        <li>
-                            <i class="bi bi-clock me-2"></i> 24/7 Support Available
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <hr class="my-5" style="opacity: 0.2;">
-
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start">
-                    <p style="opacity: 0.8;">&copy; 2026 Adoni AI. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <p style="opacity: 0.8;">Built with <i class="bi bi-lightning-charge-fill text-warning"></i> for the
-                        future</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        </footer>
+    </div>
+    <script src="https://unpkg.com/split-type"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
     <script>
-        // Animation on scroll
-        document.addEventListener('DOMContentLoaded', function () {
-            const animateElements = document.querySelectorAll('.animate-on-scroll');
+        // 1. Lenis Smooth Scroll
+        const lenis = new Lenis({ lerp: 0.08 });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+        gsap.registerPlugin(ScrollTrigger);
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
+        // 2. Space Parallax Scroll Logic
+        gsap.to("#stars-1", { y: "-20vh", ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 }});
+        gsap.to("#stars-2", { y: "-40vh", ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 }});
+        gsap.to("#stars-3", { y: "-70vh", ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 }});
 
-            animateElements.forEach(element => {
-                observer.observe(element);
-            });
+        // 3. Orbital Camera Dive
+        const orbitTimeline = gsap.timeline({ scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 } });
+        // Reduced rotation shift slightly so the massive rings stay prominent
+        orbitTimeline.to("#orbital-system", { scale: 1.5, rotationX: 45, y: "-10vh", ease: "none" });
 
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
+        // 4. Hero Fade Out
+        gsap.to("#hero-title, #hero-sub", { opacity: 0, y: -50, scrollTrigger: { trigger: "#hero-section", start: "top top", end: "+=500", scrub: true } });
 
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
+        // 5. Wormhole Zoom (Portal)
+        const tl = gsap.timeline({ scrollTrigger: { trigger: "#zoom-container", start: "top top", end: "+=2500", scrub: 1, pin: true } });
+        tl.to("#portal-text", { opacity: 0, duration: 0.1 })
+          .to("#portal", { scale: 120, opacity: 0, ease: "power2.inOut", duration: 1 }, "<")
+          .fromTo("#inside-content", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, ease: "power2.out", duration: 0.5 }, "-=0.4");
 
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-
-                        // Update active nav link
-                        document.querySelectorAll('.nav-link').forEach(link => {
-                            link.classList.remove('active');
-                        });
-                        this.classList.add('active');
-                    }
-                });
-            });
-
-            // Animated counter
-            function animateCounter() {
-                const counters = document.querySelectorAll('.stat-number');
-                const speed = 200;
-
-                counters.forEach(counter => {
-                    const target = parseInt(counter.getAttribute('data-count'));
-                    const count = parseInt(counter.innerText);
-                    const increment = Math.ceil(target / speed);
-
-                    if (count < target) {
-                        counter.innerText = count + increment;
-                        setTimeout(() => animateCounter(), 10);
-                    } else {
-                        counter.innerText = target + (counter.getAttribute('data-count') === '7' ? '+' : '');
-                    }
-                });
-            }
-
-            // Trigger counter when stats section is visible
-            const statsObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        setTimeout(animateCounter, 300);
-                    }
-                });
-            });
-
-            const statsSection = document.querySelector('.stats-section');
-            if (statsSection) {
-                statsObserver.observe(statsSection);
-            }
-
-            // Project link click handler with loading overlay
-            document.querySelectorAll('.project-link').forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const url = this.getAttribute('data-url');
-
-                    // Show loading overlay
-                    const loadingOverlay = document.getElementById('loadingOverlay');
-                    loadingOverlay.classList.add('active');
-
-                    // Redirect after 3 seconds
-                    setTimeout(() => {
-                        window.location.href = url;
-                        loadingOverlay.classList.remove('active');
-                    }, 3000);
-                });
-            });
-
-            // Navbar background on scroll
-            window.addEventListener('scroll', function () {
-                const navbar = document.querySelector('.navbar');
-                if (window.scrollY > 50) {
-                    navbar.style.background = 'rgba(10, 11, 15, 0.95)';
-                    navbar.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.4)';
-                } else {
-                    navbar.style.background = 'rgba(10, 11, 15, 0.9)';
-                    navbar.style.boxShadow = '0 5px 30px rgba(0, 0, 0, 0.3)';
-                }
-            });
-
-            // Animated terminal effect
-            function animateTerminal() {
-                const terminalCursor = document.querySelector('.terminal-cursor');
-                if (terminalCursor) {
-                    setInterval(() => {
-                        terminalCursor.style.opacity = terminalCursor.style.opacity === '0' ? '1' : '0';
-                    }, 500);
-                }
-            }
-
-            animateTerminal();
+        // 6. Horizontal Scroll
+        const track = document.getElementById("horizontal-track");
+        function getScrollAmount() {
+            let trackWidth = track.scrollWidth;
+            return -(trackWidth - window.innerWidth);
+        }
+        const tween = gsap.to(track, { x: getScrollAmount, ease: "none" });
+        ScrollTrigger.create({
+            trigger: "#services",
+            start: "top top",
+            end: () => `+=${getScrollAmount() * -1}`,
+            pin: true,
+            animation: tween,
+            scrub: 1,
+            invalidateOnRefresh: true
         });
+
+        // 7. Stacking Cards
+        const projectCards = gsap.utils.toArray('.project-card');
+        projectCards.forEach((card, index) => {
+            if (index === projectCards.length - 1) return;
+            gsap.to(card, {
+                scale: 0.9, opacity: 0.3,
+                scrollTrigger: {
+                    trigger: card, start: "top 15vh", endTrigger: projectCards[index + 1], end: "top 15vh", scrub: true, invalidateOnRefresh: true
+                }
+            });
+        });
+
+        // 8. Fades
+        gsap.utils.toArray('.scroll-fade').forEach(element => {
+            gsap.from(element, {
+                opacity: 0, y: 50, duration: 1, ease: "power2.out",
+                scrollTrigger: { trigger: element, start: "top 85%", toggleActions: "play none none reverse" }
+            });
+        });
+
+        // 9. Footer Reveal
+        gsap.from(".footer-animate", {
+            y: 100, opacity: 0, stagger: 0.2, duration: 1, ease: "power3.out",
+            scrollTrigger: { trigger: ".footer-wrapper", start: "top 80%", toggleActions: "play none none reverse" }
+        });
+        /* =========================================
+   10. MOUSE & GYRO PARALLAX
+========================================= */
+const stars1 = document.getElementById('stars-1');
+const stars2 = document.getElementById('stars-2');
+const stars3 = document.getElementById('stars-3');
+const orbital = document.getElementById('orbital-system');
+
+// Function to calculate and apply movement using GSAP
+const applyParallax = (xRatio, yRatio) => {
+    // The further the stars, the less they move to create 3D depth
+    gsap.to(stars1, { x: xRatio * -15, y: yRatio * -15, duration: 1, ease: "power2.out" });
+    gsap.to(stars2, { x: xRatio * -30, y: yRatio * -30, duration: 1, ease: "power2.out" });
+    gsap.to(stars3, { x: xRatio * -50, y: yRatio * -50, duration: 1, ease: "power2.out" });
+    // Move the orbital core slightly in the opposite direction
+    gsap.to(orbital, { x: xRatio * 20, y: yRatio * 20, duration: 1, ease: "power2.out" });
+};
+
+// Desktop: Mouse Tracking
+window.addEventListener('mousemove', (e) => {
+    // Calculate mouse position as a ratio between -1 and 1
+    const xRatio = (e.clientX / window.innerWidth) * 2 - 1; 
+    const yRatio = (e.clientY / window.innerHeight) * 2 - 1; 
+    applyParallax(xRatio, yRatio);
+});
+
+// Mobile: Gyroscope Tracking
+window.addEventListener('deviceorientation', (e) => {
+    if (!e.gamma || !e.beta) return; // Exit if the device doesn't support gyroscope
+    
+    // Gamma is left/right tilt, Beta is front/back tilt
+    // Clamp the values to keep the movement subtle and within bounds
+    let xRatio = Math.max(-1, Math.min(1, e.gamma / 45)); 
+    let yRatio = Math.max(-1, Math.min(1, (e.beta - 45) / 45)); 
+    applyParallax(xRatio, yRatio);
+});
+
+/* =========================================
+   11. ORGANIC METEOR SHOWER
+========================================= */
+const meteorContainer = document.querySelector('.meteor-shower');
+
+function createMeteor() {
+    const meteor = document.createElement('div');
+    meteor.classList.add('meteor');
+
+    // Randomize starting position (top right bias)
+    const top = Math.random() * 100 - 20; 
+    const left = Math.random() * 100 + 20; 
+    
+    // Randomize length and speed
+    const width = Math.random() * 200 + 50; // Between 50px and 250px
+    const duration = Math.random() * 2 + 1.5; // Fall speed between 1.5s and 3.5s
+
+    meteor.style.top = `${top}%`;
+    meteor.style.left = `${left}%`;
+    meteor.style.width = `${width}px`;
+    
+    // Trigger the CSS animation
+    meteor.style.animation = `meteorFall ${duration}s linear forwards`;
+
+    meteorContainer.appendChild(meteor);
+
+    // Clean up: Remove meteor from DOM after it falls so it doesn't lag the browser
+    setTimeout(() => {
+        meteor.remove();
+    }, duration * 1000);
+
+    // Queue the next meteor randomly between 0.5 and 3.5 seconds
+    setTimeout(createMeteor, Math.random() * 3000 + 500);
+}
+
+// Ignite the first meteor!
+createMeteor();
+/* =========================================
+   12. CUSTOM CURSOR TRACKING & STATES
+========================================= */
+const cursor = document.querySelector('.custom-cursor');
+
+// Use GSAP quickTo for zero-latency, buttery smooth cursor tracking
+let cursorX = gsap.quickTo(cursor, "x", {duration: 0.15, ease: "power3.out"});
+let cursorY = gsap.quickTo(cursor, "y", {duration: 0.15, ease: "power3.out"});
+
+window.addEventListener("mousemove", (e) => {
+    cursorX(e.clientX);
+    cursorY(e.clientY);
+});
+
+// Expand cursor when hovering over interactive elements
+const interactiveElements = document.querySelectorAll('a, button, .service-card, .project-card, .portal-gateway');
+interactiveElements.forEach((el) => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+});
+
+/* =========================================
+   13. MAGNETIC BUTTONS
+========================================= */
+const magneticElements = document.querySelectorAll('.nav-btn, .social-links a, .portal-gateway');
+
+magneticElements.forEach((elem) => {
+    elem.addEventListener('mousemove', (e) => {
+        const rect = elem.getBoundingClientRect();
+        // Calculate distance from the center of the element
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        // Pull the element towards the cursor
+        gsap.to(elem, {
+            x: x * 0.4, // Adjust the 0.4 to make the magnet stronger/weaker
+            y: y * 0.4,
+            duration: 0.3,
+            ease: "power2.out"
+        });
+    });
+
+    // Snap back to original position when cursor leaves
+    elem.addEventListener('mouseleave', () => {
+        gsap.to(elem, {
+            x: 0,
+            y: 0,
+            duration: 0.7,
+            ease: "elastic.out(1, 0.3)" // Adds a nice bouncy snap-back
+        });
+    });
+});
+
+/* =========================================
+   14. STAGGERED TEXT REVEALS
+========================================= */
+// Replace your old basic fades on headings with premium character reveals
+const textToAnimate = document.querySelectorAll('.hero-title, .section-header h2, .about-text h2, .big-cta');
+
+textToAnimate.forEach((text) => {
+    // Split the text into characters
+    const splitText = new SplitType(text, { types: 'chars, words' });
+    
+    // Make sure the container hides overflowing text during animation
+    text.style.overflow = 'hidden';
+
+    gsap.from(splitText.chars, {
+        opacity: 0,
+        y: 40,
+        rotationX: -90,
+        stagger: 0.02, // Delay between each character
+        duration: 0.8,
+        ease: "back.out(1.5)",
+        scrollTrigger: {
+            trigger: text,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+        }
+    });
+});
     </script>
 </body>
-
 </html>
