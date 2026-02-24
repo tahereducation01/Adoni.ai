@@ -32,10 +32,67 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Prevent scroll during load */
+        body.loading { height: 100vh; overflow: hidden; }
+
         h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
         a { text-decoration: none; }
 
-        /* ==================== 2. THE 3D CANVAS & FLASH ==================== */
+        /* ==================== 2. CINEMATIC LOADER ==================== */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000000; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            pointer-events: none;
+        }
+
+        .loader-svg {
+            width: 180px; height: 180px;
+            filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.4));
+        }
+
+        .loader-path {
+            fill: transparent;
+            stroke: url(#logoGradBright);
+            stroke-width: 2;
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            stroke-linecap: round;
+        }
+
+        .loader-circuit {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            stroke-width: 1.5;
+        }
+
+        .loader-core {
+            opacity: 0;
+            transform-origin: 60px 60px; /* Fixed anchor point for precise SVG scaling */
+            transform: scale(0);
+        }
+
+        .loader-text-wrap {
+            margin-top: 2rem;
+            overflow: hidden;
+            height: 20px;
+        }
+
+        .loader-text {
+            font-family: 'Space Grotesk', monospace;
+            color: var(--accent);
+            letter-spacing: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            transform: translateY(100%);
+        }
+
+        /* Initial states for Hero Reveal */
+        .navbar { opacity: 0; transform: translateY(-20px); }
+        #hero .content-box { opacity: 0; transform: scale(0.95); filter: blur(10px); }
+
+        /* ==================== 3. THE 3D CANVAS & FLASH ==================== */
         #webgl-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2;
             background: radial-gradient(circle at center, #050811 0%, #010203 100%);
@@ -47,12 +104,12 @@
             mix-blend-mode: screen;
         }
 
-        /* ==================== 3. NAVBAR & SVG LOGO ==================== */
+        /* ==================== 4. NAVBAR & SVG LOGO ==================== */
         .navbar { 
             position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 5vw; 
             display: flex; justify-content: space-between; align-items: center; 
             background: transparent; border-bottom: 1px solid transparent; z-index: 1000; 
-            transition: all 0.4s ease;
+            transition: background 0.4s ease, border 0.4s ease;
         }
         .navbar.scrolled {
             background: rgba(2, 3, 5, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border);
@@ -81,7 +138,7 @@
         }
         .nav-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
 
-        /* ==================== 4. LAYOUT & UI ==================== */
+        /* ==================== 5. LAYOUT & UI ==================== */
         .section-wrapper {
             position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
             padding: 15vh 5vw; z-index: 1; pointer-events: none; 
@@ -157,7 +214,34 @@
         }
     </style>
 </head>
-<body>
+<body class="loading">
+
+    <div id="loader">
+        <svg viewBox="0 0 120 120" class="loader-svg" id="loaderLogo">
+            <defs>
+                <linearGradient id="logoGradBright" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#00F7FF" />
+                    <stop offset="50%" stop-color="#9A4BFF" />
+                    <stop offset="100%" stop-color="#00FFD5" />
+                </linearGradient>
+            </defs>
+            <circle cx="60" cy="60" r="45" class="loader-path ring-1" />
+            <circle cx="60" cy="60" r="38" class="loader-path ring-2" />
+            <circle cx="60" cy="60" r="31" class="loader-path ring-3" />
+            
+            <path d="M60,30 L85,45 L85,75 L60,90 L35,75 L35,45 Z" stroke-linejoin="round" class="loader-path poly-core" />
+            
+            <path d="M40,50 L80,50" class="loader-path loader-circuit" />
+            <path d="M40,70 L80,70" class="loader-path loader-circuit" />
+            <path d="M50,40 L50,80" class="loader-path loader-circuit" />
+            <path d="M70,40 L70,80" class="loader-path loader-circuit" />
+
+            <circle cx="60" cy="60" r="8" fill="url(#logoGradBright)" class="loader-core" />
+        </svg>
+        <div class="loader-text-wrap">
+            <div class="loader-text">System Initialization</div>
+        </div>
+    </div>
 
     <canvas id="webgl-canvas"></canvas>
     <div class="warp-flash" id="warp-flash"></div>
@@ -170,11 +254,6 @@
                         <stop offset="0%" stop-color="#00D4FF" />
                         <stop offset="50%" stop-color="#8A2BE2" />
                         <stop offset="100%" stop-color="#00FFAA" />
-                    </linearGradient>
-                    <linearGradient id="logoGradBright" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#00F7FF" />
-                        <stop offset="50%" stop-color="#9A4BFF" />
-                        <stop offset="100%" stop-color="#00FFD5" />
                     </linearGradient>
                     <filter id="logoGlow" x="-30%" y="-30%" width="160%" height="160%">
                         <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
@@ -213,7 +292,7 @@
     </nav>
 
     <section class="section-wrapper" id="hero" style="height: 120vh;">
-        <div class="content-box gs-fade">
+        <div class="content-box">
             <h1 class="hero-title">INTELLIGENT<br>DIGITAL SOLUTIONS</h1>
             <p class="hero-sub">We architect intelligent software, AI automation, and high-performance digital infrastructure. Scroll to initiate sequence.</p>
         </div>
@@ -368,7 +447,7 @@
     </section>
 
     <section class="section-wrapper" id="footer" style="margin-top: 30vh; margin-bottom: 10vh;">
-        <div class="content-box glass-card gs-fade">
+        <div class="content-box glass-card gs-fade-scroll">
             <div class="footer-grid">
                 <div>
                     <h2 class="heading-lg" style="font-size: 4rem;">Let's Build.</h2>
@@ -434,8 +513,11 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Smooth Scroll (Crucial for the 3D Tunnel to feel buttery)
+        // 1. Smooth Scroll Setup (Paused Initially for Loading Sequence)
         const lenis = new Lenis({ lerp: 0.08 });
+        lenis.stop(); // Stop scroll immediately
+        window.scrollTo(0, 0);
+
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => { lenis.raf(time * 1000); });
         gsap.ticker.lagSmoothing(0);
@@ -459,7 +541,8 @@
             height = canvas.height = window.innerHeight;
         });
 
-        const camera = { x: 0, y: 0, z: 0, fov: 350 };
+        // Start camera slightly further back for the initial warp effect
+        const camera = { x: 0, y: 0, z: -2000, fov: 350 };
         const mouse = { x: 0, y: 0 };
         window.addEventListener('mousemove', (e) => {
             mouse.x = (e.clientX - width / 2) * 0.5;
@@ -551,9 +634,7 @@
         }
         animate();
 
-        // ==========================================
-        // GSAP SCROLL: THE 3D DIVE
-        // ==========================================
+        // Data Formations
         function formSphere() {
             nodes.forEach(n => {
                 const phi = Math.acos(-1 + (2 * Math.random()));
@@ -583,34 +664,84 @@
             });
         }
 
-        formSphere();
+        // ==========================================
+        // CINEMATIC LOADER TIMELINE
+        // ==========================================
+        window.onload = () => {
+            const tlLoader = gsap.timeline({
+                onComplete: () => {
+                    // Remove Loader from DOM
+                    document.getElementById('loader').style.display = 'none';
+                    document.body.classList.remove('loading');
+                    
+                    // Enable Scrolling
+                    lenis.start();
+                    
+                    // Initialize Scroll-based animations
+                    initScrollAnimations();
+                }
+            });
 
-        const diveTimeline = gsap.timeline({
-            scrollTrigger: {
-                trigger: "body",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1.5 
-            }
-        });
+            tlLoader.to(".loader-text", { y: 0, duration: 0.8, ease: "power3.out" })
+                    // Draw the SVG rings
+                    .to(".ring-1", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=0.4")
+                    .to(".ring-2", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
+                    .to(".ring-3", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
+                    // Draw the hexagon
+                    .to(".poly-core", { strokeDashoffset: 0, duration: 1.2, ease: "power3.inOut" }, "-=0.8")
+                    // Draw the circuit pattern lines staggered
+                    .to(".loader-circuit", { strokeDashoffset: 0, duration: 0.8, ease: "power2.out", stagger: 0.1 }, "-=0.6")
+                    // Pop the core dot in from the exact center
+                    .to(".loader-core", { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, "-=0.2")
+                    // Fill the hexagon to match the final logo state right before zoom
+                    .to(".poly-core", { fill: "rgba(2,3,5,0.9)", duration: 0.4 }, "-=0.2")
+                    
+                    // Hold for a fraction of a second
+                    .to(".loader-text", { opacity: 0, duration: 0.4 }, "+=0.2")
+                    
+                    // THE ZOOM: Scale loader SVG and push 3D camera forward rapidly
+                    .to("#loaderLogo", { scale: 15, opacity: 0, duration: 1.2, ease: "power4.in" }, "zoom")
+                    .to(camera, { z: 0, duration: 1.2, ease: "power3.inOut" }, "zoom")
+                    
+                    // Fade out the black screen
+                    .to("#loader", { opacity: 0, duration: 0.8, ease: "none" }, "-=0.5")
+                    // Form the initial sphere while fading out black screen
+                    .call(formSphere, [], "-=0.8")
+                    // Reveal UI components
+                    .to(".navbar", { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.3")
+                    .to("#hero .content-box", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.5, ease: "power3.out" }, "-=0.8");
+        };
 
-        diveTimeline.to(camera, { z: 2500, ease: "power2.in" }, 0)
-        .to("#warp-flash", { opacity: 0.8, duration: 0.1 }, 0.4)
-        .to("#warp-flash", { opacity: 0, duration: 0.3 }, 0.5)
-        .add(formDataTunnel, 0.4)
-        .to(camera, { z: 12000, ease: "none" }, 0.5)
-        .add(formCore, 0.85)
-        .to(camera, { z: 12200, ease: "power3.out" }, 0.85);
+        // ==========================================
+        // GSAP SCROLL: THE 3D DIVE
+        // ==========================================
+        function initScrollAnimations() {
+            const diveTimeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "body",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 1.5 
+                }
+            });
 
-        // UI Reveal Animations
-        gsap.utils.toArray('.gs-fade').forEach(el => {
-            gsap.from(el, { opacity: 0, filter: "blur(10px)", scale: 0.9, duration: 1, scrollTrigger: { trigger: el, start: "top 75%" }});
-        });
+            diveTimeline.to(camera, { z: 2500, ease: "power2.in" }, 0)
+            .to("#warp-flash", { opacity: 0.8, duration: 0.1 }, 0.4)
+            .to("#warp-flash", { opacity: 0, duration: 0.3 }, 0.5)
+            .add(formDataTunnel, 0.4)
+            .to(camera, { z: 12000, ease: "none" }, 0.5)
+            .add(formCore, 0.85)
+            .to(camera, { z: 12200, ease: "power3.out" }, 0.85);
 
-        gsap.utils.toArray('.gs-up').forEach(el => {
-            gsap.from(el, { opacity: 0, y: 100, rotationX: 10, duration: 1, scrollTrigger: { trigger: el, start: "top 85%" }});
-        });
+            // UI Reveal Animations
+            gsap.utils.toArray('.gs-fade-scroll').forEach(el => {
+                gsap.from(el, { opacity: 0, filter: "blur(10px)", scale: 0.9, duration: 1, scrollTrigger: { trigger: el, start: "top 75%" }});
+            });
 
+            gsap.utils.toArray('.gs-up').forEach(el => {
+                gsap.from(el, { opacity: 0, y: 100, rotationX: 10, duration: 1, scrollTrigger: { trigger: el, start: "top 85%" }});
+            });
+        }
     </script>
 </body>
 </html>
