@@ -3,366 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adoni AI</title>
+    <title>Adoni AI | 3D System Architecture</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
     <style>
-        /* ==================== 1. EXACT THEME VARIABLES ==================== */
+        /* ==================== 1. DEEP SPACE THEME ==================== */
         :root {
-            --primary: #00D4FF;
-            --secondary: #8A2BE2;
-            --accent: #00FFAA;
-            --dark: #0A0B0F;
-            --dark-card: #12141C;
-            --dark-light: #1A1D28;
-            --light: #FFFFFF; 
-            --gray: #C4CBE0; 
+            --bg-dark: #020305;
+            --text-main: #FFFFFF;
+            --text-muted: #8A9BB5;
+            --accent: #00F0FF;
+            --accent-glow: rgba(0, 240, 255, 0.4);
+            --glass-bg: rgba(5, 7, 12, 0.5);
+            --glass-border: rgba(0, 240, 255, 0.15);
             --gradient-primary: linear-gradient(135deg, #00D4FF 0%, #8A2BE2 50%, #00FFAA 100%);
             --gradient-bright: linear-gradient(135deg, #00F7FF 0%, #9A4BFF 50%, #00FFD5 100%);
-            --neon-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
-            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body { 
-            background-color: var(--dark); 
-            color: var(--light); 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden; 
+            -webkit-font-smoothing: antialiased;
         }
-        h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; }
+
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
         a { text-decoration: none; }
 
-        .gradient-text {
-            background: var(--gradient-bright);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
+        /* ==================== 2. THE 3D CANVAS & FLASH ==================== */
+        #webgl-canvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2;
+            background: radial-gradient(circle at center, #050811 0%, #010203 100%);
         }
 
-        /* ==================== 2. DEEP SPACE & FALLING STARS ==================== */
-        .space-background {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -6;
-            background-color: #050608; 
-        }
-        
-        .nebula {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -5;
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(138, 43, 226, 0.18), transparent 45%),
-                radial-gradient(circle at 85% 30%, rgba(0, 212, 255, 0.15), transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(0, 255, 170, 0.08), transparent 45%);
-            filter: blur(40px);
-            animation: nebulaFloat 20s ease-in-out infinite alternate;
-        }
-        @keyframes nebulaFloat {
-            0% { transform: scale(1) translate(0, 0); opacity: 0.8; }
-            100% { transform: scale(1.1) translate(2%, 2%); opacity: 1; }
+        .warp-flash {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--accent); opacity: 0; z-index: -1; pointer-events: none;
+            mix-blend-mode: screen;
         }
 
-        .stars-distant, .stars-mid, .stars-near { position: fixed; top: -50%; left: -50%; width: 200vw; height: 200vh; pointer-events: none; }
-        .stars-distant { z-index: -4; opacity: 0.4; background-image: radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)), radial-gradient(1px 1px at 150px 70px, #fff, rgba(0,0,0,0)), radial-gradient(1px 1px at 250px 140px, #fff, rgba(0,0,0,0)); background-size: 300px 300px; animation: cosmicDrift 200s linear infinite; }
-        .stars-mid { z-index: -4; opacity: 0.6; background-image: radial-gradient(1.5px 1.5px at 50px 150px, #00D4FF, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 180px 40px, #fff, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 350px 210px, #8A2BE2, rgba(0,0,0,0)); background-size: 400px 400px; animation: cosmicDrift 150s linear infinite reverse; }
-        .stars-near { z-index: -4; opacity: 0.9; background-image: radial-gradient(2px 2px at 90px 80px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 280px 250px, #00FFAA, rgba(0,0,0,0)), radial-gradient(2.5px 2.5px at 400px 100px, #fff, rgba(0,0,0,0)); background-size: 500px 500px; animation: cosmicDrift 100s linear infinite; }
-        @keyframes cosmicDrift { 100% { transform: rotate(360deg); } }
-
-        .meteor-shower { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; pointer-events: none; overflow: hidden; }
-        .meteor { position: absolute; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(0, 212, 255, 0.8) 20%, transparent 100%); border-radius: 50%; filter: drop-shadow(0 0 10px #00F7FF); transform: rotate(-45deg); opacity: 0; }
-        @keyframes meteorFall { 
-    0% { transform: rotate(-45deg) translateX(0); opacity: 0; } 
-    10% { opacity: 1; } 
-    60% { opacity: 0; } 
-    100% { transform: rotate(-45deg) translateX(-1500px); opacity: 0; } 
-}
-        /* ==================== 3. GRAND 3D ORBITAL SYSTEM (Enhanced) ==================== */
-        .orbital-system { 
-            position: fixed; top: 50%; left: 50%; 
-            transform: translate(-50%, -50%) rotateX(60deg); /* Reduced tilt for better visibility */
-            transform-style: preserve-3d; z-index: -2; pointer-events: none; 
-            width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; mix-blend-mode: screen; 
+        /* ==================== 3. NAVBAR & SVG LOGO ==================== */
+        .navbar { 
+            position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 5vw; 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: transparent; border-bottom: 1px solid transparent; z-index: 1000; 
+            transition: all 0.4s ease;
         }
-        .core { 
-            width: 200px; height: 200px; /* Made the core significantly larger */
-            border-radius: 50%; 
-            background: radial-gradient(circle at 40% 40%, #ffffff 0%, #00F7FF 30%, #8A2BE2 70%, transparent 100%); 
-            box-shadow: 0 0 100px #00F7FF, 0 0 180px #8A2BE2, inset 0 0 40px #fff; 
-            transform: rotateX(-60deg); /* Counter-rotation to keep it spherical */
-            animation: corePulse 4s ease-in-out infinite alternate; 
-        }
-        @keyframes corePulse { 
-            0% { box-shadow: 0 0 80px #00F7FF, 0 0 140px #8A2BE2, inset 0 0 30px #fff; transform: rotateX(-60deg) scale(0.95); } 
-            100% { box-shadow: 0 0 120px #00F7FF, 0 0 220px #8A2BE2, 0 0 300px rgba(0,212,255,0.4), inset 0 0 60px #fff; transform: rotateX(-60deg) scale(1.05); } 
+        .navbar.scrolled {
+            background: rgba(2, 3, 5, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border);
         }
         
-        .orbit { position: absolute; border-radius: 50%; transform-style: preserve-3d; animation: spinOrbit linear infinite; }
-        
-        /* Massively expanded orbital rings */
-        .orbit-1 { width: 700px; height: 700px; border: 2px solid rgba(0, 247, 255, 0.4); animation-duration: 30s; box-shadow: 0 0 30px rgba(0,247,255,0.2) inset, 0 0 20px rgba(0,247,255,0.2); }
-        .orbit-2 { width: 1100px; height: 1100px; border: 2px dashed rgba(138, 43, 226, 0.6); animation-duration: 50s; }
-        .orbit-3 { width: 1600px; height: 1600px; border: 1px solid rgba(0, 255, 170, 0.2); animation-duration: 90s; box-shadow: 0 0 40px rgba(0,255,170,0.1); }
-        
-        .node { position: absolute; border-radius: 50%; transform: translateX(-50%) rotateX(-60deg); background: #fff; box-shadow: 0 0 25px currentColor, 0 0 50px currentColor; }
-        .node-1 { width: 24px; height: 24px; top: -12px; left: 50%; color: #00F7FF; }
-        .node-2 { width: 40px; height: 40px; bottom: -20px; left: 50%; color: #8A2BE2; }
-        .node-3 { width: 18px; height: 18px; left: -9px; top: 50%; transform: translateY(-50%) rotateX(-60deg); color: #00FFAA; }
-        @keyframes spinOrbit { 100% { transform: rotate(360deg); } }
-
-        /* ==================== 4. GLASS NAVBAR & CUSTOM SVG LOGO ==================== */
-        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 5vw; display: flex; justify-content: space-between; align-items: center; background: rgba(10, 11, 15, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
         .nav-brand { display: flex; align-items: center; text-decoration: none; }
         .logo-text { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 1.8rem; margin-left: 12px; display: flex; align-items: center; }
         .brand-adoni { color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .brand-ai { background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-left: 6px; }
         .brand-pulse { color: #00FFAA; font-size: 2.5rem; margin-left: 2px; position: relative; top: -5px; animation: pulseDot 1.5s infinite; text-shadow: 0 0 15px #00FFAA; }
         @keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.3); } }
+        
         .logo-svg { width: 45px; height: 45px; filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.6)); animation: floatLogo 6s ease-in-out infinite; }
         @keyframes floatLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); filter: drop-shadow(0 0 20px #8A2BE2); } }
         .circuit-line-1, .circuit-line-2, .circuit-line-3, .circuit-line-4 { animation: circuitFlow 4s linear infinite; }
         .circuit-diag-1, .circuit-diag-3 { animation: circuitFlow 3s linear infinite reverse; }
         .circuit-diag-2, .circuit-diag-4 { animation: circuitFlow 3.5s linear infinite; }
         @keyframes circuitFlow { 0% { stroke-dashoffset: 20; } 100% { stroke-dashoffset: 0; } }
-        .nav-links { display: flex; gap: 2rem; }
-        .nav-links a { color: var(--light); font-weight: 500; font-size: 1rem; transition: 0.3s; }
-        .nav-links a:hover { color: var(--primary); }
-        .nav-btn { background: var(--gradient-primary); padding: 0.6rem 1.5rem; border-radius: 8px; color: #fff; font-weight: 600; font-family: 'Space Grotesk'; border: none; cursor: pointer; transition: 0.3s; box-shadow: var(--neon-shadow); }
-        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4); }
 
-        /* ==================== 5. HERO & PORTAL ==================== */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 5vw; }
-        .hero-title { font-size: 4.5rem; text-transform: uppercase; letter-spacing: 2px; line-height: 1.1; margin-bottom: 1rem; }
-        .hero-sub { font-size: 1.3rem; color: var(--gray); max-width: 600px; margin-bottom: 2rem; }
-        .zoom-section { height: 100vh; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-        .portal-gateway { width: 350px; height: 350px; border-radius: 50%; background: rgba(18, 20, 28, 0.7); backdrop-filter: blur(8px); border: 2px solid var(--glass-border); display: flex; justify-content: center; align-items: center; z-index: 2; box-shadow: 0 0 60px var(--neon-shadow), inset 0 0 40px var(--neon-shadow); }
-        .portal-gateway::before { content: ''; position: absolute; inset: -4px; z-index: -1; border-radius: 50%; background: var(--gradient-primary); animation: spin 4s linear infinite; }
-        .portal-text { font-size: 1.5rem; font-weight: 600; color: #fff; font-family: 'Space Grotesk'; letter-spacing: 2px; text-shadow: 0 0 10px var(--primary); }
-        .inside-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 1; opacity: 0; width: 90%; max-width: 800px; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* ==================== 6. ABOUT TAHER BOHRA ==================== */
-        .about-section { padding: 15vh 5vw; background: linear-gradient(180deg, transparent 0%, var(--dark-card) 100%); position: relative; z-index: 2; }
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1200px; margin: 0 auto; align-items: center; }
-        .about-text h2 { font-size: 3rem; margin-bottom: 1.5rem; }
-        .about-text p { font-size: 1.1rem; color: var(--gray); margin-bottom: 1.5rem; line-height: 1.7; }
-        .timeline { margin-top: 3rem; border-left: 2px solid var(--glass-border); padding-left: 20px; }
-        .timeline-item { position: relative; margin-bottom: 2rem; }
-        .timeline-item::before { content: ''; position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 10px var(--primary); }
-        .timeline-date { color: var(--primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.3rem; }
-        .timeline-title { font-size: 1.3rem; color: var(--light); font-weight: 600; font-family: 'Space Grotesk'; }
-        .timeline-desc { color: var(--gray); font-size: 0.95rem; margin-top: 0.5rem; }
-        
-        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 2rem; }
-        .skill-badge { background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2); padding: 8px 16px; border-radius: 50px; color: var(--primary); font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
-        .skill-badge:hover { transform: translateY(-3px); box-shadow: var(--neon-shadow); background: rgba(0, 212, 255, 0.2); }
-
-        /* ==================== 7. HORIZONTAL CAPABILITIES ==================== */
-        .horizontal-section { height: 100vh; display: flex; align-items: center; overflow: hidden; background: var(--dark-card); }
-        .horizontal-track { display: flex; gap: 4vw; padding: 0 5vw; width: max-content; }
-        
-        .service-card { 
-            width: 450px; height: 60vh; min-height: 480px; 
-            background: linear-gradient(145deg, rgba(18, 20, 28, 0.9) 0%, rgba(10, 11, 15, 0.95) 100%); 
-            backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); 
-            border-top: 2px solid var(--primary); border-radius: 24px; 
-            padding: 3.5rem 3rem; display: flex; flex-direction: column; justify-content: flex-end; 
-            position: relative; overflow: hidden; transition: 0.4s; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.02);
+        .nav-links { display: flex; gap: 3rem; }
+        .nav-links a { color: var(--text-muted); font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .nav-links a:hover { color: var(--text-main); text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .nav-btn {
+            background: transparent; padding: 0.6rem 1.5rem; border-radius: 8px; color: var(--accent); 
+            font-weight: 600; font-family: 'Space Grotesk'; border: 1px solid var(--accent); transition: 0.3s; cursor: pointer;
         }
-        .service-card::before {
-            content: ''; position: absolute; top: -50px; right: -50px; width: 250px; height: 250px;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%); border-radius: 50%; z-index: 0; transition: 0.5s ease;
-        }
-        .service-card:hover { 
-            transform: translateY(-15px); box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,212,255,0.05); 
-            border-color: rgba(0, 212, 255, 0.3); border-top: 2px solid var(--accent);
-        }
-        .service-card:hover::before { background: radial-gradient(circle, rgba(0, 255, 170, 0.2) 0%, transparent 70%); }
-        .service-number { 
-            position: absolute; top: 1.5rem; right: 2rem; font-size: 8rem; font-weight: 800; 
-            color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.1); transition: 0.4s; z-index: 0; 
-        }
-        .service-card:hover .service-number { 
-            -webkit-text-stroke: 1px rgba(0,255,170,0.4); transform: scale(1.05) translate(-5px, 5px); text-shadow: 0 0 20px rgba(0,255,170,0.2);
-        }
-        .service-title { font-size: 2.2rem; margin-bottom: 1rem; z-index: 1; font-family: 'Space Grotesk'; color: var(--light); }
-        .service-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--gradient-primary); margin-top: 15px; transition: 0.4s; }
-        .service-card:hover .service-title::after { width: 100px; }
-        .service-desc { color: var(--gray); font-size: 1.15rem; z-index: 1; line-height: 1.6; }
+        .nav-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
 
-        /* ==================== 8. STACKING PROJECTS ==================== */
-        .portfolio-section { padding: 15vh 5vw; background: linear-gradient(180deg, var(--dark-card) 0%, var(--dark) 100%); }
-        .section-header { text-align: center; margin-bottom: 5rem; }
-        .cards-container { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 10vh; padding-bottom: 10vh; }
-        .project-card { position: sticky; top: 15vh; height: 70vh; background: var(--dark-light); border: 1px solid var(--glass-border); border-radius: 30px; padding: 4rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 -30px 50px rgba(0,0,0,0.8); transform-origin: top center; }
-        #card-1 { border-top: 2px solid var(--primary); } 
-        #card-2 { border-top: 2px solid var(--secondary); } 
-        #card-3 { border-top: 2px solid var(--accent); }
-        #card-4 { border-top: 2px solid #FF44EE; }
-        .project-tags { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-        .project-title { font-size: 3rem; margin-bottom: 1rem; max-width: 800px; }
-        .project-tech { font-size: 1rem; color: var(--gray); font-family: monospace; }
-        .project-link-btn { display: inline-flex; align-items: center; margin-top: 1rem; color: var(--primary); font-weight: 600; transition: 0.3s; }
-        .project-link-btn:hover { color: var(--accent); transform: translateX(5px); }
+        /* ==================== 4. LAYOUT & UI ==================== */
+        .section-wrapper {
+            position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 15vh 5vw; z-index: 1; pointer-events: none; 
+        }
+        .content-box { pointer-events: auto; text-align: center; width: 100%; }
 
-        /* ==================== 9. MARQUEE TESTIMONIALS ==================== */
-        .testimonials-section { padding: 10vh 0; background: transparent; overflow: hidden; position: relative; z-index: 2; }
-        .testimonial-slider { width: 100%; display: flex; align-items: center; overflow: hidden; position: relative; }
-        .testimonial-slider::before, .testimonial-slider::after { content: ''; position: absolute; top: 0; width: 15vw; height: 100%; z-index: 2; }
-        .testimonial-slider::before { left: 0; background: linear-gradient(to right, var(--dark) 0%, transparent 100%); }
-        .testimonial-slider::after { right: 0; background: linear-gradient(to left, var(--dark) 0%, transparent 100%); }
-        .testimonial-track { display: flex; gap: 30px; padding: 20px; width: max-content; animation: scrollMarquee 40s linear infinite; }
-        .testimonial-card { width: 450px; background: rgba(18, 20, 28, 0.8); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2.5rem; transition: 0.3s; }
-        .testimonial-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--neon-shadow); }
-        .quote-icon { font-size: 2rem; color: rgba(0, 212, 255, 0.2); margin-bottom: 1rem; }
-        .testimonial-text { font-style: italic; color: var(--gray); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.6; }
-        .client-info { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; }
-        .client-name { font-weight: 600; color: var(--light); font-size: 1.1rem; }
-        .client-company { color: var(--primary); font-size: 0.9rem; }
-        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 15px)); } }
+        .hero-title { font-size: 5vw; line-height: 1; margin-bottom: 1.5rem; letter-spacing: -1px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .hero-sub { font-size: 1.3rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
 
-       /* ==================== 10. FIXED CURTAIN FOOTER & FORM ==================== */
-.footer-wrapper { 
-    position: relative; 
-    height: auto; 
-    min-height: 100vh; 
-    background-color: var(--dark-card);
-    z-index: 1; 
-    /* Removed clip-path to allow natural flow */
-}
+        .glass-card {
+            background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; padding: 4rem; max-width: 1100px; margin: 0 auto;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 20px rgba(0, 240, 255, 0.05);
+            text-align: left;
+        }
 
-.footer-section { 
-    position: relative; /* Changed from fixed */
-    width: 100%; 
-    min-height: 100vh; 
-    background-color: var(--dark-card); 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    padding: 10vh 5vw 5vh 5vw; /* Adjusted top padding to breathe */
-    z-index: 1; /* Changed from -1 to sit above the background naturally */
-}
+        .section-tag { color: var(--accent); font-family: 'Fira Code', monospace; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1.5rem; display: block; }
+        .heading-lg { font-size: 3.5rem; margin-bottom: 1.5rem; line-height: 1.1; letter-spacing: -1px; }
+        .text-body { font-size: 1.1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem; max-width: 800px;}
+
+        /* --- AGENCY ABOUT --- */
+        .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 4rem; align-items: center; }
+        .skills-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 1rem; }
+        .skill-badge { background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); padding: 10px 20px; border-radius: 8px; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
+
+        /* --- SERVICES GRID --- */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .service-item { border: 1px solid var(--glass-border); padding: 2rem; border-radius: 12px; background: rgba(255,255,255,0.02); transition: 0.3s; }
+        .service-item:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,240,255,0.05); }
+        .service-number { font-size: 3rem; font-weight: 800; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.1); margin-bottom: 1rem; display: block;}
+        .service-title { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-main); }
+
+        /* --- PROJECTS --- */
+        .project-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 2.5rem 0; border-bottom: 1px solid var(--glass-border); flex-wrap: wrap; gap: 1rem;}
+        .proj-name { font-size: 2rem; margin-bottom: 0.5rem; }
+        .proj-tech { font-family: monospace; color: var(--accent); font-size: 0.9rem; margin-bottom: 1rem;}
+        .project-link-btn { display: inline-flex; align-items: center; color: var(--text-main); font-weight: 600; font-size: 0.9rem; border-bottom: 1px solid var(--accent); padding-bottom: 2px; transition: 0.3s;}
+        .project-link-btn:hover { color: var(--accent); }
+
+        /* --- TESTIMONIALS --- */
+        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .testi-card { border: 1px solid var(--glass-border); padding: 2rem; border-radius: 12px; background: rgba(255,255,255,0.02); transition: 0.3s; }
+        .testi-card:hover { border-color: var(--accent); }
+        .quote-icon { font-size: 1.5rem; color: var(--accent-glow); margin-bottom: 1rem; }
+        .client-info { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: 1rem; }
         
-        .big-cta { font-size: 7vw; font-weight: 800; color: transparent; -webkit-text-stroke: 2px rgba(255,255,255,0.1); background: var(--gradient-bright); -webkit-background-clip: text; transition: 0.5s; font-family: 'Space Grotesk'; line-height: 1; margin-bottom: 2rem;}
-        .big-cta:hover { -webkit-text-fill-color: transparent; text-shadow: 0 0 40px rgba(0, 212, 255, 0.6); }
+        /* --- FOOTER & FORM --- */
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;}
+        .contact-info p, .contact-info a { color: var(--text-muted); font-size: 1.1rem; display: block; margin-bottom: 1rem; transition: 0.3s; }
+        .contact-info a:hover { color: var(--accent); }
         
-        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; margin-bottom: auto; align-items: start;}
-        
-        .contact-info h4 { font-size: 1.5rem; margin-bottom: 1.5rem; }
-        .contact-info a, .contact-info p { color: var(--gray); font-size: 1.2rem; display: block; margin-bottom: 0.8rem; transition: 0.3s; }
-        .contact-info a:hover { color: var(--primary); }
-        
-        /* High Visibility Form UI */
         .custom-form input, .custom-form textarea, .custom-form select { 
-            width: 100%; 
-            background: transparent; 
-            border: none; 
-            border-bottom: 2px solid rgba(255,255,255,0.15); 
-            color: #FFFFFF !important; 
-            padding: 1.2rem 0; 
-            margin-bottom: 1.8rem; 
-            font-size: 1.1rem; 
-            outline: none; transition: 0.3s; font-family: 'Inter', sans-serif; 
+            width: 100%; background: transparent; border: none; border-bottom: 2px solid var(--glass-border); 
+            color: #FFFFFF !important; padding: 1rem 0; margin-bottom: 1.5rem; font-size: 1rem; outline: none; transition: 0.3s; font-family: 'Inter', sans-serif; 
         }
-        .custom-form input::placeholder, .custom-form textarea::placeholder {
-            color: rgba(255, 255, 255, 0.6) !important; 
-        }
-        .custom-form input:focus, .custom-form textarea:focus, .custom-form select:focus { 
-            border-bottom-color: var(--primary); 
-            box-shadow: 0 10px 10px -10px var(--primary); 
-        }
-        
-        /* Dropdown Styling */
-        .custom-form select {
-            color: rgba(255, 255, 255, 0.6) !important; /* Placeholder color when unselected */
-            cursor: pointer;
-            appearance: none;
-        }
-        .custom-form select option {
-            background-color: var(--dark-card);
-            color: #FFFFFF;
-            padding: 1rem;
-        }
-        .custom-form select:valid {
-            color: #FFFFFF !important; /* White color when option is selected */
-        }
+        .custom-form input::placeholder, .custom-form textarea::placeholder { color: rgba(255, 255, 255, 0.4) !important; }
+        .custom-form input:focus, .custom-form textarea:focus, .custom-form select:focus { border-bottom-color: var(--accent); }
+        .custom-form select { color: rgba(255, 255, 255, 0.4) !important; cursor: pointer; appearance: none; }
+        .custom-form select option { background-color: var(--bg-dark); color: #FFFFFF; }
+        .custom-form select:valid { color: #FFFFFF !important; }
 
-        .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; color: var(--gray); margin-top: 2rem;}
-        .social-links a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); color: #fff; margin-left: 1rem; transition: 0.3s; }
-        .social-links a:hover { background: var(--gradient-primary); transform: translateY(-3px); box-shadow: var(--neon-shadow); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--glass-border); padding-top: 2rem; color: var(--text-muted); margin-top: 3rem; font-size: 0.9rem;}
+        .social-links a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); color: #fff; margin-left: 0.5rem; transition: 0.3s; text-decoration: none;}
+        .social-links a:hover { background: var(--accent); color: #000; transform: translateY(-3px); }
 
-        /* ==================== RESPONSIVE ==================== */
-        @media (max-width: 1100px) {
-            .footer-grid { gap: 3rem; }
-        }
         @media (max-width: 900px) {
             .hero-title { font-size: 3rem; }
-            .orbital-system { transform: translate(-50%, -50%) rotateX(60deg) scale(0.4); } 
             .about-grid, .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
-            .service-card { width: 85vw; height: auto; min-height: 400px; padding: 2.5rem; }
-            .project-card { padding: 2rem; height: auto; min-height: 60vh; }
-            .project-title { font-size: 2rem; }
-            .big-cta { font-size: 12vw; margin-bottom: 1rem; }
             .nav-links { display: none; }
-            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
-            .social-links a { margin: 0 0.5rem; }
-            .footer-section { padding-top: 12vh; overflow-y: auto; justify-content: flex-start;}
+            .glass-card { padding: 2rem; }
+            .about-grid > div:last-child { border-left: none; padding-left: 0; }
         }
-        /* ==================== 11. CUSTOM SPACE CURSOR ==================== */
-/* Hide the default cursor across the page, except on inputs where we need it */
-body, a, button, .service-card { 
-    cursor: none !important; 
-}
-input, textarea, select { 
-    cursor: auto !important; 
-}
-
-.custom-cursor {
-    position: fixed;
-    top: 0; 
-    left: 0;
-    width: 15px; 
-    height: 15px;
-    background: var(--primary);
-    border-radius: 50%;
-    pointer-events: none; /* Prevents cursor from blocking clicks */
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    mix-blend-mode: screen;
-    box-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
-    transition: width 0.3s, height 0.3s, background-color 0.3s, box-shadow 0.3s, border 0.3s;
-}
-
-/* State when hovering over clickable elements */
-.custom-cursor.hovered {
-    width: 60px; 
-    height: 60px;
-    background: rgba(0, 255, 170, 0.1);
-    box-shadow: 0 0 30px rgba(0, 255, 170, 0.4);
-    backdrop-filter: blur(2px);
-    border: 1px solid var(--accent);
-}
     </style>
 </head>
 <body>
-    <div class="custom-cursor"></div>
-    <div class="space-background"></div>
-    <div class="nebula"></div>
-    
-    <div class="stars-distant" id="stars-1"></div>
-    <div class="stars-mid" id="stars-2"></div>
-    <div class="stars-near" id="stars-3"></div>
-    
-  
 
-    <div class="orbital-system" id="orbital-system">
-        <div class="core"></div>
-        <div class="orbit orbit-1"><div class="node node-1"></div></div>
-        <div class="orbit orbit-2"><div class="node node-2"></div></div>
-        <div class="orbit orbit-3"><div class="node node-3"></div></div>
-    </div>
+    <canvas id="webgl-canvas"></canvas>
+    <div class="warp-flash" id="warp-flash"></div>
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <a href="#" class="nav-brand">
             <svg viewBox="0 0 120 120" class="logo-svg">
                 <defs>
@@ -387,7 +187,7 @@ input, textarea, select {
                 <circle cx="60" cy="60" r="45" stroke="url(#logoGrad)" stroke-width="1.5" fill="none" opacity="0.3" class="orbital-ring-1" />
                 <circle cx="60" cy="60" r="38" stroke="url(#logoGrad)" stroke-width="1.2" fill="none" opacity="0.4" class="orbital-ring-2" />
                 <circle cx="60" cy="60" r="31" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.5" class="orbital-ring-3" />
-                <path d="M60,30 L85,45 L85,75 L60,90 L35,75 L35,45 Z" fill="rgba(10,11,15,0.9)" stroke="url(#logoGradBright)" stroke-width="3" stroke-linejoin="round" filter="url(#logoGlow)" />
+                <path d="M60,30 L85,45 L85,75 L60,90 L35,75 L35,45 Z" fill="rgba(2,3,5,0.9)" stroke="url(#logoGradBright)" stroke-width="3" stroke-linejoin="round" filter="url(#logoGlow)" />
                 <g class="circuit-pattern">
                     <path d="M40,50 L80,50" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2" class="circuit-line-1" />
                     <path d="M40,70 L80,70" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,2" class="circuit-line-2" />
@@ -397,225 +197,190 @@ input, textarea, select {
                 <circle cx="60" cy="60" r="8" fill="url(#logoGrad)" class="central-hub">
                     <animate attributeName="r" values="8;9;8" dur="2s" repeatCount="indefinite" />
                 </circle>
-                <text x="60" y="65" text-anchor="middle" font-family="'Space Grotesk'" font-size="9" font-weight="800" fill="#0A0B0F">AI</text>
+                <text x="60" y="65" text-anchor="middle" font-family="'Space Grotesk'" font-size="9" font-weight="800" fill="#020305">AI</text>
             </svg>
             <span class="logo-text">
                 <span class="brand-adoni">ADONI</span><span class="brand-ai">AI</span><span class="brand-pulse">.</span>
             </span>
         </a>
         <div class="nav-links">
-            <a href="#about">About</a>
+            <a href="#about">Agency</a>
             <a href="#services">Services</a>
-            <a href="#portfolio">Projects</a>
+            <a href="#portfolio">Deployments</a>
             <a href="#testimonials">Clients</a>
         </div>
         <a href="#footer"><button class="nav-btn">Start Project</button></a>
     </nav>
 
-    <section class="hero" id="hero-section">
-        <h1 class="hero-title gradient-text" id="hero-title">INTELLIGENT DIGITAL SOLUTIONS</h1>
-        <p class="hero-sub" id="hero-sub">We build intelligent software, AI automation, and futuristic digital experiences. Scroll to initiate sequence.</p>
-    </section>
-
-    <section class="zoom-section" id="zoom-container">
-        <div class="portal-gateway" id="portal"><div class="portal-text" id="portal-text">Enter System</div></div>
-        <div class="inside-content" id="inside-content">
-            <h2 class="gradient-text" style="font-size: 3rem;">Welcome to Adoni AI</h2>
-            <p style="color: var(--gray); font-size: 1.2rem; margin: 1.5rem auto;">You have successfully navigated the warp gate into our central nervous system.</p>
+    <section class="section-wrapper" id="hero" style="height: 120vh;">
+        <div class="content-box gs-fade">
+            <h1 class="hero-title">INTELLIGENT<br>DIGITAL SOLUTIONS</h1>
+            <p class="hero-sub">We architect intelligent software, AI automation, and high-performance digital infrastructure. Scroll to initiate sequence.</p>
         </div>
     </section>
 
-    <section class="about-section" id="about">
-        <div class="section-header scroll-fade">
-            <h2 class="gradient-text" style="font-size: 3.5rem;">The Architect</h2>
-        </div>
-        <div class="about-grid">
-            <div class="about-text scroll-fade">
-                <h2>Hi, I'm <span class="gradient-text" style="font-size: inherit;">Taher Bohra</span></h2>
-                <p>I am the <strong>Founder of Adoni AI</strong> and a passionate Software Developer based in Pune, India. I build intelligent, scalable solutions that bridge the gap between complex problems and elegant digital experiences.</p>
-                <p>My journey into technology began with a deep curiosity about how things work behind the screen. Today, I combine academic rigor with hands-on professional experience to architect award-winning web applications and AI tools.</p>
-                
-                <div class="skills-container mt-4">
-                    <span class="skill-badge">Node.js / Express</span>
-                    <span class="skill-badge">React / HTML5</span>
-                    <span class="skill-badge">Python / AI</span>
-                    <span class="skill-badge">MongoDB / SQL</span>
+    <section class="section-wrapper" id="about" style="margin-top: 30vh;">
+        <div class="content-box glass-card gs-up">
+            <span class="section-tag">// The Agency</span>
+            <div class="about-grid">
+                <div>
+                    <h2 class="heading-lg" style="font-size: 3rem;">Engineering the future of digital logic.</h2>
+                    <p class="text-body">Adoni AI is a premier software development and artificial intelligence agency based in Pune, India.</p>
+                    <p class="text-body">Founded by Taher Bohra, our mission is to bridge the gap between complex algorithmic problems and elegant, highly scalable enterprise applications. We don't just write code; we architect robust systems designed for high availability, security, and seamless user experiences.</p>
                 </div>
-            </div>
 
-            <div class="timeline scroll-fade">
-                <div class="timeline-item">
-                    <div class="timeline-date">2025 – Present</div>
-                    <div class="timeline-title">Software Developer Intern</div>
-                    <p class="timeline-desc">Elite Infosoft, Pune. Working on full-stack web development, collaborating with senior developers, and deploying real-world projects.</p>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2025 – Present</div>
-                    <div class="timeline-title">Founder & Lead Dev</div>
-                    <p class="timeline-desc">Adoni AI. Designing responsive websites, SaaS platforms, and AI automation systems for independent clients.</p>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2022 – 2025</div>
-                    <div class="timeline-title">BCA Degree</div>
-                    <p class="timeline-desc">Studied core computer science, software engineering, and data structures while actively participating in coding challenges.</p>
+                <div style="border-left: 1px solid rgba(255,255,255,0.1); padding-left: 3rem; height: 100%;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-main); font-family: 'Space Grotesk';">Core Stack</h3>
+                    <div class="skills-container">
+                        <span class="skill-badge">Node.js / Express</span>
+                        <span class="skill-badge">React Ecosystem</span>
+                        <span class="skill-badge">Python / AI Models</span>
+                        <span class="skill-badge">MongoDB / SQL</span>
+                        <span class="skill-badge">AWS Infrastructure</span>
+                        <span class="skill-badge">Docker / Pipelines</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="horizontal-section" id="services">
-        <div class="horizontal-track" id="horizontal-track">
-            <div style="width: 80vw; max-width: 400px; display: flex; flex-direction: column; justify-content: center;">
-                <h2 class="gradient-text" style="font-size: 4rem;">Our<br>Expertise</h2>
-                <p style="color: var(--gray); margin-top: 1rem; font-size: 1.2rem;">Specialized orbital systems for the modern digital landscape.</p>
-            </div>
+    <section class="section-wrapper" id="services" style="margin-top: 30vh;">
+        <div class="content-box glass-card gs-up">
+            <span class="section-tag">// Capabilities</span>
+            <h2 class="heading-lg">Our Expertise.</h2>
+            <p class="text-body">Specialized orbital systems for the modern digital landscape.</p>
             
-            <div class="service-card">
-                <div class="service-number">01</div>
-                <h3 class="service-title">AI / ML<br>Development</h3>
-                <p class="service-desc">Building custom machine learning models, neural networks, and AI-powered applications for various industries.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-number">02</div>
-                <h3 class="service-title">Full-Stack<br>Development</h3>
-                <p class="service-desc">End-to-end development of scalable web applications using React, Node.js, Python, and modern cloud technologies.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-number">03</div>
-                <h3 class="service-title">Mobile<br>Development</h3>
-                <p class="service-desc">Designing and building cross-platform mobile applications using React Native, Flutter, and native iOS/Android frameworks.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-number">04</div>
-                <h3 class="service-title">Cloud &<br>DevOps</h3>
-                <p class="service-desc">Implementing CI/CD pipelines, Docker containerization, and AWS infrastructure for highly available applications.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-number">05</div>
-                <h3 class="service-title">Digital<br>Marketing</h3>
-                <p class="service-desc">Comprehensive SEO, Social Media campaigns, and PR strategies to drastically improve your online visibility.</p>
-            </div>
-            <div style="width: 5vw;"></div>
-        </div>
-    </section>
-
-    <section class="portfolio-section" id="portfolio">
-        <div class="section-header scroll-fade">
-            <h2 class="gradient-text" style="font-size: 4rem;">Featured Projects</h2>
-            <p style="color: var(--gray); font-size: 1.2rem; margin-top: 1rem;">Architecting digital solutions across terrestrial industries.</p>
-        </div>
-        <div class="cards-container">
-            <div class="project-card" id="card-1">
-                <div>
-                    <div class="project-tags"><span class="tag">Full-Stack</span><span class="tag">Node.js</span></div>
-                    <h3 class="project-title">Deadline Reminder System</h3>
-                    <p style="color: var(--gray); font-size: 1.1rem; max-width: 600px;">A comprehensive task management system with automated email reminders, deadline tracking, and priority management.</p>
-                    <a href="#" class="project-link-btn">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+            <div class="services-grid">
+                <div class="service-item">
+                    <span class="service-number">01</span>
+                    <h3 class="service-title">AI / ML</h3>
+                    <p class="text-body" style="font-size: 0.95rem;">Building custom machine learning models, neural networks, and AI applications.</p>
                 </div>
-                <div class="project-tech"><span style="color: var(--primary);">Stack:</span> Node.js, Express, MongoDB</div>
-            </div>
-            <div class="project-card" id="card-2">
-                <div>
-                    <div class="project-tags"><span class="tag">AI/ML</span><span class="tag">React</span></div>
-                    <h3 class="project-title">AI Resume Creator</h3>
-                    <p style="color: var(--gray); font-size: 1.1rem; max-width: 600px;">Intelligent resume builder using AI to optimize content, suggest improvements, and match job descriptions automatically.</p>
-                    <a href="#" class="project-link-btn" style="color: var(--secondary);">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+                <div class="service-item">
+                    <span class="service-number">02</span>
+                    <h3 class="service-title">Full-Stack</h3>
+                    <p class="text-body" style="font-size: 0.95rem;">End-to-end development using React, Node.js, Python, and cloud tech.</p>
                 </div>
-                <div class="project-tech"><span style="color: var(--secondary);">Stack:</span> React, Python, OpenAI API</div>
-            </div>
-            <div class="project-card" id="card-3">
-                <div>
-                    <div class="project-tags"><span class="tag">E-Commerce</span><span class="tag">React</span></div>
-                    <h3 class="project-title">VirtuQ Cafe</h3>
-                    <p style="color: var(--gray); font-size: 1.1rem; max-width: 600px;">Modern cafe management system with online ordering, inventory management, and a customer analytics dashboard.</p>
-                    <a href="#" class="project-link-btn" style="color: var(--accent);">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+                <div class="service-item">
+                    <span class="service-number">03</span>
+                    <h3 class="service-title">Mobile Dev</h3>
+                    <p class="text-body" style="font-size: 0.95rem;">Cross-platform mobile applications using React Native, Flutter, and native frameworks.</p>
                 </div>
-                <div class="project-tech"><span style="color: var(--accent);">Stack:</span> React, Node.js, MongoDB</div>
-            </div>
-            <div class="project-card" id="card-4">
-                <div>
-                    <div class="project-tags"><span class="tag">Healthcare</span><span class="tag">Database</span></div>
-                    <h3 class="project-title">Veterinary Management</h3>
-                    <p style="color: var(--gray); font-size: 1.1rem; max-width: 600px;">Complete veterinary clinic system with patient records, appointment scheduling, and automated billing generation.</p>
-                    <a href="#" class="project-link-btn" style="color: #FF44EE;">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+                <div class="service-item">
+                    <span class="service-number">04</span>
+                    <h3 class="service-title">Cloud Ops</h3>
+                    <p class="text-body" style="font-size: 0.95rem;">Implementing CI/CD pipelines, Docker, and AWS infrastructure.</p>
                 </div>
-                <div class="project-tech"><span style="color: #FF44EE;">Stack:</span> Node.js, Express, MongoDB</div>
+                <div class="service-item">
+                    <span class="service-number">05</span>
+                    <h3 class="service-title">Digital Marketing</h3>
+                    <p class="text-body" style="font-size: 0.95rem;">Comprehensive SEO, Social Media campaigns, and PR strategies.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="testimonials-section" id="testimonials">
-        <div class="section-header scroll-fade" style="margin-bottom: 3rem;">
-            <h2 class="gradient-text" style="font-size: 3.5rem;">Client Feedback</h2>
+    <section class="section-wrapper" id="portfolio" style="margin-top: 30vh;">
+        <div class="content-box glass-card gs-up">
+            <span class="section-tag">// Deployments</span>
+            <h2 class="heading-lg">Active Instances.</h2>
+            
+            <div>
+                <div class="project-row">
+                    <div>
+                        <h3 class="proj-name">Deadline Reminder System</h3>
+                        <div class="proj-tech">Node.js / Express / MongoDB</div>
+                        <a href="https://deadline-reminder-system.onrender.com/" target="_blank" rel="noopener noreferrer" class="project-link-btn mt-2">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+                    </div>
+                    <p class="text-body" style="max-width: 450px; margin:0;">A comprehensive task management system with automated email reminders, deadline tracking, and priority management.</p>
+                </div>
+                
+                <div class="project-row">
+                    <div>
+                        <h3 class="proj-name">AI Resume Creator</h3>
+                        <div class="proj-tech">React / Python / OpenAI API</div>
+                        <a href="https://ai-resume-creator-7byw.onrender.com" target="_blank" rel="noopener noreferrer" class="project-link-btn mt-2">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+                    </div>
+                    <p class="text-body" style="max-width: 450px; margin:0;">Intelligent resume builder using AI to optimize content, suggest improvements, and match job descriptions automatically.</p>
+                </div>
+
+                <div class="project-row">
+                    <div>
+                        <h3 class="proj-name">Cafe SaaS Platform</h3>
+                        <div class="proj-tech">React / Node.js / MongoDB</div>
+                        <a href="https://tahereducation01.github.io/cafe_saas/" target="_blank" rel="noopener noreferrer" class="project-link-btn mt-2">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+                    </div>
+                    <p class="text-body" style="max-width: 450px; margin:0;">Comprehensive SaaS solution tailored for modern cafes featuring online ordering, custom digital storefronts, and robust inventory tracking.</p>
+                </div>
+
+                <div class="project-row" style="border-bottom: none;">
+                    <div>
+                        <h3 class="proj-name">Veterinary Management</h3>
+                        <div class="proj-tech">Node.js / Express / MongoDB</div>
+                        <a href="https://veterinary-dc29.onrender.com" target="_blank" rel="noopener noreferrer" class="project-link-btn mt-2">Live Deployment <i class="bi bi-arrow-right ms-2"></i></a>
+                    </div>
+                    <p class="text-body" style="max-width: 450px; margin:0;">Complete veterinary clinic system with patient records, appointment scheduling, and automated billing generation.</p>
+                </div>
+            </div>
         </div>
-        <div class="testimonial-slider">
-            <div class="testimonial-track">
-                <div class="testimonial-card">
+    </section>
+
+    <section class="section-wrapper" id="testimonials" style="margin-top: 30vh;">
+        <div class="content-box glass-card gs-up">
+            <span class="section-tag">// Client Feedback</span>
+            <h2 class="heading-lg">System Reviews.</h2>
+            
+            <div class="testi-grid">
+                <div class="testi-card">
                     <i class="bi bi-quote quote-icon"></i>
-                    <p class="testimonial-text">"Taher's work on our hardware website was exceptional. He understood the technical nuances of our products and translated them into a seamless digital experience."</p>
+                    <p class="text-body" style="font-style: italic; font-size: 1rem;">"Taher's work on our hardware website was exceptional. He understood the technical nuances of our products and translated them into a seamless digital experience."</p>
                     <div class="client-info">
-                        <div class="client-name">Yusuf Kanorewala</div>
-                        <div class="client-company">Hardware Solutions</div>
+                        <div style="font-weight: 600; color: #fff;">Yusuf Kanorewala</div>
+                        <div style="color: var(--accent); font-size: 0.85rem;">Hardware Solutions</div>
                     </div>
                 </div>
-                <div class="testimonial-card">
+                <div class="testi-card">
                     <i class="bi bi-quote quote-icon"></i>
-                    <p class="testimonial-text">"Working with Taher on our project made everything easier. His problem-solving skills and coding logic were key to our project's success."</p>
+                    <p class="text-body" style="font-style: italic; font-size: 1rem;">"Working with Taher on our project made everything easier. His problem-solving skills and coding logic were key to our project's success."</p>
                     <div class="client-info">
-                        <div class="client-name">Vaishnavi Godage</div>
-                        <div class="client-company">Academic Collaboration</div>
+                        <div style="font-weight: 600; color: #fff;">Vaishnavi Godage</div>
+                        <div style="color: var(--accent); font-size: 0.85rem;">Academic Collaboration</div>
                     </div>
                 </div>
-                <div class="testimonial-card">
+                <div class="testi-card">
                     <i class="bi bi-quote quote-icon"></i>
-                    <p class="testimonial-text">"Excellent technical support and collaboration. Taher ensured that the project was not only functional but also well-documented and scalable."</p>
+                    <p class="text-body" style="font-style: italic; font-size: 1rem;">"Excellent technical support and collaboration. Taher ensured that the project was not only functional but also well-documented and scalable."</p>
                     <div class="client-info">
-                        <div class="client-name">Bhagyashri Jadhav</div>
-                        <div class="client-company">Software Engineering</div>
+                        <div style="font-weight: 600; color: #fff;">Bhagyashri Jadhav</div>
+                        <div style="color: var(--accent); font-size: 0.85rem;">Software Engineering</div>
                     </div>
                 </div>
-                <div class="testimonial-card">
+                <div class="testi-card">
                     <i class="bi bi-quote quote-icon"></i>
-                    <p class="testimonial-text">"Taher is a dedicated developer. His expertise in full-stack development helped us integrate complex features effortlessly."</p>
+                    <p class="text-body" style="font-style: italic; font-size: 1rem;">"His ability to bridge the gap between AI concepts and practical implementation was crucial. Highly recommended!"</p>
                     <div class="client-info">
-                        <div class="client-name">Ayush Jain</div>
-                        <div class="client-company">Development Partner</div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <i class="bi bi-quote quote-icon"></i>
-                    <p class="testimonial-text">"His ability to bridge the gap between AI concepts and practical implementation was crucial. Highly recommended!"</p>
-                    <div class="client-info">
-                        <div class="client-name">Akansha Shinde</div>
-                        <div class="client-company">AI Research</div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <i class="bi bi-quote quote-icon"></i>
-                    <p class="testimonial-text">"Taher's work on our hardware website was exceptional. He understood the technical nuances of our products and translated them into a seamless digital experience."</p>
-                    <div class="client-info">
-                        <div class="client-name">Yusuf Kanorewala</div>
-                        <div class="client-company">Hardware Solutions</div>
+                        <div style="font-weight: 600; color: #fff;">Akansha Shinde</div>
+                        <div style="color: var(--accent); font-size: 0.85rem;">AI Research</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="footer-wrapper" id="footer">
-        <footer class="footer-section">
+    <section class="section-wrapper" id="footer" style="margin-top: 30vh; margin-bottom: 10vh;">
+        <div class="content-box glass-card gs-fade">
             <div class="footer-grid">
                 <div>
-                    <div class="big-cta footer-animate">Let's Build.</div>
-                    <div class="contact-info footer-animate" style="margin-top: 2rem;">
-                        <h4>Contact Command</h4>
+                    <h2 class="heading-lg" style="font-size: 4rem;">Let's Build.</h2>
+                    <div class="contact-info" style="margin-top: 2rem;">
+                        <h4 style="font-size: 1.5rem; margin-bottom: 1.5rem; font-family: 'Space Grotesk';">Contact Command</h4>
                         <a href="mailto:taherbohra06@gmail.com"><i class="bi bi-envelope me-2"></i> adoniai.contact@gmail.com</a>
                         <p><i class="bi bi-phone me-2"></i> +91 9929235556</p>
                         <p style="margin-top: 1rem;"><i class="bi bi-geo-alt me-2"></i> Pune, Maharashtra, India</p>
                     </div>
                 </div>
                 
-                <div class="footer-animate">
+                <div>
                     <form action="https://api.web3forms.com/submit" method="POST" class="custom-form">
                         <input type="hidden" name="access_key" value="e7271cae-5e38-4c1a-a6f4-a24302e555af">
                         
@@ -646,12 +411,12 @@ input, textarea, select {
                         
                         <textarea name="message" rows="4" placeholder="Project Details *" required></textarea>
                         
-                        <button type="submit" class="nav-btn" style="padding: 1.2rem 3rem; font-size: 1.1rem; width: 100%;">Send Project Request</button>
+                        <button type="submit" class="nav-btn" style="padding: 1rem 2rem; font-size: 1.1rem; width: 100%;">Send Project Request</button>
                     </form>
                 </div>
             </div>
             
-            <div class="footer-bottom footer-animate">
+            <div class="footer-bottom">
                 <div>&copy; 2026 Adoni AI. Engineered by Taher Bohra.</div>
                 <div class="social-links">
                     <a href="https://github.com/taher-bohra786" target="_blank"><i class="bi bi-github"></i></a>
@@ -659,236 +424,193 @@ input, textarea, select {
                     <a href="https://www.instagram.com/adoni.ai/" target="_blank"><i class="bi bi-instagram"></i></a>
                 </div>
             </div>
-        </footer>
-    </div>
-    <script src="https://unpkg.com/split-type"></script>
+        </div>
+    </section>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
     <script>
-        // 1. Lenis Smooth Scroll
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Smooth Scroll (Crucial for the 3D Tunnel to feel buttery)
         const lenis = new Lenis({ lerp: 0.08 });
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => { lenis.raf(time * 1000); });
         gsap.ticker.lagSmoothing(0);
-        gsap.registerPlugin(ScrollTrigger);
 
-        // 2. Space Parallax Scroll Logic
-        gsap.to("#stars-1", { y: "-20vh", ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 }});
-        gsap.to("#stars-2", { y: "-40vh", ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 }});
-        gsap.to("#stars-3", { y: "-70vh", ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 }});
-
-        // 3. Orbital Camera Dive
-        const orbitTimeline = gsap.timeline({ scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 } });
-        // Reduced rotation shift slightly so the massive rings stay prominent
-        orbitTimeline.to("#orbital-system", { scale: 1.5, rotationX: 45, y: "-10vh", ease: "none" });
-
-        // 4. Hero Fade Out
-        gsap.to("#hero-title, #hero-sub", { opacity: 0, y: -50, scrollTrigger: { trigger: "#hero-section", start: "top top", end: "+=500", scrub: true } });
-
-        // 5. Wormhole Zoom (Portal)
-        const tl = gsap.timeline({ scrollTrigger: { trigger: "#zoom-container", start: "top top", end: "+=2500", scrub: 1, pin: true } });
-        tl.to("#portal-text", { opacity: 0, duration: 0.1 })
-          .to("#portal", { scale: 120, opacity: 0, ease: "power2.inOut", duration: 1 }, "<")
-          .fromTo("#inside-content", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, ease: "power2.out", duration: 0.5 }, "-=0.4");
-
-        // 6. Horizontal Scroll
-        const track = document.getElementById("horizontal-track");
-        function getScrollAmount() {
-            let trackWidth = track.scrollWidth;
-            return -(trackWidth - window.innerWidth);
-        }
-        const tween = gsap.to(track, { x: getScrollAmount, ease: "none" });
-        ScrollTrigger.create({
-            trigger: "#services",
-            start: "top top",
-            end: () => `+=${getScrollAmount() * -1}`,
-            pin: true,
-            animation: tween,
-            scrub: 1,
-            invalidateOnRefresh: true
+        // 2. Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) document.getElementById('navbar').classList.add('scrolled');
+            else document.getElementById('navbar').classList.remove('scrolled');
         });
 
-        // 7. Stacking Cards
-        const projectCards = gsap.utils.toArray('.project-card');
-        projectCards.forEach((card, index) => {
-            if (index === projectCards.length - 1) return;
-            gsap.to(card, {
-                scale: 0.9, opacity: 0.3,
-                scrollTrigger: {
-                    trigger: card, start: "top 15vh", endTrigger: projectCards[index + 1], end: "top 15vh", scrub: true, invalidateOnRefresh: true
+        // ==========================================
+        // 3D PARTICLE ENGINE
+        // ==========================================
+        const canvas = document.getElementById('webgl-canvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const camera = { x: 0, y: 0, z: 0, fov: 350 };
+        const mouse = { x: 0, y: 0 };
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = (e.clientX - width / 2) * 0.5;
+            mouse.y = (e.clientY - height / 2) * 0.5;
+        });
+
+        class Node3D {
+            constructor() {
+                this.x = (Math.random() - 0.5) * 2000;
+                this.y = (Math.random() - 0.5) * 2000;
+                this.z = Math.random() * 4000; 
+                this.tx = this.x; this.ty = this.y; this.tz = this.z;
+                this.radius = Math.random() * 2 + 1;
+                this.color = Math.random() > 0.8 ? '#ffffff' : '#00F0FF';
+                this.angle = Math.random() * Math.PI * 2;
+                this.speed = Math.random() * 0.005 + 0.002;
+            }
+
+            update() {
+                this.x += (this.tx - this.x) * 0.02;
+                this.y += (this.ty - this.y) * 0.02;
+                this.z += (this.tz - this.z) * 0.02;
+                this.angle += this.speed;
+                const ox = this.x + Math.cos(this.angle) * 20;
+                const oy = this.y + Math.sin(this.angle) * 20;
+
+                const dz = this.z - camera.z;
+                if (dz < 10) {
+                    this.z += 10000; 
+                    this.tz += 10000;
+                    return false; 
+                }
+
+                const scale = camera.fov / dz;
+                this.screenX = (ox - camera.x) * scale + width / 2;
+                this.screenY = (oy - camera.y) * scale + height / 2;
+                this.screenR = this.radius * scale;
+                return true; 
+            }
+
+            draw() {
+                const depthAlpha = Math.max(0, 1 - ((this.z - camera.z) / 5000));
+                ctx.beginPath();
+                ctx.arc(this.screenX, this.screenY, this.screenR, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = depthAlpha;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        const numNodes = 450;
+        const nodes = Array.from({ length: numNodes }, () => new Node3D());
+
+        function animate() {
+            ctx.fillStyle = 'rgba(2, 3, 5, 0.4)';
+            ctx.fillRect(0, 0, width, height);
+            
+            camera.x += (mouse.x - camera.x) * 0.05;
+            camera.y += (mouse.y - camera.y) * 0.05;
+
+            const visibleNodes = [];
+            nodes.forEach(node => {
+                if (node.update()) {
+                    node.draw();
+                    visibleNodes.push(node);
                 }
             });
-        });
 
-        // 8. Fades
-        gsap.utils.toArray('.scroll-fade').forEach(element => {
-            gsap.from(element, {
-                opacity: 0, y: 50, duration: 1, ease: "power2.out",
-                scrollTrigger: { trigger: element, start: "top 85%", toggleActions: "play none none reverse" }
-            });
-        });
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < visibleNodes.length; i++) {
+                for (let j = i + 1; j < visibleNodes.length; j++) {
+                    const n1 = visibleNodes[i];
+                    const n2 = visibleNodes[j];
+                    const dist3D = Math.sqrt(Math.pow(n1.x - n2.x, 2) + Math.pow(n1.y - n2.y, 2) + Math.pow(n1.z - n2.z, 2));
 
-        // 9. Footer Reveal
-        gsap.from(".footer-animate", {
-            y: 100, opacity: 0, stagger: 0.2, duration: 1, ease: "power3.out",
-            scrollTrigger: { trigger: ".footer-wrapper", start: "top 80%", toggleActions: "play none none reverse" }
-        });
-        /* =========================================
-   10. MOUSE & GYRO PARALLAX
-========================================= */
-const stars1 = document.getElementById('stars-1');
-const stars2 = document.getElementById('stars-2');
-const stars3 = document.getElementById('stars-3');
-const orbital = document.getElementById('orbital-system');
-
-// Function to calculate and apply movement using GSAP
-const applyParallax = (xRatio, yRatio) => {
-    // The further the stars, the less they move to create 3D depth
-    gsap.to(stars1, { x: xRatio * -15, y: yRatio * -15, duration: 1, ease: "power2.out" });
-    gsap.to(stars2, { x: xRatio * -30, y: yRatio * -30, duration: 1, ease: "power2.out" });
-    gsap.to(stars3, { x: xRatio * -50, y: yRatio * -50, duration: 1, ease: "power2.out" });
-    // Move the orbital core slightly in the opposite direction
-    gsap.to(orbital, { x: xRatio * 20, y: yRatio * 20, duration: 1, ease: "power2.out" });
-};
-
-// Desktop: Mouse Tracking
-window.addEventListener('mousemove', (e) => {
-    // Calculate mouse position as a ratio between -1 and 1
-    const xRatio = (e.clientX / window.innerWidth) * 2 - 1; 
-    const yRatio = (e.clientY / window.innerHeight) * 2 - 1; 
-    applyParallax(xRatio, yRatio);
-});
-
-// Mobile: Gyroscope Tracking
-window.addEventListener('deviceorientation', (e) => {
-    if (!e.gamma || !e.beta) return; // Exit if the device doesn't support gyroscope
-    
-    // Gamma is left/right tilt, Beta is front/back tilt
-    // Clamp the values to keep the movement subtle and within bounds
-    let xRatio = Math.max(-1, Math.min(1, e.gamma / 45)); 
-    let yRatio = Math.max(-1, Math.min(1, (e.beta - 45) / 45)); 
-    applyParallax(xRatio, yRatio);
-});
-
-/* =========================================
-   11. ORGANIC METEOR SHOWER
-========================================= */
-const meteorContainer = document.querySelector('.meteor-shower');
-
-function createMeteor() {
-    const meteor = document.createElement('div');
-    meteor.classList.add('meteor');
-
-    // Randomize starting position (top right bias)
-    const top = Math.random() * 100 - 20; 
-    const left = Math.random() * 100 + 20; 
-    
-    // Randomize length and speed
-    const width = Math.random() * 200 + 50; // Between 50px and 250px
-    const duration = Math.random() * 2 + 1.5; // Fall speed between 1.5s and 3.5s
-
-    meteor.style.top = `${top}%`;
-    meteor.style.left = `${left}%`;
-    meteor.style.width = `${width}px`;
-    
-    // Trigger the CSS animation
-    meteor.style.animation = `meteorFall ${duration}s linear forwards`;
-
-    meteorContainer.appendChild(meteor);
-
-    // Clean up: Remove meteor from DOM after it falls so it doesn't lag the browser
-    setTimeout(() => {
-        meteor.remove();
-    }, duration * 1000);
-
-    // Queue the next meteor randomly between 0.5 and 3.5 seconds
-    setTimeout(createMeteor, Math.random() * 3000 + 500);
-}
-
-// Ignite the first meteor!
-createMeteor();
-/* =========================================
-   12. CUSTOM CURSOR TRACKING & STATES
-========================================= */
-const cursor = document.querySelector('.custom-cursor');
-
-// Use GSAP quickTo for zero-latency, buttery smooth cursor tracking
-let cursorX = gsap.quickTo(cursor, "x", {duration: 0.15, ease: "power3.out"});
-let cursorY = gsap.quickTo(cursor, "y", {duration: 0.15, ease: "power3.out"});
-
-window.addEventListener("mousemove", (e) => {
-    cursorX(e.clientX);
-    cursorY(e.clientY);
-});
-
-// Expand cursor when hovering over interactive elements
-const interactiveElements = document.querySelectorAll('a, button, .service-card, .project-card, .portal-gateway');
-interactiveElements.forEach((el) => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-});
-
-/* =========================================
-   13. MAGNETIC BUTTONS
-========================================= */
-const magneticElements = document.querySelectorAll('.nav-btn, .social-links a, .portal-gateway');
-
-magneticElements.forEach((elem) => {
-    elem.addEventListener('mousemove', (e) => {
-        const rect = elem.getBoundingClientRect();
-        // Calculate distance from the center of the element
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        // Pull the element towards the cursor
-        gsap.to(elem, {
-            x: x * 0.4, // Adjust the 0.4 to make the magnet stronger/weaker
-            y: y * 0.4,
-            duration: 0.3,
-            ease: "power2.out"
-        });
-    });
-
-    // Snap back to original position when cursor leaves
-    elem.addEventListener('mouseleave', () => {
-        gsap.to(elem, {
-            x: 0,
-            y: 0,
-            duration: 0.7,
-            ease: "elastic.out(1, 0.3)" // Adds a nice bouncy snap-back
-        });
-    });
-});
-
-/* =========================================
-   14. STAGGERED TEXT REVEALS
-========================================= */
-// Replace your old basic fades on headings with premium character reveals
-const textToAnimate = document.querySelectorAll('.hero-title, .section-header h2, .about-text h2, .big-cta');
-
-textToAnimate.forEach((text) => {
-    // Split the text into characters
-    const splitText = new SplitType(text, { types: 'chars, words' });
-    
-    // Make sure the container hides overflowing text during animation
-    text.style.overflow = 'hidden';
-
-    gsap.from(splitText.chars, {
-        opacity: 0,
-        y: 40,
-        rotationX: -90,
-        stagger: 0.02, // Delay between each character
-        duration: 0.8,
-        ease: "back.out(1.5)",
-        scrollTrigger: {
-            trigger: text,
-            start: "top 85%",
-            toggleActions: "play none none reverse"
+                    if (dist3D < 300) { 
+                        const depthAlpha = Math.max(0, 1 - ((n1.z - camera.z) / 4000));
+                        const lineAlpha = (1 - dist3D / 300) * depthAlpha * 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(n1.screenX, n1.screenY);
+                        ctx.lineTo(n2.screenX, n2.screenY);
+                        ctx.strokeStyle = `rgba(0, 240, 255, ${lineAlpha})`;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
         }
-    });
-});
+        animate();
+
+        // ==========================================
+        // GSAP SCROLL: THE 3D DIVE
+        // ==========================================
+        function formSphere() {
+            nodes.forEach(n => {
+                const phi = Math.acos(-1 + (2 * Math.random()));
+                const theta = Math.sqrt(numNodes * Math.PI) * phi;
+                const r = 800;
+                n.tx = r * Math.cos(theta) * Math.sin(phi);
+                n.ty = r * Math.sin(theta) * Math.sin(phi);
+                n.tz = camera.z + 1000 + (r * Math.cos(phi)); 
+            });
+        }
+
+        function formDataTunnel() {
+            nodes.forEach(n => {
+                const angle = Math.random() * Math.PI * 2;
+                const radius = 600 + Math.random() * 200; 
+                n.tx = Math.cos(angle) * radius;
+                n.ty = Math.sin(angle) * radius;
+                n.tz = camera.z + Math.random() * 15000; 
+            });
+        }
+
+        function formCore() {
+             nodes.forEach(n => {
+                n.tx = (Math.random() - 0.5) * 200; 
+                n.ty = (Math.random() - 0.5) * 200;
+                n.tz = camera.z + 500; 
+            });
+        }
+
+        formSphere();
+
+        const diveTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.5 
+            }
+        });
+
+        diveTimeline.to(camera, { z: 2500, ease: "power2.in" }, 0)
+        .to("#warp-flash", { opacity: 0.8, duration: 0.1 }, 0.4)
+        .to("#warp-flash", { opacity: 0, duration: 0.3 }, 0.5)
+        .add(formDataTunnel, 0.4)
+        .to(camera, { z: 12000, ease: "none" }, 0.5)
+        .add(formCore, 0.85)
+        .to(camera, { z: 12200, ease: "power3.out" }, 0.85);
+
+        // UI Reveal Animations
+        gsap.utils.toArray('.gs-fade').forEach(el => {
+            gsap.from(el, { opacity: 0, filter: "blur(10px)", scale: 0.9, duration: 1, scrollTrigger: { trigger: el, start: "top 75%" }});
+        });
+
+        gsap.utils.toArray('.gs-up').forEach(el => {
+            gsap.from(el, { opacity: 0, y: 100, rotationX: 10, duration: 1, scrollTrigger: { trigger: el, start: "top 85%" }});
+        });
+
     </script>
 </body>
 </html>
