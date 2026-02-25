@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adoni AI</title>
+    <title>Adoni AI | Intelligent Systems & Software Development</title>
+
+    <meta name="description" content="Adoni AI is a premier Pune-based AI & software development agency specializing in scalable enterprise systems, cloud infrastructure, digital transformations for local businesses, and intelligent automation.">
+    <meta name="keywords" content="AI agency Pune, Software development India, AI automation, React developer Pune, Web development Pune, SaaS developer Pune, Machine learning solutions Maharashtra, Custom software Salunke Vihar, Web design NIBM Pune, Business website creation India, Node.js development Pune">
+    <meta name="author" content="Taher Bohra">
 
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
@@ -32,7 +36,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Prevent scroll during load */
         body.loading { height: 100vh; overflow: hidden; }
 
         h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
@@ -46,75 +49,30 @@
             pointer-events: none;
         }
 
-        .loader-svg {
-            width: 180px; height: 180px;
-            filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.4));
-        }
+        .loader-svg { width: 180px; height: 180px; filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.4)); }
+        .loader-path { fill: transparent; stroke: url(#logoGradBright); stroke-width: 2; stroke-dasharray: 400; stroke-dashoffset: 400; stroke-linecap: round; }
+        .loader-circuit { stroke-dasharray: 100; stroke-dashoffset: 100; stroke-width: 1.5; }
+        .loader-core { opacity: 0; transform-origin: 60px 60px; transform: scale(0); }
+        .loader-text-wrap { margin-top: 2rem; overflow: hidden; height: 20px; }
+        .loader-text { font-family: 'Space Grotesk', monospace; color: var(--accent); letter-spacing: 6px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; transform: translateY(100%); }
 
-        .loader-path {
-            fill: transparent;
-            stroke: url(#logoGradBright);
-            stroke-width: 2;
-            stroke-dasharray: 400;
-            stroke-dashoffset: 400;
-            stroke-linecap: round;
-        }
-
-        .loader-circuit {
-            stroke-dasharray: 100;
-            stroke-dashoffset: 100;
-            stroke-width: 1.5;
-        }
-
-        .loader-core {
-            opacity: 0;
-            transform-origin: 60px 60px; /* Fixed anchor point for precise SVG scaling */
-            transform: scale(0);
-        }
-
-        .loader-text-wrap {
-            margin-top: 2rem;
-            overflow: hidden;
-            height: 20px;
-        }
-
-        .loader-text {
-            font-family: 'Space Grotesk', monospace;
-            color: var(--accent);
-            letter-spacing: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            transform: translateY(100%);
-        }
-
-        /* Initial states for Hero Reveal */
         .navbar { opacity: 0; transform: translateY(-20px); }
         #hero .content-box { opacity: 0; transform: scale(0.95); filter: blur(10px); }
 
-        /* ==================== 3. THE 3D CANVAS & FLASH ==================== */
+        /* ==================== 3. THE 3D CANVAS ==================== */
         #webgl-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2;
             background: radial-gradient(circle at center, #050811 0%, #010203 100%);
         }
 
-        .warp-flash {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: var(--accent); opacity: 0; z-index: -1; pointer-events: none;
-            mix-blend-mode: screen;
-        }
-
-        /* ==================== 4. NAVBAR & SVG LOGO ==================== */
+        /* ==================== 4. NAVBAR ==================== */
         .navbar { 
             position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 5vw; 
             display: flex; justify-content: space-between; align-items: center; 
             background: transparent; border-bottom: 1px solid transparent; z-index: 1000; 
             transition: background 0.4s ease, border 0.4s ease;
         }
-        .navbar.scrolled {
-            background: rgba(2, 3, 5, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border);
-        }
-        
+        .navbar.scrolled { background: rgba(2, 3, 5, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border); }
         .nav-brand { display: flex; align-items: center; text-decoration: none; }
         .logo-text { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 1.8rem; margin-left: 12px; display: flex; align-items: center; }
         .brand-adoni { color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
@@ -145,7 +103,7 @@
         }
         .content-box { pointer-events: auto; text-align: center; width: 100%; }
 
-        .hero-title { font-size: 5vw; line-height: 1; margin-bottom: 1.5rem; letter-spacing: -1px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .hero-title { font-size: 5vw; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .hero-sub { font-size: 1.3rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
 
         .glass-card {
@@ -165,12 +123,40 @@
         .skills-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 1rem; }
         .skill-badge { background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); padding: 10px 20px; border-radius: 8px; color: var(--text-main); font-size: 0.95rem; font-weight: 500; }
 
-        /* --- SERVICES GRID --- */
+        /* --- SERVICES --- */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; }
-        .service-item { border: 1px solid var(--glass-border); padding: 2rem; border-radius: 12px; background: rgba(255,255,255,0.02); transition: 0.3s; }
+        .service-item { 
+            border: 1px solid var(--glass-border); padding: 2rem; border-radius: 12px; 
+            background: rgba(10, 15, 25, 0.65); backdrop-filter: blur(10px); transition: 0.3s; 
+        }
         .service-item:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,240,255,0.05); }
-        .service-number { font-size: 3rem; font-weight: 800; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.1); margin-bottom: 1rem; display: block;}
+        
+        /* FIXED: Service Numbers are now highly visible */
+        .service-number { 
+            font-size: 3.5rem; 
+            font-weight: 800; 
+            color: rgba(255, 255, 255, 0.05); 
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.5); 
+            margin-bottom: 1rem; 
+            display: block;
+        }
+        
         .service-title { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-main); }
+        .feature-icon { font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem; display: block; }
+
+        /* --- HORIZONTAL SCROLL (WHY CHOOSE US) --- */
+        #why-us { display: block; padding: 0; margin-top: 30vh; pointer-events: auto; }
+        .hz-pin-container { height: 100vh; width: 100vw; display: flex; align-items: center; overflow: hidden; }
+        .hz-track { display: flex; align-items: stretch; gap: 3rem; padding: 0 5vw; width: max-content; }
+        
+        .hz-intro { 
+            width: 450px; flex-shrink: 0; padding: 3rem; 
+            background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); 
+            border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.1); border-radius: 20px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 20px rgba(0, 240, 255, 0.05); 
+            display: flex; flex-direction: column; justify-content: center; 
+        }
+        .hz-card { width: 350px; flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; }
 
         /* --- PROJECTS --- */
         .project-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 2.5rem 0; border-bottom: 1px solid var(--glass-border); flex-wrap: wrap; gap: 1rem;}
@@ -181,7 +167,7 @@
 
         /* --- TESTIMONIALS --- */
         .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
-        .testi-card { border: 1px solid var(--glass-border); padding: 2rem; border-radius: 12px; background: rgba(255,255,255,0.02); transition: 0.3s; }
+        .testi-card { border: 1px solid var(--glass-border); padding: 2rem; border-radius: 12px; background: rgba(10, 15, 25, 0.65); backdrop-filter: blur(10px); transition: 0.3s; }
         .testi-card:hover { border-color: var(--accent); }
         .quote-icon { font-size: 1.5rem; color: var(--accent-glow); margin-bottom: 1rem; }
         .client-info { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: 1rem; }
@@ -211,6 +197,11 @@
             .nav-links { display: none; }
             .glass-card { padding: 2rem; }
             .about-grid > div:last-child { border-left: none; padding-left: 0; }
+            
+            /* Responsive Horizontal adjustments */
+            .hz-intro { width: 85vw; padding: 2rem; }
+            .hz-card { width: 80vw; }
+            .hz-track { gap: 1.5rem; }
         }
     </style>
 </head>
@@ -228,14 +219,11 @@
             <circle cx="60" cy="60" r="45" class="loader-path ring-1" />
             <circle cx="60" cy="60" r="38" class="loader-path ring-2" />
             <circle cx="60" cy="60" r="31" class="loader-path ring-3" />
-            
             <path d="M60,30 L85,45 L85,75 L60,90 L35,75 L35,45 Z" stroke-linejoin="round" class="loader-path poly-core" />
-            
             <path d="M40,50 L80,50" class="loader-path loader-circuit" />
             <path d="M40,70 L80,70" class="loader-path loader-circuit" />
             <path d="M50,40 L50,80" class="loader-path loader-circuit" />
             <path d="M70,40 L70,80" class="loader-path loader-circuit" />
-
             <circle cx="60" cy="60" r="8" fill="url(#logoGradBright)" class="loader-core" />
         </svg>
         <div class="loader-text-wrap">
@@ -244,7 +232,6 @@
     </div>
 
     <canvas id="webgl-canvas"></canvas>
-    <div class="warp-flash" id="warp-flash"></div>
 
     <nav class="navbar" id="navbar">
         <a href="#" class="nav-brand">
@@ -293,7 +280,7 @@
 
     <section class="section-wrapper" id="hero" style="height: 120vh;">
         <div class="content-box">
-            <h1 class="hero-title">INTELLIGENT<br>DIGITAL SOLUTIONS</h1>
+            <h1 class="hero-title">AI-POWERED SYSTEMS.<br>BUILT FOR SCALE.</h1>
             <p class="hero-sub">We architect intelligent software, AI automation, and high-performance digital infrastructure. Scroll to initiate sequence.</p>
         </div>
     </section>
@@ -400,6 +387,44 @@
                     </div>
                     <p class="text-body" style="max-width: 450px; margin:0;">Complete veterinary clinic system with patient records, appointment scheduling, and automated billing generation.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-wrapper" id="why-us">
+        <div class="hz-pin-container">
+            <div class="hz-track">
+                
+                <div class="hz-intro">
+                    <span class="section-tag">// Core Advantages</span>
+                    <h2 class="heading-lg" style="font-size: 3.5rem; margin-bottom: 1rem;">Why Choose Us.</h2>
+                    <p class="text-body" style="margin-bottom: 0;">Architecting scalable systems with precision. Keep scrolling to explore our core operational protocols.</p>
+                </div>
+                
+                <div class="service-item hz-card" style="text-align: center;">
+                    <i class="bi bi-lightning-charge feature-icon"></i>
+                    <h3 class="service-title" style="font-size: 1.5rem;">Performance-First</h3>
+                    <p class="text-body" style="font-size: 1rem; margin-bottom: 0;">Optimized load times and fluid digital experiences built for sheer speed.</p>
+                </div>
+                
+                <div class="service-item hz-card" style="text-align: center;">
+                    <i class="bi bi-shield-check feature-icon"></i>
+                    <h3 class="service-title" style="font-size: 1.5rem;">Security by Design</h3>
+                    <p class="text-body" style="font-size: 1rem; margin-bottom: 0;">Robust data protection and strict secure architecture protocols.</p>
+                </div>
+                
+                <div class="service-item hz-card" style="text-align: center;">
+                    <i class="bi bi-diagram-3 feature-icon"></i>
+                    <h3 class="service-title" style="font-size: 1.5rem;">Scalable Architecture</h3>
+                    <p class="text-body" style="font-size: 1rem; margin-bottom: 0;">Systems engineered to grow seamlessly alongside your business demands.</p>
+                </div>
+                
+                <div class="service-item hz-card" style="text-align: center;">
+                    <i class="bi bi-headset feature-icon"></i>
+                    <h3 class="service-title" style="font-size: 1.5rem;">Long-Term Support</h3>
+                    <p class="text-body" style="font-size: 1rem; margin-bottom: 0;">Continuous maintenance, system updates, and dedicated technical assistance.</p>
+                </div>
+
             </div>
         </div>
     </section>
@@ -515,7 +540,7 @@
 
         // 1. Smooth Scroll Setup (Paused Initially for Loading Sequence)
         const lenis = new Lenis({ lerp: 0.08 });
-        lenis.stop(); // Stop scroll immediately
+        lenis.stop();
         window.scrollTo(0, 0);
 
         lenis.on('scroll', ScrollTrigger.update);
@@ -541,7 +566,6 @@
             height = canvas.height = window.innerHeight;
         });
 
-        // Start camera slightly further back for the initial warp effect
         const camera = { x: 0, y: 0, z: -2000, fov: 350 };
         const mouse = { x: 0, y: 0 };
         window.addEventListener('mousemove', (e) => {
@@ -670,52 +694,35 @@
         window.onload = () => {
             const tlLoader = gsap.timeline({
                 onComplete: () => {
-                    // Remove Loader from DOM
                     document.getElementById('loader').style.display = 'none';
                     document.body.classList.remove('loading');
-                    
-                    // Enable Scrolling
                     lenis.start();
-                    
-                    // Initialize Scroll-based animations
                     initScrollAnimations();
                 }
             });
 
             tlLoader.to(".loader-text", { y: 0, duration: 0.8, ease: "power3.out" })
-                    // Draw the SVG rings
                     .to(".ring-1", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=0.4")
                     .to(".ring-2", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
                     .to(".ring-3", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
-                    // Draw the hexagon
                     .to(".poly-core", { strokeDashoffset: 0, duration: 1.2, ease: "power3.inOut" }, "-=0.8")
-                    // Draw the circuit pattern lines staggered
                     .to(".loader-circuit", { strokeDashoffset: 0, duration: 0.8, ease: "power2.out", stagger: 0.1 }, "-=0.6")
-                    // Pop the core dot in from the exact center
                     .to(".loader-core", { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, "-=0.2")
-                    // Fill the hexagon to match the final logo state right before zoom
                     .to(".poly-core", { fill: "rgba(2,3,5,0.9)", duration: 0.4 }, "-=0.2")
-                    
-                    // Hold for a fraction of a second
-                    .to(".loader-text", { opacity: 0, duration: 0.4 }, "+=0.2")
-                    
-                    // THE ZOOM: Scale loader SVG and push 3D camera forward rapidly
+                    .to(".loader-text", { opacity: 0, duration: 0.4 }, "+=2.0")
                     .to("#loaderLogo", { scale: 15, opacity: 0, duration: 1.2, ease: "power4.in" }, "zoom")
                     .to(camera, { z: 0, duration: 1.2, ease: "power3.inOut" }, "zoom")
-                    
-                    // Fade out the black screen
                     .to("#loader", { opacity: 0, duration: 0.8, ease: "none" }, "-=0.5")
-                    // Form the initial sphere while fading out black screen
                     .call(formSphere, [], "-=0.8")
-                    // Reveal UI components
                     .to(".navbar", { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.3")
                     .to("#hero .content-box", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.5, ease: "power3.out" }, "-=0.8");
         };
 
         // ==========================================
-        // GSAP SCROLL: THE 3D DIVE
+        // GSAP SCROLL ANIMATIONS
         // ==========================================
         function initScrollAnimations() {
+            // 1. The 3D Space Dive
             const diveTimeline = gsap.timeline({
                 scrollTrigger: {
                     trigger: "body",
@@ -726,14 +733,29 @@
             });
 
             diveTimeline.to(camera, { z: 2500, ease: "power2.in" }, 0)
-            .to("#warp-flash", { opacity: 0.8, duration: 0.1 }, 0.4)
-            .to("#warp-flash", { opacity: 0, duration: 0.3 }, 0.5)
             .add(formDataTunnel, 0.4)
             .to(camera, { z: 12000, ease: "none" }, 0.5)
             .add(formCore, 0.85)
             .to(camera, { z: 12200, ease: "power3.out" }, 0.85);
 
-            // UI Reveal Animations
+            // 2. Horizontal Scroll Section (Why Choose Us)
+            const hzTrack = document.querySelector('.hz-track');
+            const hzPin = document.querySelector('.hz-pin-container');
+            
+            gsap.to(hzTrack, {
+                x: () => -(hzTrack.scrollWidth - window.innerWidth + 100),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: hzPin,
+                    start: "center center",
+                    end: () => `+=${hzTrack.scrollWidth}`, 
+                    pin: true,
+                    scrub: 1,
+                    invalidateOnRefresh: true
+                }
+            });
+
+            // 3. UI Reveal Animations
             gsap.utils.toArray('.gs-fade-scroll').forEach(el => {
                 gsap.from(el, { opacity: 0, filter: "blur(10px)", scale: 0.9, duration: 1, scrollTrigger: { trigger: el, start: "top 75%" }});
             });
