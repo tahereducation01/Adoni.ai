@@ -518,20 +518,61 @@ magneticBtns.forEach(btn => {
         });
     });
 });
-// ==================== CURSOR FOLLOWER ====================
+// ==================== CURSOR FOLLOWER (DESKTOP ONLY) ====================
 const follower = document.getElementById('cursor-follower');
 
-window.addEventListener('mousemove', (e) => {
-    gsap.to(follower, {
-        x: e.clientX - 10,
-        y: e.clientY - 10,
-        duration: 0.6,
-        ease: "power2.out"
+// Only run if it's not a touch device
+if (window.matchMedia("(pointer: fine)").matches) {
+    window.addEventListener('mousemove', (e) => {
+        gsap.to(follower, {
+            x: e.clientX - 10,
+            y: e.clientY - 10,
+            duration: 0.6,
+            ease: "power2.out"
+        });
     });
-});
 
-// Scale up when hovering over interactive elements
-document.querySelectorAll('a, button, .faq-question').forEach(el => {
-    el.addEventListener('mouseenter', () => gsap.to(follower, { scale: 3, duration: 0.3 }));
-    el.addEventListener('mouseleave', () => gsap.to(follower, { scale: 1, duration: 0.3 }));
-});
+    document.querySelectorAll('a, button, .faq-question, .chat-option-btn').forEach(el => {
+        el.addEventListener('mouseenter', () => gsap.to(follower, { scale: 3, duration: 0.3 }));
+        el.addEventListener('mouseleave', () => gsap.to(follower, { scale: 1, duration: 0.3 }));
+    });
+} else {
+    // Hide follower on mobile/tablets
+    if (follower) follower.style.display = 'none';
+}
+// ==================== AJAX FOOTER FORM SUBMISSION ====================
+const contactForm = document.getElementById('contact-form');
+const formResult = document.getElementById('form-result');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(contactForm);
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
+
+        formResult.style.display = "block";
+        formResult.innerHTML = "Processing transmission...";
+
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: json
+        })
+        .then(async (response) => {
+            let json = await response.json();
+            if (response.status == 200) {
+                formResult.innerHTML = "Success! Your request has been transmitted.";
+                contactForm.reset();
+            } else {
+                formResult.innerHTML = json.message;
+            }
+        })
+        .catch(error => {
+            formResult.innerHTML = "System offline. Please try again later.";
+        })
+        .then(function() {
+            setTimeout(() => { formResult.style.display = "none"; }, 5000);
+        });
+    });
+}   
