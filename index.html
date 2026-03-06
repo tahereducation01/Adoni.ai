@@ -6,899 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adoni AI | Custom AI Automation & Enterprise Software Development</title>
 
+    <!-- Meta tags -->
     <meta name="description"
         content="Adoni AI is a premier Pune-based AI & software development agency. We help enterprises and local businesses scale through custom SaaS, digital transformations, and intelligent automation.">
     <meta name="keywords"
         content="Adoni AI, AI agency Pune, Software development India, AI automation, React developer Pune, Web development Pune, SaaS developer Pune, Custom software solutions">
     <meta name="author" content="Taher Bohra">
+    <meta property="og:title" content="Adoni AI | Custom AI Automation & SaaS Development">
+    <meta property="og:description"
+        content="AI automation, SaaS platforms, and enterprise software development in Pune.">
+    <meta property="og:url" content="https://adoniai.in">
+    <meta property="og:type" content="website">
 
+    <!-- Fonts (preconnect for performance) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
-    <style>
-        /* ==================== 1. DEEP SPACE THEME ==================== */
-        :root {
-            --bg-dark: #020305;
-            --text-main: #FFFFFF;
-            --text-muted: #8A9BB5;
-            --accent: #00F0FF;
-            --accent-glow: rgba(0, 240, 255, 0.4);
-            --glass-bg: rgba(5, 7, 12, 0.5);
-            --glass-border: rgba(0, 240, 255, 0.15);
-            --gradient-primary: linear-gradient(135deg, #00D4FF 0%, #8A2BE2 50%, #00FFAA 100%);
-            --gradient-bright: linear-gradient(135deg, #00F7FF 0%, #9A4BFF 50%, #00FFD5 100%);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        body.loading {
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        /* ==================== 2. CINEMATIC LOADER ==================== */
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #000000;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-        }
-
-        .loader-svg {
-            width: 180px;
-            height: 180px;
-            filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.4));
-        }
-
-        .loader-path {
-            fill: transparent;
-            stroke: url(#logoGradBright);
-            stroke-width: 2;
-            stroke-dasharray: 400;
-            stroke-dashoffset: 400;
-            stroke-linecap: round;
-        }
-
-        .loader-circuit {
-            stroke-dasharray: 100;
-            stroke-dashoffset: 100;
-            stroke-width: 1.5;
-        }
-
-        .loader-core {
-            opacity: 0;
-            transform-origin: 60px 60px;
-            transform: scale(0);
-        }
-
-        .loader-text-wrap {
-            margin-top: 2rem;
-            overflow: hidden;
-            height: 20px;
-        }
-
-        .loader-text {
-            font-family: 'Space Grotesk', monospace;
-            color: var(--accent);
-            letter-spacing: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            transform: translateY(100%);
-        }
-
-        .navbar {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
-        #hero .content-box {
-            opacity: 0;
-            transform: scale(0.95);
-            filter: blur(10px);
-        }
-
-        /* ==================== 3. THE 3D CANVAS ==================== */
-        #webgl-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2;
-            background: radial-gradient(circle at center, #050811 0%, #010203 100%);
-        }
-
-        /* ==================== 4. NAVBAR & BUTTONS ==================== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1rem 5vw;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: transparent;
-            border-bottom: 1px solid transparent;
-            z-index: 1000;
-            transition: background 0.4s ease, border 0.4s ease;
-        }
-
-        .navbar.scrolled {
-            background: rgba(2, 3, 5, 0.8);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .logo-text {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 800;
-            font-size: 1.8rem;
-            margin-left: 12px;
-            display: flex;
-            align-items: center;
-        }
-
-        .brand-adoni {
-            color: #fff;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .brand-ai {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-left: 6px;
-        }
-
-        .brand-pulse {
-            color: #00FFAA;
-            font-size: 2.5rem;
-            margin-left: 2px;
-            position: relative;
-            top: -5px;
-            animation: pulseDot 1.5s infinite;
-            text-shadow: 0 0 15px #00FFAA;
-        }
-
-        @keyframes pulseDot {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.7;
-                transform: scale(1.3);
-            }
-        }
-
-        .logo-svg {
-            width: 45px;
-            height: 45px;
-            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.6));
-            animation: floatLogo 6s ease-in-out infinite;
-        }
-
-        @keyframes floatLogo {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-5px);
-                filter: drop-shadow(0 0 20px #8A2BE2);
-            }
-        }
-
-        .circuit-line-1,
-        .circuit-line-2,
-        .circuit-line-3,
-        .circuit-line-4 {
-            animation: circuitFlow 4s linear infinite;
-        }
-
-        .circuit-diag-1,
-        .circuit-diag-3 {
-            animation: circuitFlow 3s linear infinite reverse;
-        }
-
-        .circuit-diag-2,
-        .circuit-diag-4 {
-            animation: circuitFlow 3.5s linear infinite;
-        }
-
-        @keyframes circuitFlow {
-            0% {
-                stroke-dashoffset: 20;
-            }
-
-            100% {
-                stroke-dashoffset: 0;
-            }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            font-weight: 500;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-main);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .nav-btn {
-            background: transparent;
-            padding: 0.8rem 1.8rem;
-            border-radius: 8px;
-            color: var(--accent);
-            font-weight: 600;
-            font-family: 'Space Grotesk';
-            border: 1px solid var(--accent);
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .nav-btn:hover {
-            background: var(--accent);
-            color: #000;
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: #000;
-        }
-
-        .btn-primary:hover {
-            background: transparent;
-            color: var(--accent);
-        }
-
-        /* ==================== 5. LAYOUT & UI ==================== */
-        .section-wrapper {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15vh 5vw;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .content-box {
-            pointer-events: auto;
-            text-align: center;
-            width: 100%;
-        }
-
-        /* SEO: Adjusted sizes to accommodate longer, SEO-friendly titles */
-        .hero-title {
-            font-size: 4.5vw;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-        }
-
-        .hero-sub {
-            font-size: 1.3rem;
-            color: var(--text-muted);
-            max-width: 750px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2.5rem;
-        }
-
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 4rem;
-            max-width: 1100px;
-            margin: 0 auto;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.05);
-            text-align: left;
-        }
-
-        .section-tag {
-            color: var(--accent);
-            font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .heading-lg {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            letter-spacing: -1px;
-        }
-
-        .text-body {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            max-width: 800px;
-        }
-
-        /* --- AGENCY ABOUT --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1.3fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 1rem;
-        }
-
-        .skill-badge {
-            background: rgba(0, 240, 255, 0.05);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            padding: 10px 20px;
-            border-radius: 8px;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        /* --- SERVICES --- */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .service-item {
-            border: 1px solid var(--glass-border);
-            padding: 2rem;
-            border-radius: 12px;
-            background: rgba(10, 15, 25, 0.65);
-            backdrop-filter: blur(10px);
-            transition: 0.3s;
-        }
-
-        .service-item:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.05);
-        }
-
-        .service-number {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.05);
-            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.5);
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .service-title {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-main);
-        }
-
-        .feature-icon {
-            font-size: 2.2rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        /* --- HORIZONTAL SCROLL (WHY CHOOSE US) --- */
-        #why-us {
-            display: block;
-            padding: 0;
-            margin-top: 30vh;
-            pointer-events: auto;
-        }
-
-        .hz-pin-container {
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .hz-track {
-            display: flex;
-            align-items: stretch;
-            gap: 3rem;
-            padding: 0 5vw;
-            width: max-content;
-        }
-
-        .hz-intro {
-            width: 450px;
-            flex-shrink: 0;
-            padding: 3rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.05);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .hz-card {
-            width: 350px;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        /* --- PROJECTS / PORTFOLIO --- */
-        .project-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 2.5rem 0;
-            border-bottom: 1px solid var(--glass-border);
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .proj-name {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .proj-tech {
-            font-family: monospace;
-            color: var(--accent);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Highlighted project outcome text for better sales pitch */
-        .proj-outcome {
-            color: #fff;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .project-link-btn {
-            display: inline-flex;
-            align-items: center;
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 0.9rem;
-            border-bottom: 1px solid var(--accent);
-            padding-bottom: 2px;
-            transition: 0.3s;
-        }
-
-        .project-link-btn:hover {
-            color: var(--accent);
-        }
-
-        /* --- TESTIMONIALS --- */
-        .testi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .testi-card {
-            border: 1px solid var(--glass-border);
-            padding: 2rem;
-            border-radius: 12px;
-            background: rgba(10, 15, 25, 0.65);
-            backdrop-filter: blur(10px);
-            transition: 0.3s;
-        }
-
-        .testi-card:hover {
-            border-color: var(--accent);
-        }
-
-        .quote-icon {
-            font-size: 1.5rem;
-            color: var(--accent-glow);
-            margin-bottom: 1rem;
-        }
-
-        .client-info {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 1rem;
-            margin-top: 1rem;
-        }
-
-        /* --- FOOTER & FORM --- */
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .contact-info p,
-        .contact-info a {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            display: block;
-            margin-bottom: 1rem;
-            transition: 0.3s;
-        }
-
-        .contact-info a:hover {
-            color: var(--accent);
-        }
-
-        .custom-form input,
-        .custom-form textarea,
-        .custom-form select {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid var(--glass-border);
-            color: #FFFFFF !important;
-            padding: 1rem 0;
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-            outline: none;
-            transition: 0.3s;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .custom-form input::placeholder,
-        .custom-form textarea::placeholder {
-            color: rgba(255, 255, 255, 0.4) !important;
-        }
-
-        .custom-form input:focus,
-        .custom-form textarea:focus,
-        .custom-form select:focus {
-            border-bottom-color: var(--accent);
-        }
-
-        .custom-form select {
-            color: rgba(255, 255, 255, 0.4) !important;
-            cursor: pointer;
-            appearance: none;
-        }
-
-        .custom-form select option {
-            background-color: var(--bg-dark);
-            color: #FFFFFF;
-        }
-
-        .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--glass-border);
-            padding-top: 2rem;
-            color: var(--text-muted);
-            margin-top: 3rem;
-            font-size: 0.9rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            margin-left: 0.5rem;
-            transition: 0.3s;
-            text-decoration: none;
-        }
-
-        .social-links a:hover {
-            background: var(--accent);
-            color: #000;
-            transform: translateY(-3px);
-        }
-
-        @media (max-width: 900px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .hero-actions {
-                flex-direction: column;
-            }
-
-            .about-grid,
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .glass-card {
-                padding: 2rem;
-            }
-
-            .about-grid>div:last-child {
-                border-left: none;
-                padding-left: 0;
-            }
-
-            .hz-intro {
-                width: 85vw;
-                padding: 2rem;
-            }
-
-            .hz-card {
-                width: 80vw;
-            }
-
-            .hz-track {
-                gap: 1.5rem;
-            }
-        }
-
-        /* ==================== CHATBOT UI ==================== */
-        #chatbot-container {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        #chatbot-toggle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.2);
-        }
-
-        #chatbot-window {
-            display: none;
-            /* Hidden by default */
-            width: 350px;
-            height: 450px;
-            padding: 0;
-            margin-bottom: 15px;
-            flex-direction: column;
-            overflow: hidden;
-            transform-origin: bottom right;
-            transform: scale(0.9);
-            opacity: 0;
-            transition: 0.3s;
-        }
-
-        #chatbot-window.active {
-            display: flex;
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .chat-header {
-            background: rgba(2, 3, 5, 0.8);
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-header h4 {
-            margin: 0;
-            color: var(--accent);
-            font-size: 1rem;
-        }
-
-        #chatbot-close {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        #chatbot-close:hover {
-            color: #fff;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .chat-msg {
-            padding: 10px 15px;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            max-width: 85%;
-            line-height: 1.4;
-        }
-
-        .msg-bot {
-            background: rgba(0, 240, 255, 0.1);
-            border: 1px solid var(--glass-border);
-            color: #fff;
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-        }
-
-        .msg-user {
-            background: var(--accent);
-            color: #000;
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-            font-weight: 500;
-        }
-
-        .chat-input-area {
-            padding: 15px;
-            border-top: 1px solid var(--glass-border);
-            display: flex;
-            gap: 10px;
-            background: rgba(2, 3, 5, 0.5);
-        }
-
-        #chat-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--text-muted);
-            color: #fff;
-            padding: 8px;
-            outline: none;
-            font-family: 'Inter';
-        }
-
-        #chat-input:focus {
-            border-bottom-color: var(--accent);
-        }
-
-        #chat-send {
-            background: transparent;
-            border: none;
-            color: var(--accent);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        #chat-send:hover {
-            transform: scale(1.1);
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        /* Add this to your existing Chatbot CSS */
-        .chat-options {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 5px;
-            align-items: flex-start;
-        }
-
-        .chat-option-btn {
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-family: 'Inter';
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: left;
-        }
-
-        .chat-option-btn:hover {
-            background: var(--accent);
-            color: #000;
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        /* We will disable the input box until they click an option */
-        #chat-input:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-    </style>
+    <!-- Favicon (placeholder – replace with your own) -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="loading">
 
+    <!-- Loader -->
     <div id="loader">
         <svg viewBox="0 0 120 120" class="loader-svg" id="loaderLogo">
             <defs>
@@ -924,8 +63,10 @@
         </div>
     </div>
 
+    <!-- 3D Canvas -->
     <canvas id="webgl-canvas"></canvas>
 
+    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <a href="#" class="nav-brand">
             <svg viewBox="0 0 120 120" class="logo-svg">
@@ -972,14 +113,14 @@
         </div>
         <a href="#footer"><button class="nav-btn">Start Project</button></a>
     </nav>
-
-    <section class="section-wrapper" id="hero" style="height: 120vh;">
+    <div id="cursor-follower"></div>
+    <!-- Hero -->
+    <section class="section-wrapper" id="hero">
         <div class="content-box">
             <h1 class="hero-title">Adoni AI: Custom Systems.<br>Built to Scale Businesses.</h1>
             <p class="hero-sub">We bridge the gap between complex algorithmic problems and elegant enterprise
                 applications. Our agency helps businesses reduce operational bottlenecks and accelerate growth through
                 custom AI workflows, SaaS platforms, and high-performance digital infrastructure.</p>
-
             <div class="hero-actions">
                 <a href="#footer"><button class="nav-btn btn-primary">Book Discovery Call</button></a>
                 <a href="#portfolio"><button class="nav-btn">View Case Studies</button></a>
@@ -987,7 +128,45 @@
         </div>
     </section>
 
-    <section class="section-wrapper" id="about" style="margin-top: 30vh;">
+    <!--  Live Stats / Impact Counter -->
+    <section class="section-wrapper" id="impact" style="min-height: auto; padding: 5vh 5vw;">
+        <div class="content-box glass-card gs-up" style="padding: 3rem;">
+            <div class="stats-grid">
+
+                <div class="stat-item">
+                    <div class="stat-number-wrap">
+                        <span class="stat-number" data-target="15">0</span><span class="stat-suffix">+</span>
+                    </div>
+                    <div class="stat-label">Enterprise Deployments</div>
+                </div>
+
+                <div class="stat-item">
+                    <div class="stat-number-wrap">
+                        <span class="stat-number" data-target="99.9">0</span><span class="stat-suffix">%</span>
+                    </div>
+                    <div class="stat-label">Uptime SLA</div>
+                </div>
+
+                <div class="stat-item">
+                    <div class="stat-number-wrap">
+                        <span class="stat-number" data-target="2.5">0</span><span class="stat-suffix">M+</span>
+                    </div>
+                    <div class="stat-label">API Calls Handled</div>
+                </div>
+
+                <div class="stat-item">
+                    <div class="stat-number-wrap">
+                        <span class="stat-number" data-target="100">0</span><span class="stat-suffix">%</span>
+                    </div>
+                    <div class="stat-label">Custom Code</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="section-wrapper" id="about">
         <div class="content-box glass-card gs-up">
             <span class="section-tag">// The Agency</span>
             <div class="about-grid">
@@ -999,7 +178,6 @@
                     <p class="text-body">We don't just write code. We architect secure, highly available systems that
                         streamline your operations, allowing you to focus entirely on scaling your business.</p>
                 </div>
-
                 <div style="border-left: 1px solid rgba(255,255,255,0.1); padding-left: 3rem; height: 100%;">
                     <h3
                         style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-main); font-family: 'Space Grotesk';">
@@ -1017,12 +195,12 @@
         </div>
     </section>
 
-    <section class="section-wrapper" id="services" style="margin-top: 30vh;">
+    <!-- Services -->
+    <section class="section-wrapper" id="services">
         <div class="content-box glass-card gs-up">
             <span class="section-tag">// Capabilities</span>
             <h2 class="heading-lg">Technical Solutions.</h2>
             <p class="text-body">We provide specialized digital integrations to solve complex industry challenges.</p>
-
             <div class="services-grid">
                 <div class="service-item">
                     <span class="service-number">01</span>
@@ -1058,16 +236,71 @@
         </div>
     </section>
 
-    <section class="section-wrapper" id="portfolio" style="margin-top: 30vh;">
+    <section class="section-wrapper" id="process">
+        <div class="content-box glass-card gs-up">
+            <span class="section-tag">// The Architecture</span>
+            <h2 class="heading-lg">Deployment Pipeline.</h2>
+            <p class="text-body" style="margin-bottom: 3rem;">We don't do guesswork. Our development lifecycle is a
+                strict, agile process designed to ship secure, scalable enterprise software.</p>
+
+            <div class="timeline-container">
+                <div class="timeline-track">
+                    <div class="timeline-progress"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="step-num">01</span>
+                        <h3>Discovery & Architecture</h3>
+                        <p>Mapping database schemas, defining AI logic, and establishing strict project roadmaps before
+                            a single line of code is written.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="step-num">02</span>
+                        <h3>Agile Sprints</h3>
+                        <p>Iterative frontend and backend development in the React and Node.js ecosystems. Weekly
+                            staging reviews keep you in the loop as features come online.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="step-num">03</span>
+                        <h3>Security & QA</h3>
+                        <p>Rigorous load testing, prompt injection prevention for AI models, and thorough bug squashing
+                            to ensure enterprise-grade stability.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="step-num">04</span>
+                        <h3>Deployment & Cloud Ops</h3>
+                        <p>Pushing to production environments on AWS. We handle the CI/CD pipelines, SSL encryption, and
+                            ongoing performance monitoring.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="section-wrapper" id="portfolio">
         <div class="content-box glass-card gs-up">
             <span class="section-tag">// Deployments</span>
             <h2 class="heading-lg">Proven ROI & Case Studies.</h2>
-
             <div>
                 <div class="project-row">
                     <div>
                         <h3 class="proj-name">B2B Wholesale Portal</h3>
-                        <div class="proj-tech">Yusufi Hardware | Custom E-Commerce</div>
+                        <!-- <div class="proj-tech">Yusufi Hardware | Custom E-Commerce</div> -->
                     </div>
                     <div style="max-width: 500px;">
                         <span class="proj-outcome">Outcome: Streamlined dealer ordering & inventory visibility.</span>
@@ -1076,11 +309,10 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="project-row">
                     <div>
                         <h3 class="proj-name">SaaS for Food & Beverage</h3>
-                        <div class="proj-tech">Chafa, Balsam & Butterwala Co.</div>
+                        <!-- <div class="proj-tech">Chafa, Balsam & Butterwala Co.</div> -->
                     </div>
                     <div style="max-width: 500px;">
                         <span class="proj-outcome">Outcome: Centralized operations and digital brand identity.</span>
@@ -1089,11 +321,10 @@
                             touchpoints.</p>
                     </div>
                 </div>
-
                 <div class="project-row">
                     <div>
                         <h3 class="proj-name">EdTech & Creative Portfolios</h3>
-                        <div class="proj-tech">Little Learners & Amatullah Creations</div>
+                        <!-- <div class="proj-tech">Little Learners & Amatullah Creations</div> -->
                     </div>
                     <div style="max-width: 500px;">
                         <span class="proj-outcome">Outcome: Enhanced UI/UX for specialized consumer markets.</span>
@@ -1101,7 +332,6 @@
                             featuring custom map integrations, secure checkouts, and premium design language.</p>
                     </div>
                 </div>
-
                 <div class="project-row" style="border-bottom: none;">
                     <div>
                         <h3 class="proj-name">AI Resume Engine</h3>
@@ -1119,6 +349,7 @@
         </div>
     </section>
 
+    <!-- Why Us (horizontal scroll) -->
     <section class="section-wrapper" id="why-us">
         <div class="hz-pin-container">
             <div class="hz-track">
@@ -1150,11 +381,11 @@
         </div>
     </section>
 
-    <section class="section-wrapper" id="testimonials" style="margin-top: 30vh;">
+    <!-- Testimonials -->
+    <section class="section-wrapper" id="testimonials">
         <div class="content-box glass-card gs-up">
             <span class="section-tag">// Client Feedback</span>
             <h2 class="heading-lg">Partner Reviews.</h2>
-
             <div class="testi-grid">
                 <div class="testi-card">
                     <i class="bi bi-quote quote-icon"></i>
@@ -1190,7 +421,8 @@
         </div>
     </section>
 
-    <section class="section-wrapper" id="footer" style="margin-top: 30vh; margin-bottom: 10vh;">
+    <!-- Footer / Contact -->
+    <section class="section-wrapper" id="footer">
         <div class="content-box glass-card gs-fade-scroll">
             <div class="footer-grid">
                 <div>
@@ -1204,7 +436,6 @@
                         <p style="margin-top: 1rem;"><i class="bi bi-geo-alt me-2"></i> Pune, Maharashtra, India</p>
                     </div>
                 </div>
-
                 <div>
                     <form action="https://api.web3forms.com/submit" method="POST" class="custom-form">
                         <input type="hidden" name="access_key" value="e7271cae-5e38-4c1a-a6f4-a24302e555af">
@@ -1230,7 +461,6 @@
                     </form>
                 </div>
             </div>
-
             <div class="footer-bottom">
                 <div>&copy; 2026 Adoni AI. Engineered by Taher Bohra.</div>
                 <div class="social-links">
@@ -1242,6 +472,8 @@
             </div>
         </div>
     </section>
+
+    <!-- Chatbot -->
     <div id="chatbot-container">
         <button id="chatbot-toggle" class="nav-btn btn-primary"><i class="bi bi-chat-dots-fill"></i></button>
         <div id="chatbot-window" class="glass-card">
@@ -1249,411 +481,76 @@
                 <h4>Adoni Assistant</h4>
                 <button id="chatbot-close"><i class="bi bi-x-lg"></i></button>
             </div>
-            <div class="chat-messages" id="chat-messages">
-            </div>
+            <div class="chat-messages" id="chat-messages"></div>
             <div class="chat-input-area">
                 <input type="text" id="chat-input" placeholder="Type your answer..." autocomplete="off">
                 <button id="chat-send"><i class="bi bi-send-fill"></i></button>
             </div>
         </div>
     </div>
+    <section class="section-wrapper" id="faq">
+        <div class="content-box glass-card gs-up">
+            <span class="section-tag">// Knowledge Base</span>
+            <h2 class="heading-lg">Frequently Asked Questions.</h2>
+            <div class="faq-container">
 
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you build from scratch or use templates?</span>
+                        <i class="bi bi-plus-lg faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-body" style="margin: 0;">We engineer custom solutions from the ground up. Whether
+                            it's a SaaS platform or an AI automation workflow, we write clean, scalable code tailored
+                            strictly to your business logic. We do not rely on bloated, pre-built templates.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How long does a typical deployment take?</span>
+                        <i class="bi bi-plus-lg faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-body" style="margin: 0;">It depends on the scope. A custom B2B portal or web
+                            architecture project typically takes 3 to 6 weeks. Complex Enterprise SaaS or AI integration
+                            models can take 2 to 3 months. We provide a strict roadmap during our discovery call.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can you integrate AI into my existing software?</span>
+                        <i class="bi bi-plus-lg faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-body" style="margin: 0;">Absolutely. We specialize in building secure API bridges
+                            to connect powerful LLMs and machine learning models to your current databases, CRMs, or
+                            legacy systems without disrupting your existing operations.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you provide ongoing maintenance and Cloud Ops?</span>
+                        <i class="bi bi-plus-lg faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-body" style="margin: 0;">Yes. Post-deployment, we offer dedicated Service Level
+                            Agreements (SLAs) to manage your AWS infrastructure, handle CI/CD pipelines, ensure 99.9%
+                            uptime, and push continuous security updates.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
-
-        const lenis = new Lenis({ lerp: 0.08 });
-        lenis.stop();
-        window.scrollTo(0, 0);
-
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-        gsap.ticker.lagSmoothing(0);
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) document.getElementById('navbar').classList.add('scrolled');
-            else document.getElementById('navbar').classList.remove('scrolled');
-        });
-
-        // ==========================================
-        // OPTIMIZED 3D PARTICLE ENGINE
-        // ==========================================
-        const canvas = document.getElementById('webgl-canvas');
-        const ctx = canvas.getContext('2d', { alpha: false }); // Performance: Disable alpha if background is solid
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
-
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        });
-
-        const camera = { x: 0, y: 0, z: -2000, fov: 350 };
-        const mouse = { x: 0, y: 0 };
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = (e.clientX - width / 2) * 0.5;
-            mouse.y = (e.clientY - height / 2) * 0.5;
-        });
-
-        class Node3D {
-            constructor() {
-                this.x = (Math.random() - 0.5) * 2000;
-                this.y = (Math.random() - 0.5) * 2000;
-                this.z = Math.random() * 4000;
-                this.tx = this.x; this.ty = this.y; this.tz = this.z;
-                this.radius = Math.random() * 2 + 1;
-                this.color = Math.random() > 0.8 ? '#ffffff' : '#00F0FF';
-                this.angle = Math.random() * Math.PI * 2;
-                this.speed = Math.random() * 0.005 + 0.002;
-                this.screenX = 0; this.screenY = 0; this.screenR = 0;
-            }
-
-            update() {
-                this.x += (this.tx - this.x) * 0.02;
-                this.y += (this.ty - this.y) * 0.02;
-                this.z += (this.tz - this.z) * 0.02;
-                this.angle += this.speed;
-                const ox = this.x + Math.cos(this.angle) * 20;
-                const oy = this.y + Math.sin(this.angle) * 20;
-
-                const dz = this.z - camera.z;
-
-                // PERFORMANCE FIX: Prevent the culling bug during fast scroll.
-                // Smoothly recycle particles behind the camera instead of suddenly pushing them back 10000 units.
-                if (dz < 10) {
-                    this.z += 6000 + Math.random() * 4000;
-                    this.tz = this.z;
-                    this.x = (Math.random() - 0.5) * 3000;
-                    this.y = (Math.random() - 0.5) * 3000;
-                    return false;
-                }
-
-                const scale = camera.fov / dz;
-                this.screenX = (ox - camera.x) * scale + width / 2;
-                this.screenY = (oy - camera.y) * scale + height / 2;
-                this.screenR = this.radius * scale;
-
-                // Only draw if visible on screen
-                return this.screenX > -50 && this.screenX < width + 50 && this.screenY > -50 && this.screenY < height + 50;
-            }
-
-            draw() {
-                const depthAlpha = Math.max(0, 1 - ((this.z - camera.z) / 5000));
-                ctx.beginPath();
-                ctx.arc(this.screenX, this.screenY, this.screenR, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.globalAlpha = depthAlpha;
-                ctx.fill();
-                ctx.globalAlpha = 1;
-            }
-        }
-
-        // PERFORMANCE FIX: Dramatically reduce nodes on mobile devices.
-        const isMobile = window.innerWidth <= 768;
-        const numNodes = isMobile ? 120 : 350;
-        const nodes = Array.from({ length: numNodes }, () => new Node3D());
-
-        function animate() {
-            // Draw background manually since alpha is disabled on context for speed
-            ctx.fillStyle = '#020305';
-            ctx.fillRect(0, 0, width, height);
-
-            // Add slight fade effect
-            ctx.fillStyle = 'rgba(2, 3, 5, 0.4)';
-            ctx.fillRect(0, 0, width, height);
-
-            camera.x += (mouse.x - camera.x) * 0.05;
-            camera.y += (mouse.y - camera.y) * 0.05;
-
-            const visibleNodes = [];
-            nodes.forEach(node => {
-                if (node.update()) {
-                    node.draw();
-                    visibleNodes.push(node);
-                }
-            });
-
-            ctx.lineWidth = 0.5;
-
-            // PERFORMANCE FIX: Bounding Box check before running Math.sqrt
-            for (let i = 0; i < visibleNodes.length; i++) {
-                for (let j = i + 1; j < visibleNodes.length; j++) {
-                    const n1 = visibleNodes[i];
-                    const n2 = visibleNodes[j];
-
-                    // Quick Screen-Space Check: If they are too far apart on the 2D screen, skip the heavy 3D math
-                    if (Math.abs(n1.screenX - n2.screenX) < 150 && Math.abs(n1.screenY - n2.screenY) < 150) {
-
-                        const dist3D = Math.sqrt(Math.pow(n1.x - n2.x, 2) + Math.pow(n1.y - n2.y, 2) + Math.pow(n1.z - n2.z, 2));
-
-                        if (dist3D < 300) {
-                            const depthAlpha = Math.max(0, 1 - ((n1.z - camera.z) / 4000));
-                            const lineAlpha = (1 - dist3D / 300) * depthAlpha * 0.5;
-                            ctx.beginPath();
-                            ctx.moveTo(n1.screenX, n1.screenY);
-                            ctx.lineTo(n2.screenX, n2.screenY);
-                            ctx.strokeStyle = `rgba(0, 240, 255, ${lineAlpha})`;
-                            ctx.stroke();
-                        }
-                    }
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        function formSphere() {
-            nodes.forEach(n => {
-                const phi = Math.acos(-1 + (2 * Math.random()));
-                const theta = Math.sqrt(numNodes * Math.PI) * phi;
-                const r = 800;
-                n.tx = r * Math.cos(theta) * Math.sin(phi);
-                n.ty = r * Math.sin(theta) * Math.sin(phi);
-                n.tz = camera.z + 1000 + (r * Math.cos(phi));
-            });
-        }
-
-        function formDataTunnel() {
-            nodes.forEach(n => {
-                const angle = Math.random() * Math.PI * 2;
-                const radius = 600 + Math.random() * 200;
-                n.tx = Math.cos(angle) * radius;
-                n.ty = Math.sin(angle) * radius;
-                n.tz = camera.z + Math.random() * 15000;
-            });
-        }
-
-        function formCore() {
-            nodes.forEach(n => {
-                n.tx = (Math.random() - 0.5) * 200;
-                n.ty = (Math.random() - 0.5) * 200;
-                n.tz = camera.z + 500;
-            });
-        }
-
-        window.onload = () => {
-            const tlLoader = gsap.timeline({
-                onComplete: () => {
-                    document.getElementById('loader').style.display = 'none';
-                    document.body.classList.remove('loading');
-                    lenis.start();
-                    initScrollAnimations();
-                }
-            });
-
-            tlLoader.to(".loader-text", { y: 0, duration: 0.8, ease: "power3.out" })
-                .to(".ring-1", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=0.4")
-                .to(".ring-2", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
-                .to(".ring-3", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
-                .to(".poly-core", { strokeDashoffset: 0, duration: 1.2, ease: "power3.inOut" }, "-=0.8")
-                .to(".loader-circuit", { strokeDashoffset: 0, duration: 0.8, ease: "power2.out", stagger: 0.1 }, "-=0.6")
-                .to(".loader-core", { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, "-=0.2")
-                .to(".poly-core", { fill: "rgba(2,3,5,0.9)", duration: 0.4 }, "-=0.2")
-                .to(".loader-text", { opacity: 0, duration: 0.4 }, "+=2.0")
-                .to("#loaderLogo", { scale: 15, opacity: 0, duration: 1.2, ease: "power4.in" }, "zoom")
-                .to(camera, { z: 0, duration: 1.2, ease: "power3.inOut" }, "zoom")
-                .to("#loader", { opacity: 0, duration: 0.8, ease: "none" }, "-=0.5")
-                .call(formSphere, [], "-=0.8")
-                .to(".navbar", { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.3")
-                .to("#hero .content-box", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.5, ease: "power3.out" }, "-=0.8");
-        };
-
-        function initScrollAnimations() {
-            const diveTimeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: "body",
-                    start: "top top",
-                    end: "bottom bottom",
-                    scrub: 1.5
-                }
-            });
-
-            diveTimeline.to(camera, { z: 2500, ease: "power2.in" }, 0)
-                .add(formDataTunnel, 0.4)
-                .to(camera, { z: 12000, ease: "none" }, 0.5)
-                .add(formCore, 0.85)
-                .to(camera, { z: 12200, ease: "power3.out" }, 0.85);
-
-            const hzTrack = document.querySelector('.hz-track');
-            const hzPin = document.querySelector('.hz-pin-container');
-
-            gsap.to(hzTrack, {
-                x: () => -(hzTrack.scrollWidth - window.innerWidth + 100),
-                ease: "none",
-                scrollTrigger: {
-                    trigger: hzPin,
-                    start: "center center",
-                    end: () => `+=${hzTrack.scrollWidth}`,
-                    pin: true,
-                    scrub: 1,
-                    invalidateOnRefresh: true
-                }
-            });
-
-            gsap.utils.toArray('.gs-fade-scroll').forEach(el => {
-                gsap.from(el, { opacity: 0, filter: "blur(10px)", scale: 0.9, duration: 1, scrollTrigger: { trigger: el, start: "top 75%" } });
-            });
-
-            gsap.utils.toArray('.gs-up').forEach(el => {
-                gsap.from(el, { opacity: 0, y: 100, rotationX: 10, duration: 1, scrollTrigger: { trigger: el, start: "top 85%" } });
-            });
-        }
-        // ==========================================
-        // GUIDED CHATBOT LOGIC & WEB3FORMS 
-        // ==========================================
-        const chatToggle = document.getElementById('chatbot-toggle');
-        const chatWindow = document.getElementById('chatbot-window');
-        const chatClose = document.getElementById('chatbot-close');
-        const chatMessages = document.getElementById('chat-messages');
-        const chatInput = document.getElementById('chat-input');
-        const chatSend = document.getElementById('chat-send');
-
-        let chatStep = 0;
-        let leadData = { service: '', name: '', email: '', message: '' };
-        let isChatOpen = false;
-
-        // Toggle window
-        chatToggle.addEventListener('click', () => {
-            chatWindow.classList.add('active');
-            if (!isChatOpen) {
-                isChatOpen = true;
-                chatInput.disabled = true; // Disable typing until they pick an option
-                setTimeout(() => {
-                    botReply("Hi! I'm the Adoni AI assistant. How can we help scale your business today?");
-                    showOptions([
-                        { text: "Build a Custom Web App / SaaS", value: "Custom Web App" },
-                        { text: "Integrate AI & Automation", value: "AI Automation" },
-                        { text: "E-commerce or B2B Portal", value: "B2B Portal" },
-                        { text: "Just looking around", value: "General Inquiry" }
-                    ]);
-                }, 500);
-            }
-        });
-
-        chatClose.addEventListener('click', () => chatWindow.classList.remove('active'));
-
-        // Handle Send (For Text Input)
-        function handleSend() {
-            const text = chatInput.value.trim();
-            if (!text) return;
-
-            userReply(text);
-            chatInput.value = '';
-
-            // Linear flow after they pick an option
-            setTimeout(() => {
-                if (chatStep === 1) {
-                    leadData.name = text;
-                    botReply(`Nice to meet you, ${leadData.name}. What is the best email address for Taher to reach you at?`);
-                    chatStep++;
-                } else if (chatStep === 2) {
-                    if (text.includes('@') && text.includes('.')) {
-                        leadData.email = text;
-                        botReply("Perfect. Lastly, could you briefly describe your project or the problem you are trying to solve?");
-                        chatStep++;
-                    } else {
-                        botReply("That doesn't look like a valid email. Could you try typing it again?");
-                    }
-                } else if (chatStep === 3) {
-                    leadData.message = text;
-                    botReply("Transmitting your data to our secure servers...");
-                    chatStep++;
-                    submitLeadToWeb3Forms();
-                }
-            }, 600);
-        }
-
-        chatSend.addEventListener('click', handleSend);
-        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !chatInput.disabled) handleSend(); });
-
-        // UI Functions
-        function botReply(text) {
-            const msg = document.createElement('div');
-            msg.className = 'chat-msg msg-bot';
-            msg.textContent = text;
-            chatMessages.appendChild(msg);
-            scrollToBottom();
-        }
-
-        function userReply(text) {
-            const msg = document.createElement('div');
-            msg.className = 'chat-msg msg-user';
-            msg.textContent = text;
-            chatMessages.appendChild(msg);
-            scrollToBottom();
-        }
-
-        function showOptions(optionsArray) {
-            const optionsContainer = document.createElement('div');
-            optionsContainer.className = 'chat-options';
-
-            optionsArray.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'chat-option-btn';
-                btn.textContent = opt.text;
-                btn.onclick = () => handleOptionClick(opt.text, opt.value, optionsContainer);
-                optionsContainer.appendChild(btn);
-            });
-
-            chatMessages.appendChild(optionsContainer);
-            scrollToBottom();
-        }
-
-        function handleOptionClick(userText, actualValue, containerToRemove) {
-            // Remove the buttons so they can't click them again
-            containerToRemove.remove();
-
-            userReply(userText);
-            leadData.service = actualValue; // Save their choice for the email
-
-            setTimeout(() => {
-                if (actualValue === "General Inquiry") {
-                    botReply("No problem! Feel free to explore our portfolio. If you want to get in touch, what's your name?");
-                } else {
-                    botReply(`Excellent choice. We specialize in ${actualValue}. To get the right details over to Adoni AI team, what's your name?`);
-                }
-
-                chatInput.disabled = false; // Re-enable typing
-                chatInput.focus();
-                chatStep = 1; // Move to the name-collection step
-            }, 600);
-        }
-
-        function scrollToBottom() {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // API Submission
-        async function submitLeadToWeb3Forms() {
-            try {
-                const response = await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify({
-                        access_key: 'e7271cae-5e38-4c1a-a6f4-a24302e555af',
-                        subject: `New Bot Lead: ${leadData.service}`,
-                        from_name: leadData.name,
-                        email: leadData.email,
-                        service_interest: leadData.service,
-                        message: leadData.message
-                    })
-                });
-
-                const result = await response.json();
-                if (result.success) {
-                    botReply("Success! Your transmission has been received. Taher will be in touch shortly. You can close this window.");
-                    chatInput.disabled = true;
-                } else {
-                    botReply("We encountered an error transmitting the data. Please try using the contact form below.");
-                }
-            } catch (error) {
-                botReply("System offline. Please use the contact form at the bottom of the page.");
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
