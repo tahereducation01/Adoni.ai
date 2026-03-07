@@ -457,21 +457,66 @@ async function submitLeadToWeb3Forms() {
     }
 }
 
-// ==================== STRUCTURED DATA (SEO) ====================
-const schemaScript = document.createElement('script');
-schemaScript.type = 'application/ld+json';
-schemaScript.text = JSON.stringify({
+// ==================== STRUCTURED DATA (SEO & AEO) ====================
+// 1. Organization Schema (Traditional SEO)
+const orgSchemaScript = document.createElement('script');
+orgSchemaScript.type = 'application/ld+json';
+orgSchemaScript.text = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Adoni AI",
     "url": "https://adoniai.in",
     "logo": "https://adoniai.in/logo.png",
+    "description": "Custom AI automation, SaaS platforms, and enterprise software development agency based in Pune.",
     "sameAs": [
         "https://www.instagram.com/adoni.ai/",
         "https://www.linkedin.com/in/taher-bohra9/"
     ]
 });
-document.head.appendChild(schemaScript);
+document.head.appendChild(orgSchemaScript);
+
+// 2. FAQ Schema (Answer Engine Optimization - AEO)
+const faqSchemaScript = document.createElement('script');
+faqSchemaScript.type = 'application/ld+json';
+faqSchemaScript.text = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Do you build from scratch or use templates?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We engineer custom solutions from the ground up. Whether it's a SaaS platform or an AI automation workflow, we write clean, scalable code tailored strictly to your business logic. We do not rely on bloated, pre-built templates."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How long does a typical deployment take?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It depends on the scope. A custom B2B portal or web architecture project typically takes 3 to 6 weeks. Complex Enterprise SaaS or AI integration models can take 2 to 3 months. We provide a strict roadmap during our discovery call."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can you integrate AI into my existing software?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutely. We specialize in building secure API bridges to connect powerful LLMs and machine learning models to your current databases, CRMs, or legacy systems without disrupting your existing operations."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Do you provide ongoing maintenance and Cloud Ops?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Post-deployment, we offer dedicated Service Level Agreements (SLAs) to manage your AWS infrastructure, handle CI/CD pipelines, ensure 99.9% uptime, and push continuous security updates."
+            }
+        }
+    ]
+});
+document.head.appendChild(faqSchemaScript);
 // ==================== FAQ ACCORDION LOGIC ====================
 const faqItems = document.querySelectorAll('.faq-item');
 
@@ -576,3 +621,15 @@ if (contactForm) {
         });
     });
 }   
+// ==================== BACK TO TOP (LENIS INTEGRATION) ====================
+const backToTopBtn = document.getElementById('back-to-top');
+
+if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+        // Uses Lenis to smoothly scroll to absolute top (0)
+        lenis.scrollTo(0, { 
+            duration: 1.5, 
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) // Beautiful exponential easing
+        });
+    });
+}
