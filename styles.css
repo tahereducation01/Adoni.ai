@@ -638,7 +638,6 @@ a {
     transform: translateY(-3px);
 }
 
-/* Chatbot */
 #chatbot-container {
     position: fixed;
     bottom: 30px;
@@ -647,6 +646,8 @@ a {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    opacity: 0; /* Hides it on load */
+    pointer-events: none; /* Prevents invisible clicks */
 }
 
 #chatbot-toggle {
@@ -1202,4 +1203,112 @@ a {
     .footer-content {
         grid-template-columns: 1fr;
     }
+}
+/* ==================== EXTENDED MOBILE RESPONSIVENESS ==================== */
+/* Standard Mobile (up to 768px) */
+@media (max-width: 768px) {
+    .heading-lg {
+        font-size: 2.5rem; /* Scales down headings globally */
+        word-wrap: break-word; /* Forces long words to wrap */
+    }
+    .nav-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Small Mobile - Samsung Galaxy S8+, iPhone SE (up to 400px) */
+@media (max-width: 400px) {
+    .heading-lg {
+        font-size: 2.1rem; /* Prevents "Deployment" from overflowing */
+        letter-spacing: -0.5px;
+    }
+    .hero-title {
+        font-size: 2rem;
+    }
+    .navbar {
+        padding: 1rem 1rem; /* Reduces edge padding to fit elements */
+    }
+    .logo-text {
+        font-size: 1.2rem;
+        margin-left: 6px;
+    }
+    .logo-svg {
+        width: 32px;
+        height: 32px;
+    }
+    .navbar .nav-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem; /* Shrinks the Start Project button */
+    }
+    .glass-card {
+        padding: 1.5rem;
+    }
+    #chatbot-container {
+        bottom: 15px;
+        right: 15px;
+    }
+}
+/* ==================== HERO DYNAMIC TEXT ==================== */
+.dynamic-word-wrap {
+    display: inline-block;
+    min-width: 250px; /* Prevents layout shifting when words change */
+    text-align: left;
+}
+
+#dynamic-word {
+    display: inline-block;
+    /* Firing / Glowing Gradient Effect */
+    background: linear-gradient(90deg, #00F0FF, #8A2BE2, #FF0055, #00F0FF);
+    background-size: 300% auto;
+    color: #fff;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fireShine 3s linear infinite;
+    text-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+}
+
+@keyframes fireShine {
+    to { background-position: 300% center; }
+}
+
+/* Mobile fix for dynamic word */
+@media (max-width: 768px) {
+    .dynamic-word-wrap { min-width: 180px; }
+}
+/* ==================== TECH MARQUEE ==================== */
+.tech-marquee-container {
+    width: 100vw;
+    overflow: hidden;
+    background: rgba(2, 3, 5, 0.8);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 0;
+    position: relative;
+    z-index: 5;
+    white-space: nowrap;
+}
+
+.tech-marquee-track {
+    display: inline-block;
+    animation: scrollMarquee 20s linear infinite;
+}
+
+.tech-marquee-track span {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.tech-marquee-track .dot {
+    color: var(--accent);
+    margin: 0 2rem;
+}
+
+@keyframes scrollMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Scrolls exactly half the width to loop seamlessly */
 }
