@@ -571,26 +571,62 @@ magneticBtns.forEach(btn => {
         });
     });
 });
-// ==================== CURSOR FOLLOWER (DESKTOP ONLY) ====================
+// ==================== ADVANCED CURSOR MORPHING (DESKTOP ONLY) ====================
 const follower = document.getElementById('cursor-follower');
 
-// Only run if it's not a touch device
 if (window.matchMedia("(pointer: fine)").matches) {
+    // Centers the GSAP transform origin exactly on the mouse coordinates
+    gsap.set(follower, { xPercent: -50, yPercent: -50 });
+
     window.addEventListener('mousemove', (e) => {
         gsap.to(follower, {
-            x: e.clientX - 10,
-            y: e.clientY - 10,
-            duration: 0.6,
+            x: e.clientX,
+            y: e.clientY,
+            duration: 0.4, // Smooth trailing effect
             ease: "power2.out"
         });
     });
 
-    document.querySelectorAll('a, button, .faq-question, .chat-option-btn').forEach(el => {
-        el.addEventListener('mouseenter', () => gsap.to(follower, { scale: 3, duration: 0.3 }));
+    // 1. General Hover State (Standard Links, Nav Buttons, FAQ)
+    // Selects interactables BUT excludes portfolio links and the chatbot
+    const standardInteractables = document.querySelectorAll('a:not(.project-link-btn), button:not(#chatbot-toggle), .faq-question');
+    
+    standardInteractables.forEach(el => {
+        el.addEventListener('mouseenter', () => gsap.to(follower, { scale: 2.5, duration: 0.3 }));
         el.addEventListener('mouseleave', () => gsap.to(follower, { scale: 1, duration: 0.3 }));
     });
+
+    // 2. Portfolio "VIEW" Morph
+    const projectLinks = document.querySelectorAll('.project-link-btn');
+    
+    projectLinks.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            follower.classList.add('view-mode');
+            follower.innerText = 'VIEW';
+            gsap.to(follower, { scale: 1, duration: 0.3 }); // Resets scale so CSS width/height takes over
+        });
+        el.addEventListener('mouseleave', () => {
+            follower.classList.remove('view-mode');
+            follower.innerText = '';
+        });
+    });
+
+    // 3. Chatbot "CHAT" Morph
+    const chatToggleBtn = document.getElementById('chatbot-toggle');
+    if(chatToggleBtn) {
+        chatToggleBtn.addEventListener('mouseenter', () => {
+            follower.classList.add('chat-mode');
+            follower.innerHTML = '<i class="bi bi-chat-dots-fill" style="color:#000; font-size:24px;"></i>';
+            gsap.to(follower, { scale: 1, duration: 0.3 });
+        });
+        chatToggleBtn.addEventListener('mouseleave', () => {
+            follower.classList.remove('chat-mode');
+            follower.innerHTML = ''; // Clears the icon
+        });
+    }
+
 } else {
-    // Hide follower on mobile/tablets
+    // Hide follower entirely on mobile/touch devices
     if (follower) follower.style.display = 'none';
 }
 // ==================== AJAX FOOTER FORM SUBMISSION ====================
