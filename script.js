@@ -188,7 +188,8 @@ window.onload = () => {
         .to("#loader", { opacity: 0, duration: 0.8, ease: "none" }, "-=0.5")
         .call(formSphere, [], "-=0.8")
         .to(".navbar", { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.3")
-        .to("#hero .content-box", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.5, ease: "power3.out" }, "-=0.8");
+        .to("#hero .content-box", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.5, ease: "power3.out" }, "-=0.8")
+        .to("#chatbot-container", { opacity: 1, pointerEvents: "auto", duration: 1 }, "-=1.0");
 };
 
 function initScrollAnimations() {
@@ -265,10 +266,10 @@ function initScrollAnimations() {
         gsap.utils.toArray('.stat-number').forEach(stat => {
             const target = parseFloat(stat.getAttribute('data-target'));
             const isDecimal = stat.getAttribute('data-target').includes('.');
-            
+
             // Create a dummy object to hold the value we want to animate
             let counter = { val: 0 };
-            
+
             gsap.to(counter, {
                 val: target,
                 duration: 2.5,
@@ -278,7 +279,7 @@ function initScrollAnimations() {
                     start: "top 85%", // Triggers when the top of the grid is 85% down the viewport
                     toggleActions: "play none none none" // Only plays once
                 },
-                onUpdate: function() {
+                onUpdate: function () {
                     // If it's a decimal, fix to 1 point. Otherwise, round to whole number.
                     stat.innerText = isDecimal ? counter.val.toFixed(1) : Math.round(counter.val);
                 }
@@ -301,6 +302,8 @@ let isChatOpen = false;
 
 chatToggle.addEventListener('click', () => {
     chatWindow.classList.add('active');
+    chatToggle.style.display = 'none'; // Hides the button when opened
+
     if (!isChatOpen) {
         isChatOpen = true;
         chatInput.disabled = true;
@@ -316,6 +319,11 @@ chatToggle.addEventListener('click', () => {
     }
 });
 
+chatClose.addEventListener('click', () => {
+    chatWindow.classList.remove('active');
+    chatToggle.style.display = 'flex'; // Brings the button back when closed
+});
+
 chatClose.addEventListener('click', () => chatWindow.classList.remove('active'));
 
 function showOptions(optionsArray) {
@@ -326,11 +334,11 @@ function showOptions(optionsArray) {
         const btn = document.createElement('button');
         btn.className = 'chat-option-btn';
         btn.textContent = opt.text;
-        
+
         btn.onclick = () => {
             optionsContainer.remove();
             userReply(opt.text);
-            
+
             // Branching logic based on the current step
             if (chatStep === 0) {
                 handleServiceSelection(opt.value);
@@ -522,7 +530,7 @@ const faqItems = document.querySelectorAll('.faq-item');
 
 faqItems.forEach(item => {
     const question = item.querySelector('.faq-question');
-    
+
     question.addEventListener('click', () => {
         // Close other open items (optional, remove if you want multiple open at once)
         faqItems.forEach(otherItem => {
@@ -530,7 +538,7 @@ faqItems.forEach(item => {
                 otherItem.classList.remove('active');
             }
         });
-        
+
         // Toggle current item
         item.classList.toggle('active');
     });
@@ -590,7 +598,7 @@ const contactForm = document.getElementById('contact-form');
 const formResult = document.getElementById('form-result');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
         const formData = new FormData(contactForm);
         const object = Object.fromEntries(formData);
@@ -604,32 +612,59 @@ if (contactForm) {
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: json
         })
-        .then(async (response) => {
-            let json = await response.json();
-            if (response.status == 200) {
-                formResult.innerHTML = "Success! Your request has been transmitted.";
-                contactForm.reset();
-            } else {
-                formResult.innerHTML = json.message;
-            }
-        })
-        .catch(error => {
-            formResult.innerHTML = "System offline. Please try again later.";
-        })
-        .then(function() {
-            setTimeout(() => { formResult.style.display = "none"; }, 5000);
-        });
+            .then(async (response) => {
+                let json = await response.json();
+                if (response.status == 200) {
+                    formResult.innerHTML = "Success! Your request has been transmitted.";
+                    contactForm.reset();
+                } else {
+                    formResult.innerHTML = json.message;
+                }
+            })
+            .catch(error => {
+                formResult.innerHTML = "System offline. Please try again later.";
+            })
+            .then(function () {
+                setTimeout(() => { formResult.style.display = "none"; }, 5000);
+            });
     });
-}   
+}
 // ==================== BACK TO TOP (LENIS INTEGRATION) ====================
 const backToTopBtn = document.getElementById('back-to-top');
 
 if (backToTopBtn) {
     backToTopBtn.addEventListener('click', () => {
         // Uses Lenis to smoothly scroll to absolute top (0)
-        lenis.scrollTo(0, { 
-            duration: 1.5, 
+        lenis.scrollTo(0, {
+            duration: 1.5,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) // Beautiful exponential easing
         });
     });
+}
+// ==================== DYNAMIC HERO TEXT ====================
+const words = ["Businesses.", "Enterprises.", "Workflows.", "Revenue."];
+let currentWordIndex = 0;
+const dynamicWord = document.getElementById('dynamic-word');
+
+if (dynamicWord) {
+    setInterval(() => {
+        // Slide up and fade out
+        gsap.to(dynamicWord, {
+            y: -20,
+            opacity: 0,
+            duration: 0.4,
+            ease: "power2.in",
+            onComplete: () => {
+                // Change the word
+                currentWordIndex = (currentWordIndex + 1) % words.length;
+                dynamicWord.innerText = words[currentWordIndex];
+                
+                // Slide in from bottom and fade in
+                gsap.fromTo(dynamicWord, 
+                    { y: 20, opacity: 0 }, 
+                    { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+                );
+            }
+        });
+    }, 3000); // Changes every 3 seconds
 }
