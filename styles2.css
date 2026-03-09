@@ -1,0 +1,131 @@
+/* ==================== PREMIUM TESTIMONIALS UPGRADE ==================== */
+.premium-testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+    align-items: center; /* Crucial for the staggered effect */
+}
+
+.premium-card {
+    position: relative;
+    padding: 2.5rem;
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(10, 15, 25, 0.8) 0%, rgba(2, 3, 5, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 340px;
+    /* We removed the transform transition here so your 3D JS hover still works perfectly! */
+    transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.premium-card:hover {
+    border-color: rgba(0, 240, 255, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 240, 255, 0.05), inset 0 0 20px rgba(0, 240, 255, 0.02);
+}
+
+/* Stagger the middle card on Desktop */
+@media (min-width: 1000px) {
+    .center-card {
+        transform: scale(1.05); /* Makes it slightly larger */
+        z-index: 2;
+        border-color: rgba(0, 240, 255, 0.15);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Massive background quote mark */
+.testi-bg-quote {
+    position: absolute;
+    top: -30px;
+    right: 15px;
+    font-family: 'Space Grotesk', serif;
+    font-size: 12rem;
+    color: rgba(255, 255, 255, 0.02);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.stars {
+    color: var(--accent);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 5px;
+    position: relative;
+    z-index: 1;
+}
+
+.testi-text {
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #E2E8F0;
+    flex-grow: 1;
+    position: relative;
+    z-index: 1;
+}
+
+/* Client Profile Area */
+.client-profile {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.client-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--gradient-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    color: #000;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+.client-info-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.client-name {
+    color: var(--text-main);
+    font-weight: 700;
+    font-size: 1.05rem;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.client-role {
+    color: var(--accent);
+    font-size: 0.85rem;
+    margin-top: 3px;
+    opacity: 0.9;
+}
+
+/* Stack them normally on Mobile */
+@media (max-width: 1000px) {
+    .premium-testi-grid {
+        grid-template-columns: 1fr;
+    }
+    .premium-card {
+        min-height: auto;
+    }
+    .center-card {
+        transform: scale(1); /* Removes scale on mobile */
+    }
+}
