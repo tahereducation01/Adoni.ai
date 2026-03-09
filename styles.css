@@ -30,7 +30,10 @@ body.loading {
     overflow: hidden;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
 }
@@ -180,8 +183,17 @@ a {
 }
 
 @keyframes pulseDot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.3); }
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: scale(1.3);
+    }
 }
 
 .logo-svg {
@@ -192,19 +204,43 @@ a {
 }
 
 @keyframes floatLogo {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); filter: drop-shadow(0 0 20px #8A2BE2); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+        filter: drop-shadow(0 0 20px #8A2BE2);
+    }
 }
 
-.circuit-line-1, .circuit-line-2, .circuit-line-3, .circuit-line-4 {
+.circuit-line-1,
+.circuit-line-2,
+.circuit-line-3,
+.circuit-line-4 {
     animation: circuitFlow 4s linear infinite;
 }
-.circuit-diag-1, .circuit-diag-3 { animation: circuitFlow 3s linear infinite reverse; }
-.circuit-diag-2, .circuit-diag-4 { animation: circuitFlow 3.5s linear infinite; }
+
+.circuit-diag-1,
+.circuit-diag-3 {
+    animation: circuitFlow 3s linear infinite reverse;
+}
+
+.circuit-diag-2,
+.circuit-diag-4 {
+    animation: circuitFlow 3.5s linear infinite;
+}
 
 @keyframes circuitFlow {
-    0% { stroke-dashoffset: 20; }
-    100% { stroke-dashoffset: 0; }
+    0% {
+        stroke-dashoffset: 20;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
 }
 
 .nav-links {
@@ -236,7 +272,7 @@ a {
     border: 1px solid var(--accent);
     transition: 0.3s;
     cursor: pointer;
-    box-shadow: 0 0 0 rgba(0,240,255,0);
+    box-shadow: 0 0 0 rgba(0, 240, 255, 0);
 }
 
 .nav-btn:hover {
@@ -307,10 +343,11 @@ a {
     max-width: 1100px;
     margin: 0 auto;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.05);
-    text-align: left;   
+    text-align: left;
     position: relative;
     overflow: hidden;
 }
+
 .glass-card::before {
     content: '';
     position: absolute;
@@ -318,7 +355,7 @@ a {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
     pointer-events: none;
     transition: 0.5s;
 }
@@ -396,7 +433,6 @@ a {
 
 .service-item:hover {
     border-color: var(--accent);
-    transform: translateY(-8px) scale(1.02);
     box-shadow: 0 10px 20px rgba(0, 240, 255, 0.05);
 }
 
@@ -515,39 +551,6 @@ a {
     color: var(--accent);
 }
 
-/* Testimonials */
-.testi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.testi-card {
-    border: 1px solid var(--glass-border);
-    padding: 2rem;
-    border-radius: 12px;
-    background: rgba(10, 15, 25, 0.65);
-    backdrop-filter: blur(10px);
-    transition: 0.3s;
-}
-
-.testi-card:hover {
-    border-color: var(--accent);
-}
-
-.quote-icon {
-    font-size: 1.5rem;
-    color: var(--accent-glow);
-    margin-bottom: 1rem;
-}
-
-.client-info {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 1rem;
-    margin-top: 1rem;
-}
-
 /* Footer & Form */
 .footer-grid {
     display: grid;
@@ -646,8 +649,10 @@ a {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    opacity: 0; /* Hides it on load */
-    pointer-events: none; /* Prevents invisible clicks */
+    opacity: 0;
+    /* Hides it on load */
+    pointer-events: none;
+    /* Prevents invisible clicks */
 }
 
 #chatbot-toggle {
@@ -816,39 +821,49 @@ a {
     .hero-title {
         font-size: 2.5rem;
     }
+
     .hero-actions {
         flex-direction: column;
     }
+
     .about-grid,
     .footer-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
     }
+
     .nav-links {
         display: none;
     }
+
     .glass-card {
         padding: 2rem;
     }
-    .about-grid > div:last-child {
+
+    .about-grid>div:last-child {
         border-left: none;
         padding-left: 0;
     }
+
     .hz-intro {
         width: 85vw;
         padding: 2rem;
     }
+
     .hz-card {
         width: 80vw;
     }
+
     .hz-track {
         gap: 1.5rem;
     }
+
     #chatbot-window {
         width: 90vw;
         height: 70vh;
     }
 }
+
 /* ==================== FAQ ACCORDION ==================== */
 .faq-container {
     margin-top: 2rem;
@@ -905,13 +920,16 @@ a {
 }
 
 .faq-item.active .faq-answer {
-    max-height: 400px; /* Adjust if your text is very long */
+    max-height: 400px;
+    /* Adjust if your text is very long */
 }
 
 .faq-answer p {
     padding: 0 1.5rem 1.5rem 1.5rem;
-    border-top: 1px solid transparent; /* Prevents margin collapse */
+    border-top: 1px solid transparent;
+    /* Prevents margin collapse */
 }
+
 /* ==================== DEPLOYMENT TIMELINE ==================== */
 .timeline-container {
     position: relative;
@@ -935,7 +953,8 @@ a {
     top: 0;
     left: 0;
     width: 100%;
-    height: 0%; /* GSAP will animate this */
+    height: 0%;
+    /* GSAP will animate this */
     background: var(--accent);
     box-shadow: 0 0 10px var(--accent-glow);
 }
@@ -960,7 +979,8 @@ a {
 
 .timeline-dot {
     position: absolute;
-    left: 14px; /* Centers exactly over the 2px track */
+    left: 14px;
+    /* Centers exactly over the 2px track */
     top: 24px;
     width: 14px;
     height: 14px;
@@ -1013,6 +1033,7 @@ a {
     line-height: 1.6;
     margin: 0;
 }
+
 /* ==================== IMPACT STATS ==================== */
 .stats-grid {
     display: grid;
@@ -1052,7 +1073,8 @@ a {
 }
 
 .stat-suffix {
-    font-size: 2.5rem; /* Slightly smaller than the number for visual hierarchy */
+    font-size: 2.5rem;
+    /* Slightly smaller than the number for visual hierarchy */
 }
 
 .stat-label {
@@ -1070,15 +1092,16 @@ a {
         grid-template-columns: repeat(2, 1fr);
         gap: 3rem 1rem;
     }
-    
+
     .stat-item:not(:last-child)::after {
-        display: none; /* Hide vertical dividers on mobile */
+        display: none;
+        /* Hide vertical dividers on mobile */
     }
-    
+
     .stat-number-wrap {
         font-size: 2.8rem;
     }
-    
+
     .stat-suffix {
         font-size: 2rem;
     }
@@ -1089,8 +1112,12 @@ a {
         grid-template-columns: 1fr;
     }
 }
+
+/* ==================== ADVANCED CURSOR FOLLOWER ==================== */
 #cursor-follower {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 20px;
     height: 20px;
     background: var(--accent);
@@ -1099,12 +1126,47 @@ a {
     z-index: 10000;
     mix-blend-mode: difference;
     box-shadow: 0 0 20px var(--accent-glow);
-    transition: transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0px;
+    /* Hidden text by default */
+    font-weight: 700;
+    color: #000;
+    overflow: hidden;
+    /* We use CSS transitions for width/height morphing, GSAP for position */
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        background-color 0.3s ease,
+        font-size 0.3s ease;
 }
+
+/* Morph State: Portfolio "VIEW" */
+#cursor-follower.view-mode {
+    width: 80px;
+    height: 80px;
+    font-size: 16px;
+    background: var(--accent);
+    mix-blend-mode: normal;
+    /* Removes difference blend so text is clear */
+    box-shadow: 0 0 30px var(--accent-glow);
+}
+
+/* Morph State: Chatbot Hover */
+#cursor-follower.chat-mode {
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    mix-blend-mode: normal;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
 /* ==================== FAT FOOTER ==================== */
 .site-footer {
     padding: 4rem 5vw 2rem 5vw;
-    background: rgba(2, 3, 5, 0.95); /* Slightly darker to anchor the bottom */
+    background: rgba(2, 3, 5, 0.95);
+    /* Slightly darker to anchor the bottom */
     border-top: 1px solid var(--glass-border);
     position: relative;
     z-index: 10;
@@ -1145,7 +1207,8 @@ a {
 
 .footer-links a:hover {
     color: var(--accent);
-    transform: translateX(5px); /* Nudges text on hover */
+    transform: translateX(5px);
+    /* Nudges text on hover */
 }
 
 .back-to-top-col {
@@ -1182,9 +1245,11 @@ a {
         grid-template-columns: 1fr 1fr;
         gap: 2.5rem;
     }
+
     .brand-col {
-        grid-column: 1 / -1; 
+        grid-column: 1 / -1;
     }
+
     .back-to-top-col {
         grid-column: 1 / -1;
         flex-direction: row;
@@ -1194,6 +1259,7 @@ a {
         padding-top: 1.5rem;
         margin-top: 1rem;
     }
+
     .btt-text {
         margin-top: 0;
     }
@@ -1204,13 +1270,17 @@ a {
         grid-template-columns: 1fr;
     }
 }
+
 /* ==================== EXTENDED MOBILE RESPONSIVENESS ==================== */
 /* Standard Mobile (up to 768px) */
 @media (max-width: 768px) {
     .heading-lg {
-        font-size: 2.5rem; /* Scales down headings globally */
-        word-wrap: break-word; /* Forces long words to wrap */
+        font-size: 2.5rem;
+        /* Scales down headings globally */
+        word-wrap: break-word;
+        /* Forces long words to wrap */
     }
+
     .nav-btn {
         padding: 0.6rem 1.2rem;
         font-size: 0.9rem;
@@ -1220,39 +1290,51 @@ a {
 /* Small Mobile - Samsung Galaxy S8+, iPhone SE (up to 400px) */
 @media (max-width: 400px) {
     .heading-lg {
-        font-size: 2.1rem; /* Prevents "Deployment" from overflowing */
+        font-size: 2.1rem;
+        /* Prevents "Deployment" from overflowing */
         letter-spacing: -0.5px;
     }
+
     .hero-title {
         font-size: 2rem;
     }
+
     .navbar {
-        padding: 1rem 1rem; /* Reduces edge padding to fit elements */
+        padding: 1rem 1rem;
+        /* Reduces edge padding to fit elements */
     }
+
     .logo-text {
         font-size: 1.2rem;
         margin-left: 6px;
     }
+
     .logo-svg {
         width: 32px;
         height: 32px;
     }
+
     .navbar .nav-btn {
         padding: 0.5rem 0.8rem;
-        font-size: 0.8rem; /* Shrinks the Start Project button */
+        font-size: 0.8rem;
+        /* Shrinks the Start Project button */
     }
+
     .glass-card {
         padding: 1.5rem;
     }
+
     #chatbot-container {
         bottom: 15px;
         right: 15px;
     }
 }
+
 /* ==================== HERO DYNAMIC TEXT ==================== */
 .dynamic-word-wrap {
     display: inline-block;
-    min-width: 250px; /* Prevents layout shifting when words change */
+    min-width: 250px;
+    /* Prevents layout shifting when words change */
     text-align: left;
 }
 
@@ -1270,13 +1352,18 @@ a {
 }
 
 @keyframes fireShine {
-    to { background-position: 300% center; }
+    to {
+        background-position: 300% center;
+    }
 }
 
 /* Mobile fix for dynamic word */
 @media (max-width: 768px) {
-    .dynamic-word-wrap { min-width: 180px; }
+    .dynamic-word-wrap {
+        min-width: 180px;
+    }
 }
+
 /* ==================== TECH MARQUEE ==================== */
 .tech-marquee-container {
     width: 100vw;
@@ -1309,6 +1396,25 @@ a {
 }
 
 @keyframes scrollMarquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* Scrolls exactly half the width to loop seamlessly */
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+
+    /* Scrolls exactly half the width to loop seamlessly */
+}
+/* ==================== SCROLL PROGRESS INDICATOR ==================== */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px; /* Thin, elegant line */
+    width: 0%;   /* Starts at 0 width */
+    background: var(--gradient-bright);
+    z-index: 10001; /* Sits above the navbar (1000) and cursor (10000) */
+    box-shadow: 0 0 10px var(--accent-glow), 0 0 5px var(--accent);
+    pointer-events: none; /* Prevents it from blocking clicks at the top of the screen */
 }
