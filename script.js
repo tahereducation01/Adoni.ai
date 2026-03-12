@@ -165,33 +165,115 @@ function formCore() {
 }
 
 window.onload = () => {
-    const tlLoader = gsap.timeline({
-        onComplete: () => {
-            document.getElementById('loader').style.display = 'none';
-            document.body.classList.remove('loading');
-            lenis.start();
-            initScrollAnimations();
+    const loaderEl = document.getElementById('loader');
+
+    // =====================================================================
+    // 1. CROSS-PAGE SMOOTH SCROLLING (Instantly wipes # from the URL)
+    // =====================================================================
+    if (window.location.hash) {
+        const targetElement = document.querySelector(window.location.hash);
+        if (targetElement) {
+            // Actively remove "index.html" and the "#hash" from the URL bar
+            let cleanUrl = window.location.pathname.replace(/\/index\.html$/, '/');
+
+            // If it leaves us with just a blank string, default to root "/"
+            if (cleanUrl === '') cleanUrl = '/';
+
+            history.replaceState(null, null, cleanUrl);
+
+            // Wait a tiny fraction of a second for Lenis to initialize, then scroll smoothly
+            setTimeout(() => {
+                lenis.scrollTo(targetElement, {
+                    offset: -80, // Adjusts for the navbar height
+                    duration: 1.5,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                });
+            }, 100);
         }
+    }
+
+    // =====================================================================
+    // 2. SAME-PAGE SMOOTH SCROLLING (Prevents # from ever appearing)
+    // =====================================================================
+    document.querySelectorAll('a').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (!href) return;
+
+            // If it's a standard hash link like "#services"
+            if (href.startsWith('#') && href !== '#') {
+                e.preventDefault();
+                const targetElement = document.querySelector(href);
+                if (targetElement) {
+                    lenis.scrollTo(targetElement, { offset: -80, duration: 1.2 });
+                }
+            }
+        });
     });
 
-    tlLoader.to(".loader-text", { y: 0, duration: 0.8, ease: "power3.out" })
-        .to(".ring-1", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=0.4")
-        .to(".ring-2", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
-        .to(".ring-3", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
-        .to(".poly-core", { strokeDashoffset: 0, duration: 1.2, ease: "power3.inOut" }, "-=0.8")
-        .to(".loader-circuit", { strokeDashoffset: 0, duration: 0.8, ease: "power2.out", stagger: 0.1 }, "-=0.6")
-        .to(".loader-core", { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, "-=0.2")
-        .to(".poly-core", { fill: "rgba(2,3,5,0.9)", duration: 0.4 }, "-=0.2")
-        .to(".loader-text", { opacity: 0, duration: 0.4 }, "+=2.0")
-        .to("#loaderLogo", { scale: 15, opacity: 0, duration: 1.2, ease: "power4.in" }, "zoom")
-        .to(camera, { z: 0, duration: 1.2, ease: "power3.inOut" }, "zoom")
-        .to("#loader", { opacity: 0, duration: 0.8, ease: "none" }, "-=0.5")
-        .call(formSphere, [], "-=0.8")
-        .to(".navbar", { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.3")
-        .to("#hero .content-box", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.5, ease: "power3.out" }, "-=0.8")
-        .to("#chatbot-container", { opacity: 1, pointerEvents: "auto", duration: 1 }, "-=1.0");
-};
+    // =====================================================================
+    // 3. SUBPAGE LOGIC (If no loader exists on this page)
+    // =====================================================================
+    if (!loaderEl) {
+        document.body.classList.remove('loading');
+        gsap.set(".navbar", { y: 0, opacity: 1 }); // Instantly show navbar
+        // ensure chatbot is visible even on subpages without a loader
+        gsap.set("#chatbot-container", { opacity: 1, pointerEvents: "auto" });
+        lenis.start();
+        initScrollAnimations();
+        return; // Stop running the rest of the script
+    }
 
+    // =====================================================================
+    // 4. GLOBAL LOADER LOGIC (Uses localStorage to remember across all tabs)
+    // =====================================================================
+    const loaderTimestamp = localStorage.getItem('adoni_loaded_time');
+    const now = new Date().getTime();
+
+    // Check if they have seen the loader in the last 2 hours (7,200,000 milliseconds)
+    // This stops it from playing when opening new tabs or clicking back
+    const hideLoader = loaderTimestamp && (now - parseInt(loaderTimestamp) < 7200000);
+
+    if (hideLoader) {
+        // Skip animation
+        loaderEl.style.display = 'none';
+        document.body.classList.remove('loading');
+        gsap.set(".navbar", { y: 0, opacity: 1 });
+        gsap.set("#hero .content-box", { opacity: 1, scale: 1, filter: "blur(0px)" });
+        gsap.set("#chatbot-container", { opacity: 1, pointerEvents: "auto" });
+        lenis.start();
+        initScrollAnimations();
+    } else {
+        // Play the full intro animation
+        const tlLoader = gsap.timeline({
+            onComplete: () => {
+                // Save the current exact time to localStorage
+                localStorage.setItem('adoni_loaded_time', now.toString());
+                loaderEl.style.display = 'none';
+                document.body.classList.remove('loading');
+                lenis.start();
+                initScrollAnimations();
+            }
+        });
+
+        tlLoader.to(".loader-text", { y: 0, duration: 0.8, ease: "power3.out" })
+            .to(".ring-1", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=0.4")
+            .to(".ring-2", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
+            .to(".ring-3", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
+            .to(".poly-core", { strokeDashoffset: 0, duration: 1.2, ease: "power3.inOut" }, "-=0.8")
+            .to(".loader-circuit", { strokeDashoffset: 0, duration: 0.8, ease: "power2.out", stagger: 0.1 }, "-=0.6")
+            .to(".loader-core", { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, "-=0.2")
+            .to(".poly-core", { fill: "rgba(2,3,5,0.9)", duration: 0.4 }, "-=0.2")
+            .to(".loader-text", { opacity: 0, duration: 0.4 }, "+=2.0")
+            .to("#loaderLogo", { scale: 15, opacity: 0, duration: 1.2, ease: "power4.in" }, "zoom")
+            .to(camera, { z: 0, duration: 1.2, ease: "power3.inOut" }, "zoom")
+            .to("#loader", { opacity: 0, duration: 0.8, ease: "none" }, "-=0.5")
+            .call(formSphere, [], "-=0.8")
+            .to(".navbar", { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.3")
+            .to("#hero .content-box", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.5, ease: "power3.out" }, "-=0.8")
+            .to("#chatbot-container", { opacity: 1, pointerEvents: "auto", duration: 1 }, "-=1.0");
+    }
+};
 function initScrollAnimations() {
     const diveTimeline = gsap.timeline({
         scrollTrigger: {
@@ -211,18 +293,21 @@ function initScrollAnimations() {
     const hzTrack = document.querySelector('.hz-track');
     const hzPin = document.querySelector('.hz-pin-container');
 
-    gsap.to(hzTrack, {
-        x: () => -(hzTrack.scrollWidth - window.innerWidth + 100),
-        ease: "none",
-        scrollTrigger: {
-            trigger: hzPin,
-            start: "center center",
-            end: () => `+=${hzTrack.scrollWidth}`,
-            pin: true,
-            scrub: 1,
-            invalidateOnRefresh: true
-        }
-    });
+    // ONLY run this if the horizontal track actually exists on the page
+    if (hzTrack && hzPin) {
+        gsap.to(hzTrack, {
+            x: () => -(hzTrack.scrollWidth - window.innerWidth + 100),
+            ease: "none",
+            scrollTrigger: {
+                trigger: hzPin,
+                start: "center center",
+                end: () => `+=${hzTrack.scrollWidth}`,
+                pin: true,
+                scrub: 1,
+                invalidateOnRefresh: true
+            }
+        });
+    }
 
     gsap.utils.toArray('.gs-fade-scroll').forEach(el => {
         gsap.from(el, { opacity: 0, filter: "blur(10px)", scale: 0.9, duration: 1, scrollTrigger: { trigger: el, start: "top 75%" } });
@@ -300,31 +385,40 @@ let chatStep = 0; // 0: service, 1: budget, 2: name, 3: email, 4: message
 let leadData = { service: '', budget: '', name: '', email: '', message: '' };
 let isChatOpen = false;
 
-chatToggle.addEventListener('click', () => {
-    chatWindow.classList.add('active');
-    chatToggle.style.display = 'none'; // Hides the button when opened
+// Ensure the toggle button exists on the current page before adding a listener
+if (chatToggle) {
+    chatToggle.addEventListener('click', () => {
+        // 1. Show the chat window and hide the floating toggle button
+        chatWindow.classList.add('active');
+        chatToggle.style.display = 'none';
 
-    if (!isChatOpen) {
-        isChatOpen = true;
-        chatInput.disabled = true;
-        setTimeout(() => {
-            botReply("Hi! I'm the Adoni AI assistant. How can we help scale your business today?");
-            showOptions([
-                { text: "Build a Custom Web App / SaaS", value: "Custom Web App" },
-                { text: "Integrate AI & Automation", value: "AI Automation" },
-                { text: "E-commerce or B2B Portal", value: "B2B Portal" },
-                { text: "Just looking around", value: "General Inquiry" }
-            ]);
-        }, 500);
-    }
-});
+        // 2. Check if this is the first time the user is opening the chat
+        if (!isChatOpen) {
+            isChatOpen = true; // Mark as initialized so it doesn't repeat
 
-chatClose.addEventListener('click', () => {
-    chatWindow.classList.remove('active');
-    chatToggle.style.display = 'flex'; // Brings the button back when closed
-});
+            // Disable text input while forcing them to click an option
+            if (chatInput) chatInput.disabled = true;
 
-chatClose.addEventListener('click', () => chatWindow.classList.remove('active'));
+            // 3. Add a slight delay so it feels like a natural response
+            setTimeout(() => {
+                botReply("Hi! I'm the Adoni AI assistant. How can we help scale your business today?");
+                showOptions([
+                    { text: "Build a Custom Web App / SaaS", value: "Custom Web App" },
+                    { text: "Integrate AI & Automation", value: "AI Automation" },
+                    { text: "E-commerce or B2B Portal", value: "B2B Portal" },
+                    { text: "Just looking around", value: "General Inquiry" }
+                ]);
+            }, 500);
+        }
+    });
+}
+
+if (chatClose) {
+    chatClose.addEventListener('click', () => {
+        chatWindow.classList.remove('active');
+        chatToggle.style.display = 'flex'; 
+    });
+}
 
 function showOptions(optionsArray) {
     const optionsContainer = document.createElement('div');
@@ -414,8 +508,15 @@ function handleSend() {
     }, 600);
 }
 
-chatSend.addEventListener('click', handleSend);
-chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !chatInput.disabled) handleSend(); });
+if (chatSend) {
+    chatSend.addEventListener('click', handleSend);
+}
+
+if (chatInput) {
+    chatInput.addEventListener('keypress', (e) => { 
+        if (e.key === 'Enter' && !chatInput.disabled) handleSend(); 
+    });
+}
 
 function botReply(text) {
     const msg = document.createElement('div');
@@ -528,6 +629,26 @@ document.head.appendChild(faqSchemaScript);
 // ==================== FAQ ACCORDION LOGIC ====================
 const faqItems = document.querySelectorAll('.faq-item');
 
+if (faqItems.length > 0) {
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+
+        // Ensure the question element exists before adding the listener
+        if (question) {
+            question.addEventListener('click', () => {
+                // Close other open items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        }
+    });
+}
 faqItems.forEach(item => {
     const question = item.querySelector('.faq-question');
 
@@ -590,7 +711,7 @@ if (window.matchMedia("(pointer: fine)").matches) {
     // 1. General Hover State (Standard Links, Nav Buttons, FAQ)
     // Selects interactables BUT excludes portfolio links and the chatbot
     const standardInteractables = document.querySelectorAll('a:not(.project-link-btn), button:not(#chatbot-toggle), .faq-question');
-    
+
     standardInteractables.forEach(el => {
         el.addEventListener('mouseenter', () => gsap.to(follower, { scale: 2.5, duration: 0.3 }));
         el.addEventListener('mouseleave', () => gsap.to(follower, { scale: 1, duration: 0.3 }));
@@ -598,7 +719,7 @@ if (window.matchMedia("(pointer: fine)").matches) {
 
     // 2. Portfolio "VIEW" Morph
     const projectLinks = document.querySelectorAll('.project-link-btn');
-    
+
     projectLinks.forEach(el => {
         el.addEventListener('mouseenter', () => {
             follower.classList.add('view-mode');
@@ -613,7 +734,7 @@ if (window.matchMedia("(pointer: fine)").matches) {
 
     // 3. Chatbot "CHAT" Morph
     const chatToggleBtn = document.getElementById('chatbot-toggle');
-    if(chatToggleBtn) {
+    if (chatToggleBtn) {
         chatToggleBtn.addEventListener('mouseenter', () => {
             follower.classList.add('chat-mode');
             follower.innerHTML = '<i class="bi bi-chat-dots-fill" style="color:#000; font-size:24px;"></i>';
@@ -694,10 +815,10 @@ if (dynamicWord) {
                 // Change the word
                 currentWordIndex = (currentWordIndex + 1) % words.length;
                 dynamicWord.innerText = words[currentWordIndex];
-                
+
                 // Slide in from bottom and fade in
-                gsap.fromTo(dynamicWord, 
-                    { y: 20, opacity: 0 }, 
+                gsap.fromTo(dynamicWord,
+                    { y: 20, opacity: 0 },
                     { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
                 );
             }
