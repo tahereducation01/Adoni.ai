@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Engine | Adoni AI Deployments</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../styles2.css">
+    <link rel="stylesheet" href="../details.css">
+</head>
+
+<body class="loading">
+    <div id="scroll-progress"></div>
+    <div id="cursor-follower"></div>
+    <canvas id="webgl-canvas"></canvas>
+
+    <nav class="navbar" id="navbar">
+        <a href="../../" class="nav-brand">
+            <span class="logo-text" style="margin-left:0;">
+                <span class="brand-adoni">ADONI</span><span class="brand-ai">AI</span><span class="brand-pulse">.</span>
+            </span>
+        </a>
+        <div class="nav-links" id="nav-links">
+            <a href="../../">Home</a>
+            <a href="../../#portfolio">All Deployments</a>
+        </div>
+        <button class="mobile-toggle" id="mobile-toggle"><i class="bi bi-list"></i></button>
+        <a href="https://ai-resume-creator-black.vercel.app/" target="_blank" class="desktop-btn">
+            <button class="nav-btn btn-primary">View Live Platform</button>
+        </a>
+    </nav>
+
+    <section class="section-wrapper detail-hero" style="align-items: flex-start;">
+        <div class="content-box glass-card gs-up" style="padding: 3rem; text-align: left; max-width: 1300px;">
+
+            <div class="showcase-grid">
+                <div class="slider-wrapper">
+                    <div class="slider-images" id="saas-slider">
+                        <img src="dashboard.png" class="slide active" alt="Resume Document Generation">
+                        <img src="form.png" class="slide" alt="User Dashboard Analytics">
+                    </div>
+                </div>
+
+                <div class="showcase-info">
+                    <span class="section-tag">// Generative AI & Automation</span>
+                    <h1 class="heading-lg" style="font-size: 3.5rem; margin-bottom: 1rem;">Autonomous Resume Engine.
+                    </h1>
+                    <p class="text-body">A full-stack Python application utilizing LLMs to architect ATS-compliant
+                        resumes. We engineered an intelligent platform that turns raw user data into highly optimized
+                        professional profiles in seconds.</p>
+
+                    <ul class="value-list">
+                        <li><i class="bi bi-cpu text-success"></i> <strong>LLM API Integration:</strong>
+                            Directly interfaces with OpenAI to analyze job descriptions and optimize keywords
+                            contextually.</li>
+                        <li><i class="bi bi-layout-wtf text-success"></i> <strong>Dynamic Data Architecture:</strong>
+                            Built with Python/Flask to manage a robust CRUD user dashboard for saving, editing, and
+                            archiving multiple resumes.</li>
+                        <li><i class="bi bi-file-earmark-pdf text-success"></i> <strong>ATS-Compliant
+                                Rendering:</strong>
+                            Strict formatting protocols ensure the generated PDFs easily pass through Enterprise
+                            Applicant Tracking Systems.</li>
+                        <li><i class="bi bi-lightning-charge text-success"></i> <strong>Frictionless UX:</strong>
+                            Features real-time skill suggestions, auto-save progress tracking, and 1-click PDF exports.
+                        </li>
+                    </ul>
+
+                    <div style="margin-top: 3rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="https://ai-resume-creator-black.vercel.app/" target="_blank"><button
+                                class="nav-btn btn-primary">Try the Platform</button></a>
+                        <button class="nav-btn trigger-drawer">Request AI Integration</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="chatbot-container">
+        <button id="chatbot-toggle" class="nav-btn btn-primary"><i class="bi bi-chat-dots-fill"></i></button>
+        <div id="chatbot-window" class="glass-card">
+            <div class="chat-header">
+                <h4>Adoni Assistant</h4>
+                <button id="chatbot-close"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="chat-messages" id="chat-messages" data-lenis-prevent></div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type your answer..." autocomplete="off">
+                <button id="chat-send"><i class="bi bi-send-fill"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+
+
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+    <div id="lead-drawer" class="lead-drawer">
+        <div class="drawer-header">
+            <button id="close-drawer" class="nav-btn btn-primary" aria-label="Close drawer">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="drawer-body" data-lenis-prevent>
+            <h2 class="heading-lg" style="margin-bottom: 1rem;">Let's Build Something Amazing</h2>
+            <p class="text-body" style="margin-bottom: 2rem;">Tell us about your project and we'll schedule a discovery
+                call to discuss your technical requirements.</p>
+            <form id="drawer-form" method="POST">
+                <input type="hidden" name="access_key" value="e7271cae-5e38-4c1a-a6f4-a24302e555af">
+                <input type="hidden" name="subject" value="New Project Inquiry from Adoni AI Website">
+                <input type="hidden" name="from_name" value="Adoni AI Website">
+
+                <div class="form-group">
+                    <label for="drawer-name">Name *</label>
+                    <input type="text" id="drawer-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-email">Email *</label>
+                    <input type="email" id="drawer-email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-demo-date">Demo Date *</label>
+                    <input type="date" id="drawer-demo-date" name="demo_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-demo-time">Demo Time *</label>
+                    <input type="time" id="drawer-demo-time" name="demo_time" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-service">Service Interested In *</label>
+                    <select id="drawer-service" name="service" required>
+                        <option value="">Select a service</option>
+                        <option value="Custom SaaS Platform">Custom SaaS Platform</option>
+                        <option value="AI Automation Workflow">AI Automation Workflow</option>
+                        <option value="Enterprise Software Integration">Enterprise Software Integration</option>
+                        <option value="B2B Portal Development">B2B Portal Development</option>
+                        <option value="Web Application Architecture">Web Application Architecture</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-budget">Project Budget Range</label>
+                    <select id="drawer-budget" name="budget">
+                        <option value="">Select budget range</option>
+                        <option value="Under ₹5 Lakhs">Under ₹5 Lakhs</option>
+                        <option value="₹5-15 Lakhs">₹5-15 Lakhs</option>
+                        <option value="₹15-50 Lakhs">₹15-50 Lakhs</option>
+                        <option value="₹50 Lakhs+">₹50 Lakhs+</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-message">Project Details</label>
+                    <textarea id="drawer-message" name="message" rows="4"
+                        placeholder="Describe your project requirements..."></textarea>
+                </div>
+
+                <button type="submit" id="drawer-submit-btn" class="nav-btn btn-primary"
+                    style="width: 100%; margin-top: 1rem;">Schedule Call</button>
+                <div id="drawer-form-result" style="margin-top: 1rem; display: none;"></div>
+            </form>
+        </div>
+    </div>
+    <script src="../../main.js"></script>
+    <script src="../../script.js"></script>
+    <script src="../details.js"></script>
+</body>
+
+</html>
