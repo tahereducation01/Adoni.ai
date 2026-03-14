@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,11 +43,11 @@
             <div class="showcase-grid">
                 <div class="slider-wrapper">
                     <div class="slider-images" id="saas-slider">
-                        <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=1000&auto=format&fit=crop"
+                        <img src="dashboard.png"
                             class="slide active" alt="Cafe Dashboard">
-                        <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=1000&auto=format&fit=crop"
+                        <img src="orders.png"
                             class="slide" alt="Order Management">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop"
+                        <img src="analytics.png"
                             class="slide" alt="Analytics">
                     </div>
                 </div>
@@ -71,7 +72,7 @@
                     <div style="margin-top: 3rem; display: flex; gap: 1rem; flex-wrap: wrap;">
                         <a href="https://tahereducation01.github.io/cafe_saas/" target="_blank"><button
                                 class="nav-btn btn-primary">Try Admin Dashboard</button></a>
-                        <a href="../../#footer"><button class="nav-btn">Request Similar System</button></a>
+                        <button class="nav-btn trigger-drawer">Request Similar System</button>
                     </div>
                 </div>
             </div>
@@ -86,7 +87,7 @@
                 <h4>Adoni Assistant</h4>
                 <button id="chatbot-close"><i class="bi bi-x-lg"></i></button>
             </div>
-            <div class="chat-messages" id="chat-messages"></div>
+            <div class="chat-messages" id="chat-messages" data-lenis-prevent></div>
             <div class="chat-input-area">
                 <input type="text" id="chat-input" placeholder="Type your answer..." autocomplete="off">
                 <button id="chat-send"><i class="bi bi-send-fill"></i></button>
@@ -100,6 +101,77 @@
 
     
 
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+    <div id="lead-drawer" class="lead-drawer">
+        <div class="drawer-header">
+            <button id="close-drawer" class="nav-btn btn-primary" aria-label="Close drawer">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="drawer-body" data-lenis-prevent>
+            <h2 class="heading-lg" style="margin-bottom: 1rem;">Let's Build Something Amazing</h2>
+            <p class="text-body" style="margin-bottom: 2rem;">Tell us about your project and we'll schedule a discovery call to discuss your technical requirements.</p>
+            <form id="drawer-form" method="POST">
+                <input type="hidden" name="access_key" value="e7271cae-5e38-4c1a-a6f4-a24302e555af">
+                <input type="hidden" name="subject" value="New Project Inquiry from Adoni AI Website">
+                <input type="hidden" name="from_name" value="Adoni AI Website">
+
+                <div class="form-group">
+                    <label for="drawer-name">Name *</label>
+                    <input type="text" id="drawer-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-email">Email *</label>
+                    <input type="email" id="drawer-email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-demo-date">Demo Date *</label>
+                    <input type="date" id="drawer-demo-date" name="demo_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-demo-time">Demo Time *</label>
+                    <input type="time" id="drawer-demo-time" name="demo_time" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-service">Service Interested In *</label>
+                    <select id="drawer-service" name="service" required>
+                        <option value="">Select a service</option>
+                        <option value="Custom SaaS Platform">Custom SaaS Platform</option>
+                        <option value="AI Automation Workflow">AI Automation Workflow</option>
+                        <option value="Enterprise Software Integration">Enterprise Software Integration</option>
+                        <option value="B2B Portal Development">B2B Portal Development</option>
+                        <option value="Web Application Architecture">Web Application Architecture</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-budget">Project Budget Range</label>
+                    <select id="drawer-budget" name="budget">
+                        <option value="">Select budget range</option>
+                        <option value="Under ₹5 Lakhs">Under ₹5 Lakhs</option>
+                        <option value="₹5-15 Lakhs">₹5-15 Lakhs</option>
+                        <option value="₹15-50 Lakhs">₹15-50 Lakhs</option>
+                        <option value="₹50 Lakhs+">₹50 Lakhs+</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="drawer-message">Project Details</label>
+                    <textarea id="drawer-message" name="message" rows="4" placeholder="Describe your project requirements..."></textarea>
+                </div>
+
+                <button type="submit" id="drawer-submit-btn" class="nav-btn btn-primary" style="width: 100%; margin-top: 1rem;">Schedule Call</button>
+                <div id="drawer-form-result" style="margin-top: 1rem; display: none;"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../main.js"></script>
     <script src="../../script.js"></script>
     <script src="../details.js"></script>
 </body>
