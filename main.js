@@ -15,6 +15,25 @@ window.addEventListener('scroll', () => {
     else navbar.classList.remove('scrolled');
 });
 
+// ==================== HAMBURGER MENU TOGGLE ====================
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+
+if (hamburgerBtn && mobileMenu) {
+    hamburgerBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+        hamburgerBtn.classList.toggle('active');
+    });
+
+    // Close menu when clicking a link
+    document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            hamburgerBtn.classList.remove('active');
+        });
+    });
+}
+
 // ==================== 3D PARTICLE ENGINE (OPTIMIZED) ====================
 const canvas = document.getElementById('webgl-canvas');
 const ctx = canvas.getContext('2d', { alpha: false });
