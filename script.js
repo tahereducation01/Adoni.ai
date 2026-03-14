@@ -68,6 +68,12 @@ function openDrawer(e) {
     if (e) e.preventDefault();
     if (!drawer || !overlay) return;
 
+    // Close mobile menu if open
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    if (mobileMenu) mobileMenu.classList.remove('active');
+    if (hamburgerBtn) hamburgerBtn.classList.remove('active');
+
     drawer.classList.add('open');
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden'; // Prevents native background scrolling
