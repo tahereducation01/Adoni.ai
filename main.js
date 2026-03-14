@@ -373,7 +373,7 @@ function initScrollAnimations() {
     }
 }
 
-// ==================== GUIDED CHATBOT LOGIC ====================
+// ==================== ADVANCED GUIDED CHATBOT LOGIC ====================
 const chatToggle = document.getElementById('chatbot-toggle');
 const chatWindow = document.getElementById('chatbot-window');
 const chatClose = document.getElementById('chatbot-close');
@@ -381,33 +381,22 @@ const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');
 const chatSend = document.getElementById('chat-send');
 
-let chatStep = 0; // 0: service, 1: budget, 2: name, 3: email, 4: message
 let leadData = { service: '', budget: '', name: '', email: '', message: '' };
 let isChatOpen = false;
+let inputExpects = null; // Tracks what text input we are waiting for ('name', 'email', 'message')
 
-// Ensure the toggle button exists on the current page before adding a listener
 if (chatToggle) {
     chatToggle.addEventListener('click', () => {
-        // 1. Show the chat window and hide the floating toggle button
         chatWindow.classList.add('active');
         chatToggle.style.display = 'none';
 
-        // 2. Check if this is the first time the user is opening the chat
         if (!isChatOpen) {
-            isChatOpen = true; // Mark as initialized so it doesn't repeat
+            isChatOpen = true; 
+            chatInput.disabled = true; // Disable typing until they pick an option
 
-            // Disable text input while forcing them to click an option
-            if (chatInput) chatInput.disabled = true;
-
-            // 3. Add a slight delay so it feels like a natural response
             setTimeout(() => {
-                botReply("Hi! I'm the Adoni AI assistant. How can we help scale your business today?");
-                showOptions([
-                    { text: "Build a Custom Web App / SaaS", value: "Custom Web App" },
-                    { text: "Integrate AI & Automation", value: "AI Automation" },
-                    { text: "E-commerce or B2B Portal", value: "B2B Portal" },
-                    { text: "Just looking around", value: "General Inquiry" }
-                ]);
+                botReply("Hi! I'm the Adoni AI assistant. How can I help you scale your business today?");
+                showMainMenu();
             }, 500);
         }
     });
@@ -420,108 +409,19 @@ if (chatClose) {
     });
 }
 
-function showOptions(optionsArray) {
-    const optionsContainer = document.createElement('div');
-    optionsContainer.className = 'chat-options';
-
-    optionsArray.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.className = 'chat-option-btn';
-        btn.textContent = opt.text;
-
-        btn.onclick = () => {
-            optionsContainer.remove();
-            userReply(opt.text);
-
-            // Branching logic based on the current step
-            if (chatStep === 0) {
-                handleServiceSelection(opt.value);
-            } else if (chatStep === 1) {
-                handleBudgetSelection(opt.value);
-            }
-        };
-        optionsContainer.appendChild(btn);
-    });
-
-    chatMessages.appendChild(optionsContainer);
-    scrollToBottom();
-}
-
-function handleServiceSelection(value) {
-    leadData.service = value;
-    if (value === "General Inquiry") {
-        setTimeout(() => {
-            botReply("No problem! Feel free to explore. If you want to get in touch, what's your name?");
-            chatInput.disabled = false;
-            chatInput.focus();
-            chatStep = 2; // Jump straight to Name
-        }, 600);
-    } else {
-        setTimeout(() => {
-            chatStep = 1; // Move to Budget
-            botReply(`Great choice! To better understand your needs, what is your estimated budget range?`);
-            showOptions([
-                { text: "Under ₹1,000", value: "budget-low" },
-                { text: "₹1,000 – ₹5,000", value: "budget-mid" },
-                { text: "₹5,000+", value: "budget-high" }
-            ]);
-        }, 600);
-    }
-}
-
-function handleBudgetSelection(value) {
-    leadData.budget = value;
-    chatStep = 2; // Move to Name
-    setTimeout(() => {
-        botReply("Thanks! Now, what's your name?");
-        chatInput.disabled = false;
-        chatInput.focus();
-    }, 600);
-}
-
-function handleSend() {
-    const text = chatInput.value.trim();
-    if (!text) return;
-
-    userReply(text);
-    chatInput.value = '';
-
-    setTimeout(() => {
-        if (chatStep === 2) {
-            leadData.name = text;
-            botReply(`Nice to meet you, ${leadData.name}. What is the best email address for team to reach you at?`);
-            chatStep++;
-        } else if (chatStep === 3) {
-            if (text.includes('@') && text.includes('.')) {
-                leadData.email = text;
-                botReply("Perfect. Lastly, could you briefly describe your project or the problem you are trying to solve?");
-                chatStep++;
-            } else {
-                botReply("That doesn't look like a valid email. Could you try typing it again?");
-            }
-        } else if (chatStep === 4) {
-            leadData.message = text;
-            botReply("Transmitting your data to our secure servers...");
-            chatStep++;
-            submitLeadToWeb3Forms();
-        }
-    }, 600);
-}
-
-if (chatSend) {
-    chatSend.addEventListener('click', handleSend);
-}
-
-if (chatInput) {
-    chatInput.addEventListener('keypress', (e) => { 
-        if (e.key === 'Enter' && !chatInput.disabled) handleSend(); 
-    });
-}
-
+// ==================== UI HELPERS ====================
 function botReply(text) {
     const msg = document.createElement('div');
     msg.className = 'chat-msg msg-bot';
     msg.textContent = text;
+    chatMessages.appendChild(msg);
+    scrollToBottom();
+}
+
+function botReplyHTML(htmlString) {
+    const msg = document.createElement('div');
+    msg.className = 'chat-msg msg-bot';
+    msg.innerHTML = htmlString;
     chatMessages.appendChild(msg);
     scrollToBottom();
 }
@@ -536,6 +436,211 @@ function userReply(text) {
 
 function scrollToBottom() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Dynamically generates buttons and handles their specific actions
+function showOptions(optionsArray) {
+    const optionsContainer = document.createElement('div');
+    optionsContainer.className = 'chat-options';
+
+    optionsArray.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'chat-option-btn';
+        btn.innerHTML = opt.text;
+
+        btn.onclick = () => {
+            optionsContainer.remove(); // Remove buttons after clicking
+            userReply(btn.textContent); // Show what the user clicked
+            opt.action(); // Run the specific function tied to this button
+        };
+        optionsContainer.appendChild(btn);
+    });
+
+    chatMessages.appendChild(optionsContainer);
+    scrollToBottom();
+}
+
+// ==================== CONVERSATION FLOWS ====================
+
+function showMainMenu() {
+    inputExpects = null;
+    chatInput.disabled = true;
+    showOptions([
+        { text: "🚀 Start a Project", action: startLeadFlow },
+        { text: "🔍 Help me choose a Service", action: exploreServicesFlow },
+        { text: "🌐 Connect on Socials", action: showSocialsFlow },
+        { text: "💡 Give Website Feedback", action: feedbackFlow }
+    ]);
+}
+
+// --- FLOW: Social Media ---
+function showSocialsFlow() {
+    setTimeout(() => {
+        botReply("We'd love to connect! Here is where you can find our team and our code:");
+        
+        const socialsHTML = `
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 5px;">
+                <a href="https://www.linkedin.com/in/taher-bohra9/" target="_blank" style="color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                    <i class="bi bi-linkedin"></i> Connect on LinkedIn
+                </a>
+                <a href="https://www.instagram.com/adoni.ai/" target="_blank" style="color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                    <i class="bi bi-instagram"></i> Follow on Instagram
+                </a>
+                <a href="https://github.com/taher-bohra786" target="_blank" style="color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                    <i class="bi bi-github"></i> View our GitHub
+                </a>
+            </div>
+        `;
+        setTimeout(() => {
+            botReplyHTML(socialsHTML);
+            
+            setTimeout(() => {
+                botReply("Anything else I can help you explore?");
+                showOptions([
+                    { text: "Back to Main Menu", action: showMainMenu },
+                    { text: "Start a Project", action: startLeadFlow }
+                ]);
+            }, 1500);
+        }, 600);
+    }, 500);
+}
+
+// --- FLOW: Feedback ---
+function feedbackFlow() {
+    setTimeout(() => {
+        botReply("We love feedback. How are you liking the Adoni AI digital experience so far?");
+        showOptions([
+            { text: "It's amazing! 🤩", action: () => handleFeedbackResponse("Amazing! We pride ourselves on engineering premium experiences. We can build something this engaging for your brand, too.") },
+            { text: "It's pretty good 👍", action: () => handleFeedbackResponse("Glad you like it! We are always optimizing. Let us know if you want to see what we can do for your business.") },
+            { text: "Needs improvement 🔧", action: () => handleFeedbackResponse("We appreciate the honesty. We are constantly deploying updates to optimize performance.") }
+        ]);
+    }, 500);
+}
+
+function handleFeedbackResponse(responseMsg) {
+    setTimeout(() => {
+        botReply(responseMsg);
+        setTimeout(() => {
+            showOptions([
+                { text: "Let's build something together", action: startLeadFlow },
+                { text: "Main Menu", action: showMainMenu }
+            ]);
+        }, 1000);
+    }, 600);
+}
+
+// --- FLOW: Explore Services ---
+function exploreServicesFlow() {
+    setTimeout(() => {
+        botReply("Every business is different. What is the biggest operational bottleneck you are facing right now?");
+        showOptions([
+            { text: "Too much manual data entry", action: () => pitchService("AI Automation Workflow", "Our AI automation bots can eliminate manual entry, read documents, and save your team 20+ hours a week.") },
+            { text: "My current website doesn't convert", action: () => pitchService("Custom Web Architecture", "A slow site kills revenue. We build ultra-fast, high-converting platforms using React & Node.js.") },
+            { text: "Managing B2B/Wholesale orders is chaos", action: () => pitchService("Custom B2B Portal", "We can digitize your entire wholesale process with custom tiered pricing and bulk-order dashboards.") }
+        ]);
+    }, 500);
+}
+
+function pitchService(serviceName, pitchText) {
+    setTimeout(() => {
+        botReply(`${pitchText} Based on that, I highly recommend our **${serviceName}** package.`);
+        setTimeout(() => {
+            botReply("Would you like to get a cost estimate and roadmap for this?");
+            showOptions([
+                { text: "Yes, let's talk about this!", action: () => { leadData.service = serviceName; askBudget(); } },
+                { text: "Show me other options", action: exploreServicesFlow },
+                { text: "Main Menu", action: showMainMenu }
+            ]);
+        }, 1200);
+    }, 600);
+}
+
+// --- FLOW: Lead Generation ---
+function startLeadFlow() {
+    setTimeout(() => {
+        botReply("Awesome. What type of technical system are you looking to build?");
+        showOptions([
+            { text: "Custom SaaS Platform", action: () => { leadData.service = "SaaS"; askBudget(); } },
+            { text: "AI / Automation Logic", action: () => { leadData.service = "AI Automation"; askBudget(); } },
+            { text: "B2B / E-commerce", action: () => { leadData.service = "B2B Portal"; askBudget(); } },
+            { text: "Other / Unsure", action: () => { leadData.service = "General/Other"; askBudget(); } }
+        ]);
+    }, 500);
+}
+
+function askBudget() {
+    setTimeout(() => {
+        botReply(`Great. To architect the best solution for your ${leadData.service}, what is your estimated budget?`);
+        showOptions([
+            { text: "Under ₹5 Lakhs", action: () => { leadData.budget = "Under 5L"; askName(); } },
+            { text: "₹5L – ₹15 Lakhs", action: () => { leadData.budget = "5L - 15L"; askName(); } },
+            { text: "₹15 Lakhs+", action: () => { leadData.budget = "15L+"; askName(); } }
+        ]);
+    }, 600);
+}
+
+function askName() {
+    setTimeout(() => {
+        botReply("Thanks! What's your name?");
+        inputExpects = 'name'; // Tell the text input to listen for a name
+        chatInput.disabled = false;
+        chatInput.focus();
+    }, 600);
+}
+
+// ==================== TEXT INPUT HANDLING ====================
+function handleSend() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    // Secret reset command
+    if (text.toLowerCase() === 'restart' || text.toLowerCase() === 'menu') {
+        userReply(text);
+        chatInput.value = '';
+        showMainMenu();
+        return;
+    }
+
+    userReply(text);
+    chatInput.value = '';
+
+    // Handle the expected input based on the current state
+    if (inputExpects === 'name') {
+        leadData.name = text;
+        inputExpects = 'email';
+        setTimeout(() => botReply(`Nice to meet you, ${leadData.name}. What is the best email address to reach you at?`), 600);
+    
+    } else if (inputExpects === 'email') {
+        if (text.includes('@') && text.includes('.')) {
+            leadData.email = text;
+            inputExpects = 'message';
+            setTimeout(() => botReply("Perfect. Lastly, could you briefly describe your project goals or bottlenecks?"), 600);
+        } else {
+            setTimeout(() => botReply("That doesn't look like a valid email. Could you try typing it again?"), 600);
+        }
+    
+    } else if (inputExpects === 'message') {
+        leadData.message = text;
+        inputExpects = null; // Done
+        chatInput.disabled = true; // Lock input
+        setTimeout(() => {
+            botReply("Transmitting your data to our secure servers...");
+            submitLeadToWeb3Forms();
+        }, 600);
+    
+    } else {
+        // Fallback if they type randomly
+        setTimeout(() => {
+            botReply("I am currently in guided mode. Please use the buttons above, or type 'menu' to start over.");
+        }, 600);
+    }
+}
+
+if (chatSend) chatSend.addEventListener('click', handleSend);
+if (chatInput) {
+    chatInput.addEventListener('keypress', (e) => { 
+        if (e.key === 'Enter' && !chatInput.disabled) handleSend(); 
+    });
 }
 
 async function submitLeadToWeb3Forms() {
@@ -556,10 +661,15 @@ async function submitLeadToWeb3Forms() {
 
         const result = await response.json();
         if (result.success) {
-            botReply("Success! Your transmission has been received. The team will be in touch shortly. You can close this window.");
-            chatInput.disabled = true;
+            setTimeout(() => {
+                botReply("Success! Your transmission has been received. The engineering team will be in touch shortly.");
+                setTimeout(() => {
+                    botReply("You can safely close this window, or return to the main menu.");
+                    showOptions([{ text: "Back to Main Menu", action: showMainMenu }]);
+                }, 1000);
+            }, 800);
         } else {
-            botReply("We encountered an error transmitting the data. Please try using the contact form below.");
+            botReply("We encountered an error transmitting the data. Please try using the contact form in the footer.");
         }
     } catch (error) {
         botReply("System offline. Please use the contact form at the bottom of the page.");
@@ -626,43 +736,28 @@ faqSchemaScript.text = JSON.stringify({
     ]
 });
 document.head.appendChild(faqSchemaScript);
-// ==================== FAQ ACCORDION LOGIC ====================
-const faqItems = document.querySelectorAll('.faq-item');
+// ==================== FAQ ACCORDION LOGIC (BULLETPROOF) ====================
+document.addEventListener('click', function(e) {
+    // 1. Check if the user clicked on or inside a question box (like the plus icon)
+    const clickedQuestion = e.target.closest('.faq-question');
+    if (!clickedQuestion) return; // If they clicked somewhere else, ignore it
 
-if (faqItems.length > 0) {
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
+    // 2. Find the parent FAQ item
+    const parentItem = clickedQuestion.closest('.faq-item');
+    if (!parentItem) return;
 
-        // Ensure the question element exists before adding the listener
-        if (question) {
-            question.addEventListener('click', () => {
-                // Close other open items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item && otherItem.classList.contains('active')) {
-                        otherItem.classList.remove('active');
-                    }
-                });
+    // 3. Check if the one we clicked is currently open
+    const isAlreadyOpen = parentItem.classList.contains('active');
 
-                // Toggle current item
-                item.classList.toggle('active');
-            });
-        }
+    // 4. Close ALL FAQ items forcefully
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
     });
-}
-faqItems.forEach(item => {
-    const question = item.querySelector('.faq-question');
 
-    question.addEventListener('click', () => {
-        // Close other open items (optional, remove if you want multiple open at once)
-        faqItems.forEach(otherItem => {
-            if (otherItem !== item && otherItem.classList.contains('active')) {
-                otherItem.classList.remove('active');
-            }
-        });
-
-        // Toggle current item
-        item.classList.toggle('active');
-    });
+    // 5. If the one we clicked wasn't open, open it now!
+    if (!isAlreadyOpen) {
+        parentItem.classList.add('active');
+    }
 });
 // ==================== MAGNETIC BUTTON EFFECT ====================
 const magneticBtns = document.querySelectorAll('.nav-btn');
