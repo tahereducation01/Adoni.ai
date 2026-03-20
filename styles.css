@@ -179,6 +179,8 @@ a {
     display: flex;
     align-items: center;
     text-decoration: none;
+    white-space: nowrap;
+    /* ADD THIS: Prevents the logo text from wrapping */
 }
 
 .logo-text {
@@ -1007,6 +1009,16 @@ a {
         width: 90vw;
         height: 70vh;
     }
+
+    .logo-image {
+        width: 45px;
+        /* Scales logo down for tablets/large phones */
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
+        /* Scales text down slightly */
+    }
 }
 
 /* ==================== FAQ ACCORDION ==================== */
@@ -1472,6 +1484,33 @@ a {
     #chatbot-container {
         bottom: 15px;
         right: 15px;
+    }
+
+    .logo-text {
+        font-size: 1.2rem;
+        margin-left: 6px;
+    }
+
+    /* FIX: Changed from .logo-svg to .logo-image */
+    .logo-image {
+        width: 35px;
+        height: auto;
+    }
+}
+
+/* Force clearance for the fixed navbar */
+#hero {
+    padding-top: 140px;
+}
+
+@media (max-width: 768px) {
+    #hero {
+        padding-top: 120px;
+        /* Slightly tighter on mobile, but still clears the navbar */
+    }
+
+    .hero-title {
+        margin-top: 1rem;
     }
 }
 
