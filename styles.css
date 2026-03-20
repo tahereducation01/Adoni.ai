@@ -60,20 +60,26 @@ a {
 
 /* --- New Loader Logo Styles --- */
 .loader-new-logo {
-    width: 180px; /* Adjust size as needed */
+    width: 180px;
+    /* Adjust size as needed */
     height: auto;
-    filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.6)); /* Purple glowing shadow */
-    opacity: 0;           /* Starts hidden for GSAP */
-    transform: scale(0.5); /* Starts shrunk for GSAP */
+    filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.6));
+    /* Purple glowing shadow */
+    opacity: 0;
+    /* Starts hidden for GSAP */
+    transform: scale(0.5);
+    /* Starts shrunk for GSAP */
     margin-bottom: 20px;
 }
 
 /* --- New Navbar Logo Styles --- */
 .logo-image {
-    width: 55px; /* Adjust based on how it looks next to your text */
+    width: 55px;
+    /* Adjust based on how it looks next to your text */
     height: auto;
     filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.6));
-    animation: floatLogo 6s ease-in-out infinite; /* Keeps your floating effect! */
+    animation: floatLogo 6s ease-in-out infinite;
+    /* Keeps your floating effect! */
 }
 
 .loader-path {
@@ -100,17 +106,29 @@ a {
 .loader-text-wrap {
     margin-top: 2rem;
     overflow: hidden;
-    height: 20px;
+    height: auto;
+    /* Changed from fixed 20px */
+    min-height: 60px;
+    /* Gives room for wrapped text to slide up */
+    width: 90%;
+    /* Prevents text from hitting screen edges on mobile */
+    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 .loader-text {
     font-family: 'Space Grotesk', monospace;
     color: var(--accent);
-    letter-spacing: 6px;
+    letter-spacing: 4px;
+    /* Slightly reduced to fit longer sentences */
     font-size: 0.85rem;
     font-weight: 600;
     text-transform: uppercase;
     transform: translateY(100%);
+    line-height: 1.6;
+    /* Adds breathing room between stacked lines */
+    display: inline-block;
 }
 
 .navbar {
@@ -382,11 +400,13 @@ a {
 /* ==================== LAYOUT & UI ==================== */
 .section-wrapper {
     position: relative;
-    min-height: 100vh;
+    min-height: auto;
+    /* Changed from 100vh to stop forced empty spaces */
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 15vh 5vw;
+    padding: 8vh 5vw;
+    /* Changed from 15vh to tighten the gaps */
     z-index: 1;
     pointer-events: none;
 }
@@ -547,27 +567,56 @@ a {
 }
 
 /* Horizontal Scroll (Why Us) */
+/* Horizontal Scroll (Why Us) */
 #why-us {
     display: block;
-    padding: 0;
-    margin-top: 30vh;
+    padding: 8vh 5vw;
+    /* Standardized padding */
+    margin-top: 0;
+    /* Removed the huge 30vh top margin */
     pointer-events: auto;
 }
 
 .hz-pin-container {
-    height: 100vh;
-    width: 100vw;
+    height: auto;
+    /* Removed 100vh lock */
+    width: 100%;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .hz-track {
     display: flex;
     align-items: stretch;
-    gap: 3rem;
-    padding: 0 5vw;
-    width: max-content;
+    gap: 2rem;
+    padding: 1rem 0 2rem 0;
+    /* Added bottom padding for the scrollbar */
+    width: 100%;
+    overflow-x: auto;
+    /* Enables standard left/right swiping */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on iOS */
+}
+
+/* Optional: Custom scrollbar for the horizontal track */
+.hz-track::-webkit-scrollbar {
+    height: 8px;
+}
+
+.hz-track::-webkit-scrollbar-track {
+    background: rgba(2, 3, 5, 0.5);
+    border-radius: 4px;
+}
+
+.hz-track::-webkit-scrollbar-thumb {
+    background: rgba(0, 240, 255, 0.3);
+    border-radius: 4px;
+}
+
+.hz-track::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
 }
 
 .hz-intro {
@@ -1502,15 +1551,20 @@ a {
 
     /* Scrolls exactly half the width to loop seamlessly */
 }
+
 /* ==================== SCROLL PROGRESS INDICATOR ==================== */
 #scroll-progress {
     position: fixed;
     top: 0;
     left: 0;
-    height: 3px; /* Thin, elegant line */
-    width: 0%;   /* Starts at 0 width */
+    height: 3px;
+    /* Thin, elegant line */
+    width: 0%;
+    /* Starts at 0 width */
     background: var(--gradient-bright);
-    z-index: 10001; /* Sits above the navbar (1000) and cursor (10000) */
+    z-index: 10001;
+    /* Sits above the navbar (1000) and cursor (10000) */
     box-shadow: 0 0 10px var(--accent-glow), 0 0 5px var(--accent);
-    pointer-events: none; /* Prevents it from blocking clicks at the top of the screen */
+    pointer-events: none;
+    /* Prevents it from blocking clicks at the top of the screen */
 }

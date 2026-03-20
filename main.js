@@ -309,24 +309,24 @@ function initScrollAnimations() {
         .add(formCore, 0.85)
         .to(camera, { z: 12200, ease: "power3.out" }, 0.85);
 
-    const hzTrack = document.querySelector('.hz-track');
-    const hzPin = document.querySelector('.hz-pin-container');
+    // const hzTrack = document.querySelector('.hz-track');
+    // const hzPin = document.querySelector('.hz-pin-container');
 
-    // ONLY run this if the horizontal track actually exists on the page
-    if (hzTrack && hzPin) {
-        gsap.to(hzTrack, {
-            x: () => -(hzTrack.scrollWidth - window.innerWidth + 100),
-            ease: "none",
-            scrollTrigger: {
-                trigger: hzPin,
-                start: "center center",
-                end: () => `+=${hzTrack.scrollWidth}`,
-                pin: true,
-                scrub: 1,
-                invalidateOnRefresh: true
-            }
-        });
-    }
+    // // ONLY run this if the horizontal track actually exists on the page
+    // if (hzTrack && hzPin) {
+    //     gsap.to(hzTrack, {
+    //         x: () => -(hzTrack.scrollWidth - window.innerWidth + 100),
+    //         ease: "none",
+    //         scrollTrigger: {
+    //             trigger: hzPin,
+    //             start: "center center",
+    //             end: () => `+=${hzTrack.scrollWidth}`,
+    //             pin: true,
+    //             scrub: 1,
+    //             invalidateOnRefresh: true
+    //         }
+    //     });
+    // }
 
     gsap.utils.toArray('.gs-fade-scroll').forEach(el => {
         gsap.from(el, { opacity: 0, filter: "blur(10px)", scale: 0.9, duration: 1, scrollTrigger: { trigger: el, start: "top 75%" } });
