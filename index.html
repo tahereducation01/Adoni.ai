@@ -43,27 +43,11 @@
 
     <!-- Loader -->
     <div id="loader">
-        <svg viewBox="0 0 120 120" class="loader-svg" id="loaderLogo">
-            <defs>
-                <linearGradient id="logoGradBright" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#00F7FF" />
-                    <stop offset="50%" stop-color="#9A4BFF" />
-                    <stop offset="100%" stop-color="#00FFD5" />
-                </linearGradient>
-            </defs>
-            <circle cx="60" cy="60" r="45" class="loader-path ring-1" />
-            <circle cx="60" cy="60" r="38" class="loader-path ring-2" />
-            <circle cx="60" cy="60" r="31" class="loader-path ring-3" />
-            <path d="M60,30 L85,45 L85,75 L60,90 L35,75 L35,45 Z" stroke-linejoin="round"
-                class="loader-path poly-core" />
-            <path d="M40,50 L80,50" class="loader-path loader-circuit" />
-            <path d="M40,70 L80,70" class="loader-path loader-circuit" />
-            <path d="M50,40 L50,80" class="loader-path loader-circuit" />
-            <path d="M70,40 L70,80" class="loader-path loader-circuit" />
-            <circle cx="60" cy="60" r="8" fill="url(#logoGradBright)" class="loader-core" />
-        </svg>
+        <div class="loader-img-wrapper">
+            <img src="new-logo.svg" alt="Adoni AI Core" class="loader-new-logo" id="loaderLogoImg">
+        </div>
         <div class="loader-text-wrap">
-            <div class="loader-text">Welcome to Adoni AI</div>
+            <div class="loader-text">Welcome my friend , Your Partner in Digital Transformation</div>
         </div>
     </div>
 
@@ -73,38 +57,7 @@
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <a href="#" class="nav-brand">
-            <svg viewBox="0 0 120 120" class="logo-svg">
-                <defs>
-                    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#00D4FF" />
-                        <stop offset="50%" stop-color="#8A2BE2" />
-                        <stop offset="100%" stop-color="#00FFAA" />
-                    </linearGradient>
-                    <filter id="logoGlow" x="-30%" y="-30%" width="160%" height="160%">
-                        <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
-                        <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
-                        <feFlood flood-color="#00D4FF" flood-opacity="0.6" result="glowColor" />
-                        <feComposite in="glowColor" in2="offsetBlur" operator="in" result="softGlow" />
-                        <feMerge>
-                            <feMergeNode in="softGlow" />
-                            <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                    </filter>
-                </defs>
-                <circle cx="60" cy="60" r="45" stroke="url(#logoGrad)" stroke-width="1.5" fill="none" opacity="0.3"
-                    class="orbital-ring-1" />
-                <circle cx="60" cy="60" r="38" stroke="url(#logoGrad)" stroke-width="1.2" fill="none" opacity="0.4"
-                    class="orbital-ring-2" />
-                <circle cx="60" cy="60" r="31" stroke="url(#logoGrad)" stroke-width="1" fill="none" opacity="0.5"
-                    class="orbital-ring-3" />
-                <path d="M60,30 L85,45 L85,75 L60,90 L35,75 L35,45 Z" fill="rgba(2,3,5,0.9)"
-                    stroke="url(#logoGradBright)" stroke-width="3" stroke-linejoin="round" filter="url(#logoGlow)" />
-                <circle cx="60" cy="60" r="8" fill="url(#logoGrad)" class="central-hub">
-                    <animate attributeName="r" values="8;9;8" dur="2s" repeatCount="indefinite" />
-                </circle>
-                <text x="60" y="65" text-anchor="middle" font-family="'Space Grotesk'" font-size="9" font-weight="800"
-                    fill="#020305">AI</text>
-            </svg>
+            <img src="new-logo.svg" alt="Adoni AI Logo" class="logo-image">
             <span class="logo-text">
                 <span class="brand-adoni">ADONI</span><span class="brand-ai">AI</span><span class="brand-pulse">.</span>
             </span>
@@ -122,7 +75,7 @@
             <a href="blog/" style="color: var(--accent);">Insights</a>
         </div>
         </div>
-       <button class="nav-btn desktop-btn trigger-drawer">Start Project</button>
+        <button class="nav-btn desktop-btn trigger-drawer">Start Project</button>
     </nav>
     <div class="mobile-menu" id="mobile-menu">
         <div class="mobile-nav-links">
@@ -343,7 +296,7 @@
                     <div>
                         <h3 class="proj-name">Cafe SaaS Platform</h3>
                         <div class="proj-tech">Custom Dashboard / Operations</div>
-                        <a href="deployment/cafe_saas/  " target="_blank" rel="noopener noreferrer"
+                        <a href="deployment/cafe_saas/" target="_blank" rel="noopener noreferrer"
                             class="project-link-btn mt-2">View Admin Panel <i class="bi bi-arrow-right ms-2"></i></a>
                     </div>
                     <div style="max-width: 500px;">
@@ -373,7 +326,7 @@
                     <div>
                         <h3 class="proj-name">AI Resume Engine</h3>
                         <div class="proj-tech">React / Python / Generative AI</div>
-                        <a href="https://ai-resume-creator-black.vercel.app/" target="_blank" rel="noopener noreferrer"
+                        <a href="deployment/Ai-resume/" target="_blank" rel="noopener noreferrer"
                             class="project-link-btn mt-2">View Live Instance <i class="bi bi-arrow-right ms-2"></i></a>
                     </div>
                     <div style="max-width: 500px;">
@@ -707,36 +660,37 @@
                 <i class="bi bi-x-lg"></i>
             </button>
         </div>
-        
-        <div class="drawer-body" data-lenis-prevent >
+
+        <div class="drawer-body" data-lenis-prevent>
             <h2 class="heading-lg" style="margin-bottom: 1rem;">Let's Build Something Amazing</h2>
-            <p class="text-body" style="margin-bottom: 2rem;">Tell us about your project and we'll schedule a discovery call to discuss your technical requirements.</p>
-            
+            <p class="text-body" style="margin-bottom: 2rem;">Tell us about your project and we'll schedule a discovery
+                call to discuss your technical requirements.</p>
+
             <form id="drawer-form" method="POST">
                 <input type="hidden" name="access_key" value="e7271cae-5e38-4c1a-a6f4-a24302e555af">
                 <input type="hidden" name="subject" value="New Project Inquiry from Adoni AI Website">
                 <input type="hidden" name="from_name" value="Adoni AI Website">
-                
+
                 <div class="form-group">
                     <label for="drawer-name">Name *</label>
                     <input type="text" id="drawer-name" name="name" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="drawer-email">Email *</label>
                     <input type="email" id="drawer-email" name="email" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="drawer-demo-date">Demo Date *</label>
                     <input type="date" id="drawer-demo-date" name="demo_date" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="drawer-demo-time">Demo Time *</label>
                     <input type="time" id="drawer-demo-time" name="demo_time" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="drawer-service">Service Interested In *</label>
                     <select id="drawer-service" name="service" required>
@@ -749,7 +703,7 @@
                         <option value="Other">Other</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="drawer-budget">Project Budget Range</label>
                     <select id="drawer-budget" name="budget">
@@ -760,18 +714,20 @@
                         <option value="₹50 Lakhs+">₹50 Lakhs+</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="drawer-message">Project Details</label>
-                    <textarea id="drawer-message" name="message" rows="4" placeholder="Describe your project requirements..."></textarea>
+                    <textarea id="drawer-message" name="message" rows="4"
+                        placeholder="Describe your project requirements..."></textarea>
                 </div>
-                
-                <button type="submit" id="drawer-submit-btn" class="nav-btn btn-primary" style="width: 100%; margin-top: 1rem;">Schedule Call</button>
+
+                <button type="submit" id="drawer-submit-btn" class="nav-btn btn-primary"
+                    style="width: 100%; margin-top: 1rem;">Schedule Call</button>
                 <div id="drawer-form-result" style="margin-top: 1rem; display: none;"></div>
             </form>
         </div>
     </div>
-     <!-- Scripts -->
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>

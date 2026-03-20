@@ -58,10 +58,22 @@ a {
     pointer-events: none;
 }
 
-.loader-svg {
-    width: 180px;
-    height: 180px;
-    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.4));
+/* --- New Loader Logo Styles --- */
+.loader-new-logo {
+    width: 180px; /* Adjust size as needed */
+    height: auto;
+    filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.6)); /* Purple glowing shadow */
+    opacity: 0;           /* Starts hidden for GSAP */
+    transform: scale(0.5); /* Starts shrunk for GSAP */
+    margin-bottom: 20px;
+}
+
+/* --- New Navbar Logo Styles --- */
+.logo-image {
+    width: 55px; /* Adjust based on how it looks next to your text */
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.6));
+    animation: floatLogo 6s ease-in-out infinite; /* Keeps your floating effect! */
 }
 
 .loader-path {

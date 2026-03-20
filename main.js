@@ -264,6 +264,7 @@ window.onload = () => {
         initScrollAnimations();
     } else {
         // Play the full intro animation
+        // Play the full intro animation
         const tlLoader = gsap.timeline({
             onComplete: () => {
                 // Save the current exact time to localStorage
@@ -276,15 +277,14 @@ window.onload = () => {
         });
 
         tlLoader.to(".loader-text", { y: 0, duration: 0.8, ease: "power3.out" })
-            .to(".ring-1", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=0.4")
-            .to(".ring-2", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
-            .to(".ring-3", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, "-=1.0")
-            .to(".poly-core", { strokeDashoffset: 0, duration: 1.2, ease: "power3.inOut" }, "-=0.8")
-            .to(".loader-circuit", { strokeDashoffset: 0, duration: 0.8, ease: "power2.out", stagger: 0.1 }, "-=0.6")
-            .to(".loader-core", { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, "-=0.2")
-            .to(".poly-core", { fill: "rgba(2,3,5,0.9)", duration: 0.4 }, "-=0.2")
-            .to(".loader-text", { opacity: 0, duration: 0.4 }, "+=2.0")
-            .to("#loaderLogo", { scale: 15, opacity: 0, duration: 1.2, ease: "power4.in" }, "zoom")
+            // 1. Smoothly scale the new logo up and fade it in
+            .to("#loaderLogoImg", { opacity: 1, scale: 1, duration: 1.5, ease: "elastic.out(1, 0.5)" }, "-=0.4")
+            // 2. Add a powerful pulse/glow to the image
+            .to("#loaderLogoImg", { filter: "drop-shadow(0 0 40px #00F0FF)", duration: 0.8, yoyo: true, repeat: 1 }, "-=0.8")
+            // 3. Fade out the text
+            .to(".loader-text", { opacity: 0, duration: 0.4 }, "+=1.5")
+            // 4. Zoom the new logo incredibly close to the camera as a transition
+            .to("#loaderLogoImg", { scale: 20, opacity: 0, duration: 1.2, ease: "power4.in" }, "zoom")
             .to(camera, { z: 0, duration: 1.2, ease: "power3.inOut" }, "zoom")
             .to("#loader", { opacity: 0, duration: 0.8, ease: "none" }, "-=0.5")
             .call(formSphere, [], "-=0.8")
@@ -410,7 +410,7 @@ if (chatToggle) {
         chatToggle.style.display = 'none';
 
         if (!isChatOpen) {
-            isChatOpen = true; 
+            isChatOpen = true;
             chatInput.disabled = true; // Disable typing until they pick an option
 
             setTimeout(() => {
@@ -424,7 +424,7 @@ if (chatToggle) {
 if (chatClose) {
     chatClose.addEventListener('click', () => {
         chatWindow.classList.remove('active');
-        chatToggle.style.display = 'flex'; 
+        chatToggle.style.display = 'flex';
     });
 }
 
@@ -496,7 +496,7 @@ function showMainMenu() {
 function showSocialsFlow() {
     setTimeout(() => {
         botReply("We'd love to connect! Here is where you can find our team and our code:");
-        
+
         const socialsHTML = `
             <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 5px;">
                 <a href="https://www.linkedin.com/in/taher-bohra9/" target="_blank" style="color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 8px;">
@@ -512,7 +512,7 @@ function showSocialsFlow() {
         `;
         setTimeout(() => {
             botReplyHTML(socialsHTML);
-            
+
             setTimeout(() => {
                 botReply("Anything else I can help you explore?");
                 showOptions([
@@ -628,7 +628,7 @@ function handleSend() {
         leadData.name = text;
         inputExpects = 'email';
         setTimeout(() => botReply(`Nice to meet you, ${leadData.name}. What is the best email address to reach you at?`), 600);
-    
+
     } else if (inputExpects === 'email') {
         if (text.includes('@') && text.includes('.')) {
             leadData.email = text;
@@ -637,7 +637,7 @@ function handleSend() {
         } else {
             setTimeout(() => botReply("That doesn't look like a valid email. Could you try typing it again?"), 600);
         }
-    
+
     } else if (inputExpects === 'message') {
         leadData.message = text;
         inputExpects = null; // Done
@@ -646,7 +646,7 @@ function handleSend() {
             botReply("Transmitting your data to our secure servers...");
             submitLeadToWeb3Forms();
         }, 600);
-    
+
     } else {
         // Fallback if they type randomly
         setTimeout(() => {
@@ -657,8 +657,8 @@ function handleSend() {
 
 if (chatSend) chatSend.addEventListener('click', handleSend);
 if (chatInput) {
-    chatInput.addEventListener('keypress', (e) => { 
-        if (e.key === 'Enter' && !chatInput.disabled) handleSend(); 
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !chatInput.disabled) handleSend();
     });
 }
 
@@ -756,7 +756,7 @@ faqSchemaScript.text = JSON.stringify({
 });
 document.head.appendChild(faqSchemaScript);
 // ==================== FAQ ACCORDION LOGIC (BULLETPROOF) ====================
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     // 1. Check if the user clicked on or inside a question box (like the plus icon)
     const clickedQuestion = e.target.closest('.faq-question');
     if (!clickedQuestion) return; // If they clicked somewhere else, ignore it
